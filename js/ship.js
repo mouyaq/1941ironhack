@@ -9,7 +9,7 @@ function Ship(canvas, x, y, type, color, health, speedX, speedY) {
     this.speedY = speedY;
     this.rad = 0;
     //this.movementArray = ["straight", "angle", "circle", "sin", "persecution"];
-    this.movementArray = ["straight"];
+    this.movementArray = ["straight", "angle", "circle"];
     this.movement = this.movementArray[Math.floor(Math.random() * this.movementArray.length)];
     /* 
     types:
