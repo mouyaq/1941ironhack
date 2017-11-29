@@ -6,12 +6,13 @@ function Game(canvas) {
     this.enemyInterval = 5;
     this.enemiesList = ["enemy1", "enemy2"];
     this.colorList = ["white", "black"];
-    this.playersList = [];
+    this.players = [];
     this.player1 = new Player(canvas, this.canvas.width / 4, this.canvas.height - 100, "player1", this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, 10, 5);
-    this.playersList.push(this.player1);
+    this.players.push(this.player1);
     // this.player2 = new Player(canvas, 615, 700, "player1", "white", 100, 10, 10);
-    this.bullets = [];
+    this.playersBullets = [];
     this.enemies = [];
+    this.enemiesBullets = [];
     setInterval(function(){
         if(this.enemies.length < 5) { 
             this.enemies.push(new Enemy(this.canvas, Math.floor(Math.random()*700), Math.floor(Math.random()*-500)-200, this.enemiesList[Math.floor(Math.random() * this.enemiesList.length)], this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, 1, 1, this.player1));
@@ -22,7 +23,7 @@ function Game(canvas) {
         this.enemies.forEach(function(enemy){
             if(enemy.y > 0) { 
                 enemy.shoot(this);
-                console.log("NUMERO DE BULLETS: " + this.bullets.length);
+                console.log("NUMERO DE BULLETS: " + this.enemiesBullets.length);
             }
         }.bind(this));
     }.bind(this), 1000);
@@ -33,19 +34,23 @@ function Game(canvas) {
 
 Game.prototype.draw = function() {
     // check collisions
-    this.checkCollisions();
+    this.checkCollisions(this.players, this.enemiesList, this.bullets);
     // Draw background
     this.bg.draw();
-    // Draw bullets
-    this.bullets.forEach(function(bullet) {
-        bullet.draw(this);
+    // Draw players bullets
+    this.playersBullets.forEach(function(bullet) {
+        bullet.draw(this.playersBullets);
+    }.bind(this))
+    // Draw enemies bullets
+    this.enemiesBullets.forEach(function(bullet) {
+        bullet.draw(this.enemiesBullets);
     }.bind(this))
     // Draw enemies
     this.enemies.forEach(function(enemy) {
         enemy.draw(this);
     }.bind(this))
     // Draw player1
-    this.playersList.forEach(function(player) {
+    this.players.forEach(function(player) {
         player.draw();
     })
     
@@ -75,8 +80,7 @@ Game.prototype.onKeyDown = function(event) {
                 this.player1.changeColor();
                 break;
             case P1_SHOOT:
-                var that = this;
-                this.player1.shoot(that);
+                this.player1.shoot(this);
                 break;
             // case P2_UP:
             //     this.player2.moveUp();
@@ -103,6 +107,11 @@ Game.prototype.onKeyUp = function(event) {
     // this.player2.frameIndex = 0;
 }
 
-Game.prototype.checkCollisions = function() {
+Game.prototype.checkCollisions = function(players, enemies, bullets) {
+    // Possible collisions:
+    // Player with enemy
+    // Player with enemy bullet
+    // Enemy with player bullet
+    // Between players != color
 
 }

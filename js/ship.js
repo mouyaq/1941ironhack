@@ -70,9 +70,9 @@ Ship.prototype.selectSprite = function(type, color) {
     this.sprite.src = imgSrc;
 }
 
-Ship.prototype.shoot = function(that) {
-    that.bullets.push(new Bullet(this.canvas, this.x, this.y, "PlasLaser", 1, this.color, this.speedX, this.speedY));
-}
+// Ship.prototype.shoot = function(that) {
+//     that.bullets.push(new Bullet(this.canvas, this.x, this.y, "PlasLaser", 1, this.color, this.speedX, this.speedY));
+// }
 
 Ship.prototype.getRandomSize = function(min, max) {
     var randomSize = 1;
@@ -196,9 +196,9 @@ Player.prototype.moveRight = function() {
     }
 }
 
-// Player.prototype.draw = function() {
-//     Ship.draw();
-// }
+Player.prototype.shoot = function(that) {
+    that.playersBullets.push(new Bullet(this.canvas, this.x, this.y, "PlasLaser", 1, this.color, this.speedX, this.speedY));
+}
 
 Enemy.prototype = Object.create(Ship.prototype);
 
@@ -266,5 +266,5 @@ Enemy.prototype.getPlayerPosition = function(player) {
 }
 
 Enemy.prototype.shoot = function(that) {
-    that.bullets.push(new Bullet(this.canvas, this.x, this.y, "PlasLaser", 0, this.color, -this.speedX*2, -this.speedY*2));
+    that.enemiesBullets.push(new Bullet(this.canvas, this.x, this.y, "PlasLaser", 0, this.color, -this.speedX*2, -this.speedY*2));
 }

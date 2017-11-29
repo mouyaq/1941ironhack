@@ -23,10 +23,10 @@ function Bullet(canvas, x, y, type, index, color, speedX, speedY) {
     this.height = this.frameHeight * this.scale;
 }
 
-Bullet.prototype.draw = function(that) {
+Bullet.prototype.draw = function(bullets) {
     if(this.isRemovable()) {
-        var index = that.bullets.indexOf(this);
-        that.bullets.splice(index, 1);
+        var index = bullets.indexOf(this);
+        bullets.splice(index, 1);
     }
     else {
         this.selectSprite(this.type, this.color);
