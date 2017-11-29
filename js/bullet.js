@@ -10,10 +10,6 @@ function Bullet(canvas, x, y, type, index, color, speedX, speedY) {
     this.sprite = new Image();
     this.selectSprite(this.type, this.color);
     this.scale = 1;
-    //this.numFrames = 6;
-    // this.frameWidth = 284;
-    //this.frameHeight = 180;
-    //this.frameHeight = 314;
     this.damage = [1, 2];
     this.frameWidthArray = [85, 85, 85];
     this.frameHeightArray = [85, 195, 250];

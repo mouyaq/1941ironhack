@@ -148,10 +148,6 @@ Ship.prototype.detectBorder = function() {
 }
 
 Ship.prototype.isRemovable = function() {
-    //var out = (this.x + this.width < 0 || this.x > this.canvas.width || this.y > this.canvas.height);
-    //console.log(out);
-    //console.log("THIS.X: " + this.x + " THIS.Y: " + this.y + " THIS:WIDTH: " + this.width + " CANVAS.WIDTH: " + this.canvas.width + " CANVAS.HEIGHT: " + this.canvas.height);
-    //return out;
     return (this.x + this.width < 0 || this.x > this.canvas.width || this.y > this.canvas.height);
 }
 
@@ -238,7 +234,7 @@ function Enemy(canvas, x, y, type, color, health, speedX, speedY, player) {
         case "enemy1":
             this.frameIndex = 0;
             // this.scale = this.getRandomSize(0.6, 0.8);
-            this.scale = 0.7;
+            this.scale = 0.6;
             console.log("ENEMY1 SCALE: " + this.scale);
             console.log(this.movement);
             break;

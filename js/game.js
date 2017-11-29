@@ -7,13 +7,13 @@ function Game(canvas) {
     this.enemyInterval = 10;
     this.enemiesList = ["enemy1", "enemy2"];
     this.colorList = ["white", "black"];
-    this.player1 = new Player(canvas, this.canvas.width / 4, this.canvas.height - 100, "player1", this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, 10, 10);
+    this.player1 = new Player(canvas, this.canvas.width / 4, this.canvas.height - 100, "player1", this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, 10, 5);
     // this.player2 = new Player(canvas, 615, 700, "player1", "white", 100, 10, 10);
     this.bullets = [];
     this.enemies = [];
     setInterval(function(){
         if(this.enemies.length < 5) { 
-            this.enemies.push(new Enemy(this.canvas, Math.floor(Math.random()*700), Math.floor(Math.random()*-500)-200, this.enemiesList[Math.floor(Math.random() * this.enemiesList.length)], this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, 2, 2, this.player1));
+            this.enemies.push(new Enemy(this.canvas, Math.floor(Math.random()*700), Math.floor(Math.random()*-500)-200, this.enemiesList[Math.floor(Math.random() * this.enemiesList.length)], this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, 1, 1, this.player1));
             console.log("NUMERO DE ENEMIGOS: " + this.enemies.length);
         }
     }.bind(this), (Math.floor(Math.random() * this.enemyInterval) + 1) * 1000 );
