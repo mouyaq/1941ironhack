@@ -4,22 +4,33 @@ function Game(canvas) {
     // background
     this.bg = new Bg(canvas);
     // interval for each enemy
-    var enemyInterval = 10;
-    var enemiesList = ["enemy1", "enemy2"];
-    var colorList = ["white", "black"];
-    this.player1 = new Player(canvas, this.canvas.width / 4, this.canvas.height - 100, "player1", colorList[Math.floor(Math.random() * colorList.length)], 100, 10, 10);
+    this.enemyInterval = 10;
+    this.enemiesList = ["enemy1", "enemy2"];
+    this.colorList = ["white", "black"];
+    this.player1 = new Player(canvas, this.canvas.width / 4, this.canvas.height - 100, "player1", this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, 10, 10);
     // this.player2 = new Player(canvas, 615, 700, "player1", "white", 100, 10, 10);
     this.bullets = [];
     this.enemies = [];
     setInterval(function(){
-        this.enemies.push(new Enemy(canvas, Math.floor(Math.random()*700), Math.floor(Math.random()*-500)-200, enemiesList[Math.floor(Math.random() * enemiesList.length)], colorList[Math.floor(Math.random() * colorList.length)], 100, 2, 2, this.player1));
-        console.log(this.enemies.length);
-    }.bind(this), (Math.floor(Math.random() * enemyInterval) + 1) * 1000 );
+        if(this.enemies.length < 5) { 
+            this.enemies.push(new Enemy(this.canvas, Math.floor(Math.random()*700), Math.floor(Math.random()*-500)-200, this.enemiesList[Math.floor(Math.random() * this.enemiesList.length)], this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, 2, 2, this.player1));
+            console.log("NUMERO DE ENEMIGOS: " + this.enemies.length);
+        }
+    }.bind(this), (Math.floor(Math.random() * this.enemyInterval) + 1) * 1000 );
     setInterval(function(){
         this.enemies.forEach(function(enemy){
-            enemy.shoot(this);
+            if(enemy.y > 0) { 
+                enemy.shoot(this);
+                console.log("NUMERO DE BULLETS: " + this.bullets.length);
+            }
         }.bind(this));
     }.bind(this), 1000);
+    // Console.log enemies position each 10s
+    setInterval(function(){
+        this.enemies.forEach(function(enemy){
+            console.log("ENEMY POS: [" + enemy.x + "," + enemy.y + "]");
+        })
+    }.bind(this), 10000);
     this.keysList = [];
     document.onkeydown = this.onKeyDown.bind(this);
     document.onkeyup = this.onKeyUp.bind(this);
@@ -28,21 +39,16 @@ function Game(canvas) {
 Game.prototype.draw = function() {
     this.bg.draw();
 
-    this.enemies.forEach(function(enemy) {
-        if(enemy.outOfScreen()) {
-            var index = this.enemies.indexOf(enemy);
-            if(index > -1) {
-                this.enemies.splice(index, 1);
-            }
-        }
-        else {
-            var that = this;
-            enemy.draw(that);
-        }
-    })
     this.bullets.forEach(function(bullet) {
-        bullet.draw();
-    })
+        bullet.draw(this);
+    }.bind(this))
+
+    this.enemies.forEach(function(enemy) {
+        enemy.draw(this);
+    }.bind(this))
+
+
+    
     this.player1.draw();
     // this.player2.draw();
 

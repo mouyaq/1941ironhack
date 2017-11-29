@@ -27,26 +27,31 @@ function Bullet(canvas, x, y, type, index, color, speedX, speedY) {
     this.height = this.frameHeight * this.scale;
 }
 
-Bullet.prototype.draw = function() {
-    this.selectSprite(this.type, this.color);
-    this.sprite.onload = function() {
-        //this.ctx.drawImage(this.sprite, this.x, this.y);
-        this.ctx.save();
-        this.ctx.drawImage(
-          this.sprite,
-          this.framePositionX[this.frameIndex],
-          this.framePositionY[this.frameIndex],
-          this.frameWidth,
-          this.frameHeight,
-          this.x,
-          this.y,
-          this.width,
-          this.height
-        );
-        this.ctx.restore();
-    }.bind(this);
-    this.y -= this.speedY;
-    
+Bullet.prototype.draw = function(that) {
+    if(this.isRemovable()) {
+        var index = that.bullets.indexOf(this);
+        that.bullets.splice(index, 1);
+    }
+    else {
+        this.selectSprite(this.type, this.color);
+        this.sprite.onload = function() {
+            //this.ctx.drawImage(this.sprite, this.x, this.y);
+            this.ctx.save();
+            this.ctx.drawImage(
+              this.sprite,
+              this.framePositionX[this.frameIndex],
+              this.framePositionY[this.frameIndex],
+              this.frameWidth,
+              this.frameHeight,
+              this.x,
+              this.y,
+              this.width,
+              this.height
+            );
+            this.ctx.restore();
+        }.bind(this);
+        this.y -= this.speedY;
+    }   
 }
 
 Bullet.prototype.selectSprite = function(type, color) {
@@ -60,4 +65,8 @@ Bullet.prototype.selectSprite = function(type, color) {
             break;
     }
     this.sprite.src = imgSrc;
+}
+
+Bullet.prototype.isRemovable = function() {
+    return (this.x + this.width < 0 || this.x > this.canvas.width || this.y > this.canvas.height);
 }

@@ -9,7 +9,7 @@ function Ship(canvas, x, y, type, color, health, speedX, speedY) {
     this.speedY = speedY;
     this.rad = 0;
     //this.movementArray = ["straight", "angle", "circle", "sin", "persecution"];
-    this.movementArray = ["straight", "angle", "circle"];
+    this.movementArray = ["straight"];
     this.movement = this.movementArray[Math.floor(Math.random() * this.movementArray.length)];
     /* 
     types:
@@ -76,8 +76,6 @@ Ship.prototype.draw = function() {
         );
         this.ctx.restore();
     }.bind(this);
-
-
 }
 
 Ship.prototype.selectSprite = function(type, color) {
@@ -116,7 +114,7 @@ Ship.prototype.move = function(movement) {
     switch(movement) {
         case "straight":
             if(this.y > this.canvas.height) {
-                this.ctx.clearRect(this.x, this.y, this.width, this.height);
+                //this.ctx.clearRect(this.x, this.y, this.width, this.height);
             }
             else {
                 this.y += this.speedY;
@@ -149,8 +147,12 @@ Ship.prototype.detectBorder = function() {
     return this.x < 0 || this.x + this.width >= this.canvas.width || this.y < 0;
 }
 
-Ship.prototype.outOfScreen = function() {
-    return (this.x + this.width < 0 || this.x > this.canvas.width || this.y > this.canvas.heigth);
+Ship.prototype.isRemovable = function() {
+    //var out = (this.x + this.width < 0 || this.x > this.canvas.width || this.y > this.canvas.height);
+    //console.log(out);
+    //console.log("THIS.X: " + this.x + " THIS.Y: " + this.y + " THIS:WIDTH: " + this.width + " CANVAS.WIDTH: " + this.canvas.width + " CANVAS.HEIGHT: " + this.canvas.height);
+    //return out;
+    return (this.x + this.width < 0 || this.x > this.canvas.width || this.y > this.canvas.height);
 }
 
 Player.prototype = Object.create(Ship.prototype);
@@ -235,13 +237,15 @@ function Enemy(canvas, x, y, type, color, health, speedX, speedY, player) {
     switch(this.type) {
         case "enemy1":
             this.frameIndex = 0;
-            this.scale = this.getRandomSize(0.6, 0.8);
+            // this.scale = this.getRandomSize(0.6, 0.8);
+            this.scale = 0.7;
             console.log("ENEMY1 SCALE: " + this.scale);
             console.log(this.movement);
             break;
         case "enemy2":
             this.frameIndex = 1;
-            this.scale = this.getRandomSize(0.1, 0.3);
+            //this.scale = this.getRandomSize(0.1, 0.3);
+            this.scale = 0.2;
             console.log("ENEMY2 SCALE: " + this.scale);
             console.log(this.movement);
             break;
@@ -258,6 +262,10 @@ Enemy.prototype.changeColor = function() {
 }
 
 Enemy.prototype.draw = function(that) {
+    if(this.isRemovable()) {
+        var index = that.enemies.indexOf(this);
+        that.enemies.splice(index, 1);
+    }
     this.selectSprite(this.type, this.color);
     this.sprite.onload = function() {
         this.ctx.save();
@@ -274,7 +282,6 @@ Enemy.prototype.draw = function(that) {
         );
         this.ctx.restore();
     }.bind(this);
-    //this.y += this.speed;
     this.move(this.movement);
 }
 
