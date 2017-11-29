@@ -22,20 +22,6 @@ function Ship(canvas, x, y, type, color, health, speedX, speedY) {
     this.color = color;
     this.sprite = new Image();
     this.selectSprite(this.type, this.color);
-    //this.numFrames = 6;
-    // this.frameWidth = 284;
-    
-    //this.frameHeight = this.sprite.height;
-    //this.frameHeight = 314;
-    /*
-    this.frameHeight = 180;
-    this.frameIndexArray = [185, 181, 172, 188, 181, 172, 188];
-    this.framePositionArray = [0, 186, 367, 539, 727, 908, 1080];
-    this.frameIndex = 0;
-    this.frameWidth = this.frameIndexArray[this.frameIndex];
-    this.width = this.frameWidth * this.scale;
-    this.height = this.frameHeight * this.scale;
-    */
 }
 
 Ship.prototype.draw = function() {

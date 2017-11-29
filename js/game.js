@@ -25,12 +25,6 @@ function Game(canvas) {
             }
         }.bind(this));
     }.bind(this), 1000);
-    // Console.log enemies position each 10s
-    setInterval(function(){
-        this.enemies.forEach(function(enemy){
-            console.log("ENEMY POS: [" + enemy.x + "," + enemy.y + "]");
-        })
-    }.bind(this), 10000);
     this.keysList = [];
     document.onkeydown = this.onKeyDown.bind(this);
     document.onkeyup = this.onKeyUp.bind(this);

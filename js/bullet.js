@@ -64,5 +64,5 @@ Bullet.prototype.selectSprite = function(type, color) {
 }
 
 Bullet.prototype.isRemovable = function() {
-    return (this.x + this.width < 0 || this.x > this.canvas.width || this.y > this.canvas.height);
+    return (this.x + this.width < 0 || this.x > this.canvas.width || this.y > this.canvas.height || this.y + this.height < 0);
 }
