@@ -11,13 +11,6 @@ function Ship(canvas, x, y, type, color, health, speedX, speedY) {
     //this.movementArray = ["straight", "angle", "circle", "sin", "persecution"];
     this.movementArray = ["straight", "angle", "circle"];
     this.movement = this.movementArray[Math.floor(Math.random() * this.movementArray.length)];
-    /* 
-    types:
-        p : Player  --> player_black.png / player_white.png
-        e1 : Enemy1 --> e1_black.png / e1_white.png
-        e2 : Enemy2 --> e2_black.png / e2_white.png
-        e3 : Enemy3 --> e3_black.png / e3_white.png
-    */
     this.type = type;
     this.color = color;
     this.sprite = new Image();
