@@ -31,7 +31,6 @@ Bullet.prototype.draw = function(that) {
     else {
         this.selectSprite(this.type, this.color);
         this.sprite.onload = function() {
-            //this.ctx.drawImage(this.sprite, this.x, this.y);
             this.ctx.save();
             this.ctx.drawImage(
               this.sprite,

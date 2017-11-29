@@ -1,13 +1,14 @@
 function Game(canvas) {
     this.canvas = canvas;
     this.ctx = this.canvas.getContext('2d');
-    // background
     this.bg = new Bg(canvas);
-    // interval for each enemy
-    this.enemyInterval = 10;
+    // interval for each enemy in seconds.
+    this.enemyInterval = 5;
     this.enemiesList = ["enemy1", "enemy2"];
     this.colorList = ["white", "black"];
+    this.playersList = [];
     this.player1 = new Player(canvas, this.canvas.width / 4, this.canvas.height - 100, "player1", this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, 10, 5);
+    this.playersList.push(this.player1);
     // this.player2 = new Player(canvas, 615, 700, "player1", "white", 100, 10, 10);
     this.bullets = [];
     this.enemies = [];
@@ -31,22 +32,26 @@ function Game(canvas) {
 }
 
 Game.prototype.draw = function() {
+    // check collisions
+    this.checkCollisions();
+    // Draw background
     this.bg.draw();
-
+    // Draw bullets
     this.bullets.forEach(function(bullet) {
         bullet.draw(this);
     }.bind(this))
-
+    // Draw enemies
     this.enemies.forEach(function(enemy) {
         enemy.draw(this);
     }.bind(this))
-
-
+    // Draw player1
+    this.playersList.forEach(function(player) {
+        player.draw();
+    })
     
-    this.player1.draw();
+    // Draw player2
     // this.player2.draw();
 
-    // clear enemies and bullets
     window.requestAnimationFrame(this.draw.bind(this));
 }
 
@@ -96,4 +101,8 @@ Game.prototype.onKeyUp = function(event) {
     this.keysList = [];
     this.player1.frameIndex = 0;
     // this.player2.frameIndex = 0;
+}
+
+Game.prototype.checkCollisions = function() {
+
 }
