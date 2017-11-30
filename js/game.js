@@ -4,6 +4,8 @@ function Game(canvas) {
     this.bg = new Bg(canvas);
     // interval for each enemy in seconds.
     this.enemyInterval = 5;
+    // Maximum number of enemies
+    this.maxEnemies = 10;
     this.enemiesList = ["enemy1", "enemy2"];
     this.colorList = ["white", "black"];
     this.players = [];
@@ -14,8 +16,8 @@ function Game(canvas) {
     this.enemies = [];
     this.enemiesBullets = [];
     setInterval(function(){
-        if(this.enemies.length < 5) { 
-            this.enemies.push(new Enemy(this.canvas, Math.floor(Math.random()*700), Math.floor(Math.random()*-500)-200, this.enemiesList[Math.floor(Math.random() * this.enemiesList.length)], this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, 0.5, 0.5, this.player1));
+        if(this.enemies.length < this.maxEnemies) { 
+            this.enemies.push(new Enemy(this.canvas, Math.floor(Math.random()*700), Math.floor(Math.random()*-500)-200, this.enemiesList[Math.floor(Math.random() * this.enemiesList.length)], this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, 1, 1, this.player1));
             console.log("NUMERO DE ENEMIGOS: " + this.enemies.length);
         }
     }.bind(this), (Math.floor(Math.random() * this.enemyInterval) + 1) * 1000 );

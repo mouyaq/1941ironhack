@@ -85,7 +85,8 @@ Bullet.prototype.checkCollision = function(enemies) {
         if ( this.y < enemyColisionYmax && 
              this.y > enemyColisionYmin && 
              this.x < enemyColisionXmax &&
-             this.x > enemyColisionXmin) {
+             this.x > enemyColisionXmin &&
+             this.color != enemy.color) {
                 console.log("HIT");
                 enemy.setRemovable();
         }
