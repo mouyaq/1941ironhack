@@ -15,6 +15,7 @@ function Ship(canvas, x, y, type, color, health, speedX, speedY) {
     this.color = color;
     this.sprite = new Image();
     this.selectSprite(this.type, this.color);
+    this.removable = false;
 }
 
 Ship.prototype.draw = function() {
@@ -126,8 +127,14 @@ Ship.prototype.detectBorder = function() {
     return this.x < 0 || this.x + this.width >= this.canvas.width || this.y < 0;
 }
 
-Ship.prototype.isRemovable = function() {
-    return (this.x + this.width < 0 || this.x > this.canvas.width || this.y > this.canvas.height);
+Ship.prototype.isOutOfScreen = function() {
+    if (this.x + this.width < 0 || this.x > this.canvas.width || this.y > this.canvas.height) {
+        this.setRemovable();
+    }
+}
+
+Ship.prototype.setRemovable = function() {
+    this.removable = true;
 }
 
 Player.prototype = Object.create(Ship.prototype);
@@ -197,7 +204,7 @@ Player.prototype.moveRight = function() {
 }
 
 Player.prototype.shoot = function(that) {
-    that.playersBullets.push(new Bullet(this.canvas, this.x, this.y, "PlasLaser", 1, this.color, this.speedX, this.speedY));
+    that.playersBullets.push(new Bullet(this.canvas, this.x, this.y, "PlasLaser", 0, this.color, this.speedX, this.speedY));
 }
 
 Enemy.prototype = Object.create(Ship.prototype);
@@ -214,15 +221,15 @@ function Enemy(canvas, x, y, type, color, health, speedX, speedY, player) {
             this.frameIndex = 0;
             // this.scale = this.getRandomSize(0.6, 0.8);
             this.scale = 0.6;
-            console.log("ENEMY1 SCALE: " + this.scale);
-            console.log(this.movement);
+            // console.log("ENEMY1 SCALE: " + this.scale);
+            // console.log(this.movement);
             break;
         case "enemy2":
             this.frameIndex = 1;
             //this.scale = this.getRandomSize(0.1, 0.3);
             this.scale = 0.2;
-            console.log("ENEMY2 SCALE: " + this.scale);
-            console.log(this.movement);
+            // console.log("ENEMY2 SCALE: " + this.scale);
+            // console.log(this.movement);
             break;
     }
     this.frameHeight = this.frameHeightArray[this.frameIndex];
@@ -237,9 +244,10 @@ Enemy.prototype.changeColor = function() {
 }
 
 Enemy.prototype.draw = function(that) {
-    if(this.isRemovable()) {
+    if(this.removable) {
         var index = that.enemies.indexOf(this);
         that.enemies.splice(index, 1);
+        //console.log("REMOVE ENEMY");
     }
     this.selectSprite(this.type, this.color);
     this.sprite.onload = function() {

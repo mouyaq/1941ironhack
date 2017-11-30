@@ -14,7 +14,7 @@ function Game(canvas) {
     this.enemies = [];
     this.enemiesBullets = [];
     setInterval(function(){
-        if(this.enemies.length < 5) { 
+        if(this.enemies.length < 1) { 
             this.enemies.push(new Enemy(this.canvas, Math.floor(Math.random()*700), Math.floor(Math.random()*-500)-200, this.enemiesList[Math.floor(Math.random() * this.enemiesList.length)], this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, 1, 1, this.player1));
             console.log("NUMERO DE ENEMIGOS: " + this.enemies.length);
         }
@@ -23,7 +23,8 @@ function Game(canvas) {
         this.enemies.forEach(function(enemy){
             if(enemy.y > 0) { 
                 enemy.shoot(this);
-                console.log("NUMERO DE BULLETS: " + this.enemiesBullets.length);
+                // console.log("ENEMIES BULLETS: " + this.enemiesBullets.length);
+                // console.log("PLAYER BULLETS: " + this.playersBullets.length);
             }
         }.bind(this));
     }.bind(this), 1000);
@@ -34,19 +35,23 @@ function Game(canvas) {
 
 Game.prototype.draw = function() {
     // check collisions
-    this.checkCollisions(this.players, this.enemiesList, this.bullets);
+    //this.checkCollisions(this.players, this.enemiesList, this.bullets);
     // Draw background
     this.bg.draw();
     // Draw players bullets
     this.playersBullets.forEach(function(bullet) {
+        bullet.isOutOfScreen();
+        bullet.checkCollision(this.enemies);
         bullet.draw(this.playersBullets);
     }.bind(this))
     // Draw enemies bullets
     this.enemiesBullets.forEach(function(bullet) {
+        bullet.isOutOfScreen();
         bullet.draw(this.enemiesBullets);
     }.bind(this))
     // Draw enemies
     this.enemies.forEach(function(enemy) {
+        enemy.isOutOfScreen();
         enemy.draw(this);
     }.bind(this))
     // Draw player1
@@ -107,9 +112,12 @@ Game.prototype.onKeyUp = function(event) {
     // this.player2.frameIndex = 0;
 }
 
-Game.prototype.checkCollisions = function(players, enemies, bullets) {
+Game.prototype.checkCollision = function(players, enemies, bullets) {
     // Possible collisions:
     // Player with enemy
+    players.forEarch(function(player){
+
+    })
     // Player with enemy bullet
     // Enemy with player bullet
     // Between players != color

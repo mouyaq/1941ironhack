@@ -21,12 +21,14 @@ function Bullet(canvas, x, y, type, index, color, speedX, speedY) {
     this.frameHeight = this.frameHeightArray[this.frameIndex];
     this.width = this.frameWidth * this.scale;
     this.height = this.frameHeight * this.scale;
+    this.removable = false;
 }
 
 Bullet.prototype.draw = function(bullets) {
-    if(this.isRemovable()) {
+    if(this.removable) {
         var index = bullets.indexOf(this);
         bullets.splice(index, 1);
+        //console.log("REMOVE BULLET");
     }
     else {
         this.selectSprite(this.type, this.color);
@@ -62,6 +64,34 @@ Bullet.prototype.selectSprite = function(type, color) {
     this.sprite.src = imgSrc;
 }
 
-Bullet.prototype.isRemovable = function() {
-    return (this.x + this.width < 0 || this.x > this.canvas.width || this.y > this.canvas.height || this.y + this.height < 0);
+Bullet.prototype.isOutOfScreen = function() {
+    if(this.x + this.width < 0 || this.x > this.canvas.width || this.y > this.canvas.height || this.y + this.height < 0) {
+        this.setRemovable();
+    }
+}
+
+Bullet.prototype.checkCollision = function(enemies) {
+    enemies.forEach(function(enemy){
+        var enemyColisionXmin = enemy.x;
+        var enemyColisionXmax = enemy.x + enemy.width;
+        var enemyColisionYmin = enemy.y;
+        var enemyColisionYmax = enemy.y + enemy.height;
+        /*
+        enemy.x + 1/4 * enemy.width
+        enemy.x + 3/4 * enemy.width
+        enemy.y + 1/4 * enemy.height
+        enemy.y + 3/4 * enemy.height
+        */
+        if ( this.y < enemyColisionYmax && 
+             this.y > enemyColisionYmin && 
+             this.x < enemyColisionXmax &&
+             this.x > enemyColisionXmin) {
+                console.log("HIT");
+                enemy.setRemovable();
+        }
+    }.bind(this))
+}
+
+Bullet.prototype.setRemovable = function() {
+    this.removable = true;
 }
