@@ -14,8 +14,8 @@ function Game(canvas) {
     this.enemies = [];
     this.enemiesBullets = [];
     setInterval(function(){
-        if(this.enemies.length < 1) { 
-            this.enemies.push(new Enemy(this.canvas, Math.floor(Math.random()*700), Math.floor(Math.random()*-500)-200, this.enemiesList[Math.floor(Math.random() * this.enemiesList.length)], this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, 1, 1, this.player1));
+        if(this.enemies.length < 5) { 
+            this.enemies.push(new Enemy(this.canvas, Math.floor(Math.random()*700), Math.floor(Math.random()*-500)-200, this.enemiesList[Math.floor(Math.random() * this.enemiesList.length)], this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, 0.5, 0.5, this.player1));
             console.log("NUMERO DE ENEMIGOS: " + this.enemies.length);
         }
     }.bind(this), (Math.floor(Math.random() * this.enemyInterval) + 1) * 1000 );
@@ -47,6 +47,7 @@ Game.prototype.draw = function() {
     // Draw enemies bullets
     this.enemiesBullets.forEach(function(bullet) {
         bullet.isOutOfScreen();
+        bullet.checkCollision(this.players);
         bullet.draw(this.enemiesBullets);
     }.bind(this))
     // Draw enemies
@@ -56,8 +57,8 @@ Game.prototype.draw = function() {
     }.bind(this))
     // Draw player1
     this.players.forEach(function(player) {
-        player.draw();
-    })
+        player.draw(this);
+    }.bind(this))
     
     // Draw player2
     // this.player2.draw();

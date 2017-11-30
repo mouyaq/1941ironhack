@@ -72,10 +72,10 @@ Bullet.prototype.isOutOfScreen = function() {
 
 Bullet.prototype.checkCollision = function(enemies) {
     enemies.forEach(function(enemy){
-        var enemyColisionXmin = enemy.x;
-        var enemyColisionXmax = enemy.x + enemy.width;
-        var enemyColisionYmin = enemy.y;
-        var enemyColisionYmax = enemy.y + enemy.height;
+        var enemyColisionXmin = enemy.x - (1/2 * enemy.width);
+        var enemyColisionXmax = enemy.x + (1/2 * enemy.width);
+        var enemyColisionYmin = enemy.y - (1/2 * enemy.height);
+        var enemyColisionYmax = enemy.y + (1/2 * enemy.height);
         /*
         enemy.x + 1/4 * enemy.width
         enemy.x + 3/4 * enemy.width

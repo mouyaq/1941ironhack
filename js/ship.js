@@ -9,7 +9,7 @@ function Ship(canvas, x, y, type, color, health, speedX, speedY) {
     this.speedY = speedY;
     this.rad = 0;
     //this.movementArray = ["straight", "angle", "circle", "sin", "persecution"];
-    this.movementArray = ["straight", "angle", "circle"];
+    this.movementArray = ["straight"];
     this.movement = this.movementArray[Math.floor(Math.random() * this.movementArray.length)];
     this.type = type;
     this.color = color;
@@ -18,45 +18,6 @@ function Ship(canvas, x, y, type, color, health, speedX, speedY) {
     this.removable = false;
 }
 
-Ship.prototype.draw = function() {
-    this.selectSprite(this.type, this.color);
-    this.sprite.onload = function() {
-         // Draw circle
-        /*
-        this.ctx.beginPath();
-        var grd = this.ctx.createRadialGradient((this.x+this.width/2), (this.y+this.height/2), this.width, (this.x+this.width/2), (this.y+this.height/2), this.width/4);
-        if(this.color == "white") {
-            grd.addColorStop(0, "#000");
-            grd.addColorStop(1, "#fff");
-        }
-        else {
-            grd.addColorStop(0, "#fff");
-            grd.addColorStop(1, "#000");
-        }
-        
-        this.ctx.fillStyle = grd;
-        this.ctx.fill();
-        this.ctx.moveTo((this.x+this.width/2), (this.y+this.height/2));
-        this.ctx.arc((this.x+this.width/2), (this.y+this.height/2) , this.width*2/3 ,0 , 2*Math.PI);
-        this.ctx.fill();
-        this.ctx.closePath();
-        */
-        //this.ctx.drawImage(this.sprite, this.x, this.y);
-        this.ctx.save();
-        this.ctx.drawImage(
-          this.sprite,
-          this.framePositionArray[this.frameIndex],
-          0,
-          this.frameWidth,
-          this.frameHeight,
-          this.x,
-          this.y,
-          this.width,
-          this.height
-        );
-        this.ctx.restore();
-    }.bind(this);
-}
 
 Ship.prototype.selectSprite = function(type, color) {
     var imgSrc = "./images/sprites/" + type;
@@ -149,6 +110,46 @@ function Player(canvas, x, y, type, color, health, speedX, speedY) {
     this.frameWidth = this.frameIndexArray[this.frameIndex];
     this.width = this.frameWidth * this.scale;
     this.height = this.frameHeight * this.scale;
+}
+
+Player.prototype.draw = function(that) {
+    this.selectSprite(this.type, this.color);
+    this.sprite.onload = function() {
+         // Draw circle
+        /*
+        this.ctx.beginPath();
+        var grd = this.ctx.createRadialGradient((this.x+this.width/2), (this.y+this.height/2), this.width, (this.x+this.width/2), (this.y+this.height/2), this.width/4);
+        if(this.color == "white") {
+            grd.addColorStop(0, "#000");
+            grd.addColorStop(1, "#fff");
+        }
+        else {
+            grd.addColorStop(0, "#fff");
+            grd.addColorStop(1, "#000");
+        }
+        
+        this.ctx.fillStyle = grd;
+        this.ctx.fill();
+        this.ctx.moveTo((this.x+this.width/2), (this.y+this.height/2));
+        this.ctx.arc((this.x+this.width/2), (this.y+this.height/2) , this.width*2/3 ,0 , 2*Math.PI);
+        this.ctx.fill();
+        this.ctx.closePath();
+        */
+        //this.ctx.drawImage(this.sprite, this.x, this.y);
+        this.ctx.save();
+        this.ctx.drawImage(
+          this.sprite,
+          this.framePositionArray[this.frameIndex],
+          0,
+          this.frameWidth,
+          this.frameHeight,
+          this.x,
+          this.y,
+          this.width,
+          this.height
+        );
+        this.ctx.restore();
+    }.bind(this);
 }
 
 Player.prototype.changeColor = function() {
