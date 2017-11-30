@@ -9,7 +9,7 @@ function Ship(canvas, x, y, type, color, health, speedX, speedY) {
     this.speedY = speedY;
     this.rad = 0;
     //this.movementArray = ["straight", "angle", "circle", "sin", "persecution"];
-    this.movementArray = ["straight"];
+    this.movementArray = ["straight", "angle", "circle"];
     this.movement = this.movementArray[Math.floor(Math.random() * this.movementArray.length)];
     this.type = type;
     this.color = color;
@@ -205,7 +205,9 @@ Player.prototype.moveRight = function() {
 }
 
 Player.prototype.shoot = function(that) {
-    that.playersBullets.push(new Bullet(this.canvas, this.x, this.y, "PlasLaser", 0, this.color, this.speedX, this.speedY));
+    if(that.playersBullets.length < that.maxPlayerBullets) {
+        that.playersBullets.push(new Bullet(this.canvas, this.x, this.y, "PlasLaser", 0, this.color, this.speedX, this.speedY));
+    }
 }
 
 Enemy.prototype = Object.create(Ship.prototype);

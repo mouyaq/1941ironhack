@@ -3,9 +3,11 @@ function Game(canvas) {
     this.ctx = this.canvas.getContext('2d');
     this.bg = new Bg(canvas);
     // interval for each enemy in seconds.
-    this.enemyInterval = 5;
+    this.enemyInterval = 1;
     // Maximum number of enemies
     this.maxEnemies = 10;
+    this.maxPlayerBullets = 25;
+    this.maxEnemyBullets = 50
     this.enemiesList = ["enemy1", "enemy2"];
     this.colorList = ["white", "black"];
     this.players = [];
@@ -23,10 +25,10 @@ function Game(canvas) {
     }.bind(this), (Math.floor(Math.random() * this.enemyInterval) + 1) * 1000 );
     setInterval(function(){
         this.enemies.forEach(function(enemy){
-            if(enemy.y > 0) { 
+            if(enemy.y > 0 && this.enemiesBullets.length < this.maxEnemyBullets) { 
                 enemy.shoot(this);
-                // console.log("ENEMIES BULLETS: " + this.enemiesBullets.length);
-                // console.log("PLAYER BULLETS: " + this.playersBullets.length);
+                console.log("ENEMIES BULLETS: " + this.enemiesBullets.length);
+                console.log("PLAYER BULLETS: " + this.playersBullets.length);
             }
         }.bind(this));
     }.bind(this), 1000);
@@ -66,6 +68,7 @@ Game.prototype.draw = function() {
     // this.player2.draw();
 
     window.requestAnimationFrame(this.draw.bind(this));
+    
 }
 
 Game.prototype.onKeyDown = function(event) {

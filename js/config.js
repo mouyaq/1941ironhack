@@ -6,10 +6,10 @@ var P1_DOWN = 40;
 var P1_LEFT = 37;
 // right arrow
 var P1_RIGHT = 39;
-// right command
-var P1_CHANGE_COLOR = 93;
-// option
-var P1_SHOOT = 18;
+// n
+var P1_CHANGE_COLOR = 78;
+// m
+var P1_SHOOT = 77;
 
 var P2_UP = 87;
 var P2_DOWN = 83;
