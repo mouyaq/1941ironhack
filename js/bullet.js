@@ -70,27 +70,36 @@ Bullet.prototype.isOutOfScreen = function() {
     }
 }
 
-Bullet.prototype.checkCollision = function(enemies) {
-    enemies.forEach(function(enemy){
-        var enemyColisionXmin = enemy.x - (1/2 * enemy.width);
-        var enemyColisionXmax = enemy.x + (1/2 * enemy.width);
-        var enemyColisionYmin = enemy.y - (1/2 * enemy.height);
-        var enemyColisionYmax = enemy.y + (1/2 * enemy.height);
+Bullet.prototype.checkCollision = function(ships) {
+    ships.forEach(function(ship){
+        var shipColisionXmin = ship.x - (1/2 * ship.width);
+        var shipColisionXmax = ship.x + (1/2 * ship.width);
+        var shipColisionYmin = ship.y - (1/2 * ship.height);
+        var shipColisionYmax = ship.y + (1/2 * ship.height);
         /*
         enemy.x + 1/4 * enemy.width
         enemy.x + 3/4 * enemy.width
         enemy.y + 1/4 * enemy.height
         enemy.y + 3/4 * enemy.height
         */
-        if ( this.y < enemyColisionYmax && 
-             this.y > enemyColisionYmin && 
-             this.x < enemyColisionXmax &&
-             this.x > enemyColisionXmin &&
-             this.color != enemy.color) {
+        if ( this.y < shipColisionYmax && 
+             this.y > shipColisionYmin && 
+             this.x < shipColisionXmax &&
+             this.x > shipColisionXmin &&
+             this.color != ship.color) {
                 console.log("HIT");
-                enemy.setRemovable();
+                ship.setRemovable();
                 this.setRemovable();
         }
+        if ( this.y < shipColisionYmax && 
+            this.y > shipColisionYmin && 
+            this.x < shipColisionXmax &&
+            this.x > shipColisionXmin &&
+            this.color == ship.color) {
+               console.log("HIT");
+               //enemy.increasePower();
+               this.setRemovable();
+       }
     }.bind(this))
 }
 

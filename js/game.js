@@ -68,10 +68,12 @@ Game.prototype.draw = function() {
     // Draw enemies
     this.enemies.forEach(function(enemy) {
         enemy.isOutOfScreen();
+        enemy.checkCollision(this.players);
         enemy.draw(this);
     }.bind(this))
     // Draw player1
     this.players.forEach(function(player) {
+        player.checkCollision(this.players);
         player.draw(this);
     }.bind(this))
     

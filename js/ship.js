@@ -249,6 +249,39 @@ Player.prototype.shoot = function(that) {
     }
 }
 
+Player.prototype.checkCollision = function(ships) {
+    ships.forEach(function(ship){
+        var shipColisionXmin = ship.x - (1/2 * ship.width);
+        var shipColisionXmax = ship.x + (1/2 * ship.width);
+        var shipColisionYmin = ship.y - (1/2 * ship.height);
+        var shipColisionYmax = ship.y + (1/2 * ship.height);
+        /*
+        enemy.x + 1/4 * enemy.width
+        enemy.x + 3/4 * enemy.width
+        enemy.y + 1/4 * enemy.height
+        enemy.y + 3/4 * enemy.height
+        */
+        if ( this.y < shipColisionYmax && 
+             this.y > shipColisionYmin && 
+             this.x < shipColisionXmax &&
+             this.x > shipColisionXmin &&
+             this.color != ship.color) {
+                console.log("HIT");
+                ship.setRemovable();
+                this.setRemovable();
+        }
+        if ( this.y < shipColisionYmax && 
+            this.y > shipColisionYmin && 
+            this.x < shipColisionXmax &&
+            this.x > shipColisionXmin &&
+            this.color == ship.color) {
+               console.log("HIT");
+            //    ship.increasePower();
+               this.setRemovable();
+       }
+    }.bind(this))
+}
+
 Enemy.prototype = Object.create(Ship.prototype);
 
 function Enemy(canvas, x, y, type, color, health, speedX, speedY, player) {
@@ -317,4 +350,41 @@ Enemy.prototype.getPlayerPosition = function(player) {
 
 Enemy.prototype.shoot = function(that) {
     that.enemiesBullets.push(new Bullet(this.canvas, this.x, this.y, "PlasLaser", 0, this.color, -this.speedX*2, -this.speedY*2));
+}
+
+Enemy.prototype.checkCollision = function(ships) {
+    ships.forEach(function(ship){
+        var shipColisionXmin = ship.x - (1/2 * ship.width);
+        var shipColisionXmax = ship.x + (1/2 * ship.width);
+        var shipColisionYmin = ship.y - (1/2 * ship.height);
+        var shipColisionYmax = ship.y + (1/2 * ship.height);
+        /*
+        enemy.x + 1/4 * enemy.width
+        enemy.x + 3/4 * enemy.width
+        enemy.y + 1/4 * enemy.height
+        enemy.y + 3/4 * enemy.height
+        */
+        if ( this.y < shipColisionYmax && 
+             this.y > shipColisionYmin && 
+             this.x < shipColisionXmax &&
+             this.x > shipColisionXmin &&
+             this.color != ship.color) {
+                console.log("HIT");
+                ship.setRemovable();
+                this.setRemovable();
+        }
+        if ( this.y < shipColisionYmax && 
+            this.y > shipColisionYmin && 
+            this.x < shipColisionXmax &&
+            this.x > shipColisionXmin &&
+            this.color == ship.color) {
+               console.log("HIT");
+               ship.setRemovable();
+               this.setRemovable();
+       }
+    }.bind(this))
+}
+
+Bullet.prototype.setRemovable = function() {
+    this.removable = true;
 }
