@@ -13,7 +13,8 @@ function Game(canvas) {
     this.players = [];
     this.player1 = new Player(canvas, this.canvas.width / 4, this.canvas.height - 100, "player1", this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, 10, 5);
     this.players.push(this.player1);
-    // this.player2 = new Player(canvas, 615, 700, "player1", "white", 100, 10, 10);
+    // this.player2 = new Player(canvas, this.canvas.width * 3/4, this.canvas.height - 100, "player1", this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, 10, 5);
+    // this.players.push(this.player2);
     this.playersBullets = [];
     this.enemies = [];
     this.enemiesBullets = [];
@@ -33,9 +34,19 @@ function Game(canvas) {
         }.bind(this));
     }.bind(this), 1000);
     this.keysList = [];
-    document.onkeydown = this.onKeyDown.bind(this);
-    document.onkeyup = this.onKeyUp.bind(this);
+    // document.onkeydown = this.onKeyDown.bind(this);
+    // document.onkeyup = this.onKeyUp.bind(this);
+    window.addEventListener('keydown', function (e) {
+        this.keys = (this.keys || []);
+        this.keys[e.keyCode] = true;
+        this.player1.move(this);
+    }.bind(this))
+    window.addEventListener('keyup', function (e) {
+        this.keys[e.keyCode] = false; 
+        this.player1.resetMove();
+    }.bind(this))
 }
+
 
 Game.prototype.draw = function() {
     // check collisions
@@ -65,34 +76,34 @@ Game.prototype.draw = function() {
     }.bind(this))
     
     // Draw player2
-    // this.player2.draw();
+    //this.player2.draw();
 
     window.requestAnimationFrame(this.draw.bind(this));
-    
 }
 
+/*
 Game.prototype.onKeyDown = function(event) {
     this.keysList.push(event.keyCode);
     for(i=0; i < this.keysList.length; i++) {
         switch(this.keysList[i]) {
             case P1_UP:
                 this.player1.moveUp();
-                break;
+                continue;
             case P1_DOWN:
                 this.player1.moveDown();
-                break;
+                continue;
             case P1_LEFT:
                 this.player1.moveLeft();
-                break;
+                continue;
             case P1_RIGHT:
                 this.player1.moveRight();
-                break;
+                continue;
             case P1_CHANGE_COLOR:
                 this.player1.changeColor();
-                break;
+                continue;
             case P1_SHOOT:
                 this.player1.shoot(this);
-                break;
+                continue;
             // case P2_UP:
             //     this.player2.moveUp();
             //     break;
@@ -112,6 +123,7 @@ Game.prototype.onKeyDown = function(event) {
     }
 }
 
+
 Game.prototype.onKeyUp = function(event) {
     this.keysList = [];
     this.player1.frameIndex = 0;
@@ -129,3 +141,4 @@ Game.prototype.checkCollision = function(players, enemies, bullets) {
     // Between players != color
 
 }
+*/

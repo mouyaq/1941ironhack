@@ -136,6 +136,32 @@ Player.prototype.draw = function(that) {
         this.ctx.closePath();
         */
         //this.ctx.drawImage(this.sprite, this.x, this.y);
+        if (that.keys && that.keys[P1_UP]) { 
+            this.moveUp();
+            this.resetMove(); 
+        }
+        if (that.keys && that.keys[P1_DOWN]) { 
+            this.moveDown();
+            this.resetMove();
+         }
+        if (that.keys && that.keys[P1_LEFT]) { this.moveLeft(); }
+        if (that.keys && that.keys[P1_RIGHT]) { this.moveRight(); }
+        //if ( !(that.keys[P1_LEFT] && that.keys[P1_RIGHT]) ) { this.resetMove(); }
+        // if (! that.keys[P1_RIGHT] && ! that.keys[P1_RIGHT]) {
+        //     this.resetMove();
+        // }
+        // if (that.keys && that.keys[P1_LEFT]) {
+        //     this.moveLeft();
+        // }
+        // else {
+        //     this.resetMove();
+        // } 
+        // if (that.keys && that.keys[P1_RIGHT]) {
+        //     this.moveRight();
+        // }
+        // else {
+        //     this.resetMove();
+        // }
         this.ctx.save();
         this.ctx.drawImage(
           this.sprite,
@@ -150,6 +176,11 @@ Player.prototype.draw = function(that) {
         );
         this.ctx.restore();
     }.bind(this);
+}
+
+Player.prototype.move = function(that) {
+    if (that.keys && that.keys[P1_CHANGE_COLOR]) { this.changeColor() }
+    if (that.keys && that.keys[P1_SHOOT]) { this.shoot(that) }
 }
 
 Player.prototype.changeColor = function() {
@@ -186,7 +217,7 @@ Player.prototype.moveLeft = function() {
         if(this.frameIndex <= 3) {
             this.frameIndex = 4;
         }
-        this.draw();
+        //this.draw();
         this.x -= this.speedX;
     }
 }
@@ -199,9 +230,17 @@ Player.prototype.moveRight = function() {
         if(this.frameIndex < 3) {
             this.frameIndex += 1;
         }
-        this.draw();
+        else {
+            this.frameIndex -= 1;
+        }
+        //this.draw();
         this.x += this.speedX;
     }
+}
+
+Player.prototype.resetMove = function() {
+    this.frameIndex = 0;
+    // this.player2.frameIndex = 0;
 }
 
 Player.prototype.shoot = function(that) {

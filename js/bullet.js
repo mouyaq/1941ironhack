@@ -89,6 +89,7 @@ Bullet.prototype.checkCollision = function(enemies) {
              this.color != enemy.color) {
                 console.log("HIT");
                 enemy.setRemovable();
+                this.setRemovable();
         }
     }.bind(this))
 }
