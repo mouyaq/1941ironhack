@@ -28,7 +28,6 @@ Bullet.prototype.draw = function(bullets) {
     if(this.removable) {
         var index = bullets.indexOf(this);
         bullets.splice(index, 1);
-        //console.log("REMOVE BULLET");
     }
     else {
         this.selectSprite(this.type, this.color);
@@ -87,7 +86,6 @@ Bullet.prototype.checkCollision = function(ships) {
              this.x < shipColisionXmax &&
              this.x > shipColisionXmin &&
              this.color != ship.color) {
-                console.log("HIT");
                 ship.setRemovable();
                 this.setRemovable();
         }
@@ -96,7 +94,6 @@ Bullet.prototype.checkCollision = function(ships) {
             this.x < shipColisionXmax &&
             this.x > shipColisionXmin &&
             this.color == ship.color) {
-               console.log("HIT");
                //enemy.increasePower();
                this.setRemovable();
        }

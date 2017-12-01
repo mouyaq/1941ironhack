@@ -13,8 +13,8 @@ function Game(canvas) {
     this.players = [];
     this.player1 = new Player(canvas, this.canvas.width / 4, this.canvas.height - 100, "player1", this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, 10, 5);
     this.players.push(this.player1);
-    // this.player2 = new Player(canvas, this.canvas.width * 3/4, this.canvas.height - 100, "player1", this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, 10, 5);
-    // this.players.push(this.player2);
+    //this.player2 = new Player(canvas, this.canvas.width * 3/4, this.canvas.height - 100, "player1", this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, 10, 5);
+    //this.players.push(this.player2);
     this.playersBullets = [];
     this.enemies = [];
     this.enemiesBullets = [];
@@ -82,65 +82,3 @@ Game.prototype.draw = function() {
 
     window.requestAnimationFrame(this.draw.bind(this));
 }
-
-/*
-Game.prototype.onKeyDown = function(event) {
-    this.keysList.push(event.keyCode);
-    for(i=0; i < this.keysList.length; i++) {
-        switch(this.keysList[i]) {
-            case P1_UP:
-                this.player1.moveUp();
-                continue;
-            case P1_DOWN:
-                this.player1.moveDown();
-                continue;
-            case P1_LEFT:
-                this.player1.moveLeft();
-                continue;
-            case P1_RIGHT:
-                this.player1.moveRight();
-                continue;
-            case P1_CHANGE_COLOR:
-                this.player1.changeColor();
-                continue;
-            case P1_SHOOT:
-                this.player1.shoot(this);
-                continue;
-            // case P2_UP:
-            //     this.player2.moveUp();
-            //     break;
-            // case P2_DOWN:
-            //     this.player2.moveDown();
-            //     break;
-            // case P2_LEFT:
-            //     this.player2.moveLeft();
-            //     break;
-            // case P2_RIGHT:
-            //     this.player2.moveRight();
-            //     break;
-            // case P2_CHANGE_COLOR:
-            //     this.player2.changeColor();
-            //     break;
-        }
-    }
-}
-
-
-Game.prototype.onKeyUp = function(event) {
-    this.keysList = [];
-    this.player1.frameIndex = 0;
-    // this.player2.frameIndex = 0;
-}
-
-Game.prototype.checkCollision = function(players, enemies, bullets) {
-    // Possible collisions:
-    // Player with enemy
-    players.forEarch(function(player){
-
-    })
-    // Player with enemy bullet
-    // Enemy with player bullet
-    // Between players != color
-
-}
-*/

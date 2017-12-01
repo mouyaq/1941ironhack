@@ -146,22 +146,6 @@ Player.prototype.draw = function(that) {
          }
         if (that.keys && that.keys[P1_LEFT]) { this.moveLeft(); }
         if (that.keys && that.keys[P1_RIGHT]) { this.moveRight(); }
-        //if ( !(that.keys[P1_LEFT] && that.keys[P1_RIGHT]) ) { this.resetMove(); }
-        // if (! that.keys[P1_RIGHT] && ! that.keys[P1_RIGHT]) {
-        //     this.resetMove();
-        // }
-        // if (that.keys && that.keys[P1_LEFT]) {
-        //     this.moveLeft();
-        // }
-        // else {
-        //     this.resetMove();
-        // } 
-        // if (that.keys && that.keys[P1_RIGHT]) {
-        //     this.moveRight();
-        // }
-        // else {
-        //     this.resetMove();
-        // }
         this.ctx.save();
         this.ctx.drawImage(
           this.sprite,
@@ -266,7 +250,6 @@ Player.prototype.checkCollision = function(ships) {
              this.x < shipColisionXmax &&
              this.x > shipColisionXmin &&
              this.color != ship.color) {
-                console.log("HIT");
                 ship.setRemovable();
                 this.setRemovable();
         }
@@ -275,7 +258,6 @@ Player.prototype.checkCollision = function(ships) {
             this.x < shipColisionXmax &&
             this.x > shipColisionXmin &&
             this.color == ship.color) {
-               console.log("HIT");
             //    ship.increasePower();
                this.setRemovable();
        }
@@ -369,7 +351,6 @@ Enemy.prototype.checkCollision = function(ships) {
              this.x < shipColisionXmax &&
              this.x > shipColisionXmin &&
              this.color != ship.color) {
-                console.log("HIT");
                 ship.setRemovable();
                 this.setRemovable();
         }
@@ -378,7 +359,6 @@ Enemy.prototype.checkCollision = function(ships) {
             this.x < shipColisionXmax &&
             this.x > shipColisionXmin &&
             this.color == ship.color) {
-               console.log("HIT");
                ship.setRemovable();
                this.setRemovable();
        }
