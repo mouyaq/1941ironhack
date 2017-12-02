@@ -8,7 +8,7 @@ function Bg(canvas) {
 
 Bg.prototype.draw = function() {
     this.sprite = new Image();
-    this.sprite.src = "./images/bg/bg8.jpg";
+    this.sprite.src = "./images/bg/bg11.png";
     this.width = this.sprite.width;
     this.height = this.sprite.height;
     this.sprite.onload = function() {

@@ -1,9 +1,25 @@
 body {
-    text-align: center;
+    /*text-align: center;*/
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 #game {
     border: 5px solid red;
+    height: 600px;
+}
+
+#game-board {
+    text-align: center;
+}
+
+#header {
+    height: 50px;
+}
+
+.help {
+    /*border: 1px solid red;*/
 }
 
 #start-button {
@@ -18,5 +34,5 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     */
-    font-size: 3em;
+    font-size: 2em;
 }
