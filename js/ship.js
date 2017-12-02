@@ -3,7 +3,6 @@ function Ship(canvas, x, y, type, color, health, speedX, speedY) {
     this.ctx = this.canvas.getContext("2d");
     this.x = x;
     this.y = y;
-    this.x < this.canvas.width - this.x ? this.radius = this.x/8 : this.radius = (this.canvas.width - this.x)/8;
     this.health = health;
     this.speedX = speedX;
     this.speedY = speedY;
@@ -15,10 +14,8 @@ function Ship(canvas, x, y, type, color, health, speedX, speedY) {
     this.color = color;
     this.sprite = new Image();
     this.selectSprite(this.type, this.color);
-    this.removable = false;
     this.destroyed = false;
-    this.i = 0;
-    this.j = 0;
+    this.removable = false;
 }
 
 
@@ -57,13 +54,7 @@ Ship.prototype.getRandomSize = function(min, max) {
 Ship.prototype.move = function(movement) {
     switch(movement) {
         case "straight":
-            if(this.y > this.canvas.height) {
-                //this.ctx.clearRect(this.x, this.y, this.width, this.height);
-            }
-            else {
-                this.y += this.speedY;
-            }
-            
+            this.y += this.speedY;
             break;
         case "angle":
             while(this.y + this.height < 0){
@@ -106,13 +97,14 @@ Ship.prototype.setDestroyed = function() {
 }
 
 Ship.prototype.blowUp = function() {
-    this.selectSprite("blowup", this.color);
+    this.type = "blowup";
+    this.selectSprite(this.type, this.color);
     this.ctx.save();
     // sprite explosion is 4x3 and 360x480px
         this.ctx.drawImage(
             this.sprite,
-            this.i * 120,
-            this.j * 120,
+            120,
+            120,
             120,
             120,
             this.x,
@@ -120,8 +112,6 @@ Ship.prototype.blowUp = function() {
             this.width,
             this.height
         );
-        this.i += 1;
-        this.j += 1;
     this.ctx.restore();
 }
 
@@ -264,8 +254,8 @@ Player.prototype.checkCollision = function(ships) {
              this.x < shipColisionXmax &&
              this.x > shipColisionXmin &&
              this.color != ship.color) {
-                ship.setRemovable();
-                this.setRemovable();
+                ship.setDestroyed();
+                this.setDestroyed();
         }
         if ( this.y < shipColisionYmax && 
             this.y > shipColisionYmin && 
@@ -273,7 +263,7 @@ Player.prototype.checkCollision = function(ships) {
             this.x > shipColisionXmin &&
             this.color == ship.color) {
             //    ship.increasePower();
-               this.setRemovable();
+               this.setDestroyed();
        }
     }.bind(this))
 }
@@ -315,17 +305,19 @@ Enemy.prototype.changeColor = function() {
 }
 
 Enemy.prototype.draw = function(that) {
-    if(this.removable) {
+    if(this.destroyed) {
         //window.requestAnimationFrame(this.blowUp.bind(this));
-        
-        this.timer = setInterval(this.blowUp.bind(this), 1000/60);
-        console.log("TIMER: " + this.timer);
-        //clearInterval(timer);
+        this.blowUp();
+        setTimeout(this.setRemovable.bind(this), 250);
+        //console.log("TIMER: " + this.timer);
+        //setTimeout(this.setDestroyed(), 2000);
+        //clearInterval(this.timer);
         //this.blowUp();
+        //console.log("REMOVE ENEMY");
+    }
+    if(this.removable) {
         var index = that.enemies.indexOf(this);
         that.enemies.splice(index, 1);
-        
-        //console.log("REMOVE ENEMY");
     }
     this.selectSprite(this.type, this.color);
     this.sprite.onload = function() {
@@ -372,20 +364,16 @@ Enemy.prototype.checkCollision = function(ships) {
              this.x < shipColisionXmax &&
              this.x > shipColisionXmin &&
              this.color != ship.color) {
-                ship.setRemovable();
-                this.setRemovable();
+                ship.setDestroyed();
+                this.setDestroyed();
         }
         if ( this.y < shipColisionYmax && 
             this.y > shipColisionYmin && 
             this.x < shipColisionXmax &&
             this.x > shipColisionXmin &&
             this.color == ship.color) {
-               ship.setRemovable();
-               this.setRemovable();
+               ship.setDestroyed();
+               this.setDestroyed();
        }
     }.bind(this))
-}
-
-Enemy.prototype.setRemovable = function() {
-    this.removable = true;
 }

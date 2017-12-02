@@ -86,7 +86,7 @@ Bullet.prototype.checkCollision = function(ships) {
              this.x < shipColisionXmax &&
              this.x > shipColisionXmin &&
              this.color != ship.color) {
-                ship.setRemovable();
+                ship.setDestroyed();
                 this.setRemovable();
         }
         if ( this.y < shipColisionYmax && 

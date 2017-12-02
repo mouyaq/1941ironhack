@@ -21,15 +21,15 @@ function Game(canvas) {
     setInterval(function(){
         if(this.enemies.length < this.maxEnemies) { 
             this.enemies.push(new Enemy(this.canvas, Math.floor(Math.random()*700), Math.floor(Math.random()*-500)-200, this.enemiesList[Math.floor(Math.random() * this.enemiesList.length)], this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, 1, 1, this.player1));
-            console.log("NUMERO DE ENEMIGOS: " + this.enemies.length);
+            // console.log("NUMERO DE ENEMIGOS: " + this.enemies.length);
         }
     }.bind(this), (Math.floor(Math.random() * this.enemyInterval) + 1) * 1000 );
     setInterval(function(){
         this.enemies.forEach(function(enemy){
             if(enemy.y > 0 && this.enemiesBullets.length < this.maxEnemyBullets) { 
                 enemy.shoot(this);
-                console.log("ENEMIES BULLETS: " + this.enemiesBullets.length);
-                console.log("PLAYER BULLETS: " + this.playersBullets.length);
+                // console.log("ENEMIES BULLETS: " + this.enemiesBullets.length);
+                // console.log("PLAYER BULLETS: " + this.playersBullets.length);
             }
         }.bind(this));
     }.bind(this), 1000);
