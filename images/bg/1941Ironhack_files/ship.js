@@ -16,9 +16,6 @@ function Ship(canvas, x, y, type, color, health, speedX, speedY) {
     this.sprite = new Image();
     this.selectSprite(this.type, this.color);
     this.removable = false;
-    this.destroyed = false;
-    this.i = 0;
-    this.j = 0;
 }
 
 
@@ -101,27 +98,27 @@ Ship.prototype.setRemovable = function() {
     this.removable = true;
 }
 
-Ship.prototype.setDestroyed = function() {
-    this.destroyed = true;
-}
-
 Ship.prototype.blowUp = function() {
     this.selectSprite("blowup", this.color);
+    console.log(this.sprite.src);
     this.ctx.save();
     // sprite explosion is 4x3 and 360x480px
-        this.ctx.drawImage(
-            this.sprite,
-            this.i * 120,
-            this.j * 120,
-            120,
-            120,
-            this.x,
-            this.y,
-            this.width,
-            this.height
-        );
-        this.i += 1;
-        this.j += 1;
+    for(var i = 0; i < 3; i++) {
+        for(var j = 0; j < 4; j++) {
+            this.ctx.drawImage(
+                this.sprite,
+                i * 120,
+                j * 120,
+                120,
+                120,
+                this.x,
+                this.y,
+                this.width,
+                this.height
+            );
+        }
+    }
+    
     this.ctx.restore();
 }
 
@@ -150,6 +147,27 @@ Player.prototype.draw = function(that) {
     }
     this.selectSprite(this.type, this.color);
     this.sprite.onload = function() {
+         // Draw circle
+        /*
+        this.ctx.beginPath();
+        var grd = this.ctx.createRadialGradient((this.x+this.width/2), (this.y+this.height/2), this.width, (this.x+this.width/2), (this.y+this.height/2), this.width/4);
+        if(this.color == "white") {
+            grd.addColorStop(0, "#000");
+            grd.addColorStop(1, "#fff");
+        }
+        else {
+            grd.addColorStop(0, "#fff");
+            grd.addColorStop(1, "#000");
+        }
+        
+        this.ctx.fillStyle = grd;
+        this.ctx.fill();
+        this.ctx.moveTo((this.x+this.width/2), (this.y+this.height/2));
+        this.ctx.arc((this.x+this.width/2), (this.y+this.height/2) , this.width*2/3 ,0 , 2*Math.PI);
+        this.ctx.fill();
+        this.ctx.closePath();
+        */
+        //this.ctx.drawImage(this.sprite, this.x, this.y);
         if (that.keys && that.keys[P1_UP]) { 
             this.moveUp();
             this.resetMove(); 
@@ -316,15 +334,9 @@ Enemy.prototype.changeColor = function() {
 
 Enemy.prototype.draw = function(that) {
     if(this.removable) {
-        //window.requestAnimationFrame(this.blowUp.bind(this));
-        
-        this.timer = setInterval(this.blowUp.bind(this), 1000/60);
-        console.log("TIMER: " + this.timer);
-        //clearInterval(timer);
-        //this.blowUp();
         var index = that.enemies.indexOf(this);
         that.enemies.splice(index, 1);
-        
+        this.blowUp();
         //console.log("REMOVE ENEMY");
     }
     this.selectSprite(this.type, this.color);
