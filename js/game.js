@@ -11,8 +11,10 @@ function Game(canvas) {
     this.enemiesList = ["enemy1", "enemy2"];
     this.colorList = ["white", "black"];
     this.players = [];
-    this.player1 = new Player(canvas, this.canvas.width / 4, this.canvas.height, "player1", this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, 10, 5);
+    this.player1 = new Player(this.canvas, this.canvas.width / 4, this.canvas.height, "player1", this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, 10, 5);
     this.players.push(this.player1);
+    this.player2 = new Player(this.canvas, this.canvas.width * 3 / 4, this.canvas.height, "player2", this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, 10, 5);
+    this.players.push(this.player2);
     //this.player2 = new Player(canvas, this.canvas.width * 3/4, this.canvas.height - 100, "player1", this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, 10, 5);
     //this.players.push(this.player2);
     this.playersBullets = [];
@@ -37,13 +39,26 @@ function Game(canvas) {
     // document.onkeydown = this.onKeyDown.bind(this);
     // document.onkeyup = this.onKeyUp.bind(this);
     window.addEventListener('keydown', function (e) {
-        this.keys = (this.keys || []);
-        this.keys[e.keyCode] = true;
-        this.player1.move(this);
+        if(e.keyCode == P1_UP || e.keyCode == P1_DOWN || e.keyCode == P1_LEFT || e.keyCode == P1_RIGHT || e.keyCode == P1_CHANGE_COLOR || e.keyCode == P1_SHOOT) {
+            this.player1.keys = (this.player1.keys || []);
+            this.player1.keys[e.keyCode] = true;
+            this.player1.move(this);
+        }
+        if(e.keyCode == P2_UP || e.keyCode == P2_DOWN || e.keyCode == P2_LEFT || e.keyCode == P2_RIGHT || e.keyCode == P2_CHANGE_COLOR || e.keyCode == P2_SHOOT) {
+            this.player2.keys = (this.player2.keys || []);
+            this.player2.keys[e.keyCode] = true;
+            this.player2.move(this);
+        }
     }.bind(this))
     window.addEventListener('keyup', function (e) {
-        this.keys[e.keyCode] = false; 
-        this.player1.resetMove();
+        if(e.keyCode == P1_UP || e.keyCode == P1_DOWN || e.keyCode == P1_LEFT || e.keyCode == P1_RIGHT || e.keyCode == P1_CHANGE_COLOR || e.keyCode == P1_SHOOT) {
+            this.player1.keys[e.keyCode] = false; 
+            this.player1.resetMove();
+        }
+        if(e.keyCode == P2_UP || e.keyCode == P2_DOWN || e.keyCode == P2_LEFT || e.keyCode == P2_RIGHT || e.keyCode == P2_CHANGE_COLOR || e.keyCode == P2_SHOOT) {
+            this.player2.keys[e.keyCode] = false;
+            this.player2.resetMove();
+        }
     }.bind(this))
 }
 

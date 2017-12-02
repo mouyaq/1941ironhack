@@ -23,16 +23,28 @@ Player.prototype.draw = function(that) {
     }
     this.selectSprite(this.type, this.color);
     this.sprite.onload = function() {
-        if (that.keys && that.keys[P1_UP]) { 
+        if (this.keys && this.keys[P1_UP]) { 
             this.moveUp();
             this.resetMove(); 
         }
-        if (that.keys && that.keys[P1_DOWN]) { 
+        if (this.keys && this.keys[P1_DOWN]) { 
             this.moveDown();
             this.resetMove();
          }
-        if (that.keys && that.keys[P1_LEFT]) { this.moveLeft(); }
-        if (that.keys && that.keys[P1_RIGHT]) { this.moveRight(); }
+        if (this.keys && this.keys[P1_LEFT]) { this.moveLeft(); }
+        if (this.keys && this.keys[P1_RIGHT]) { this.moveRight(); }
+        
+        if (this.keys && this.keys[P2_UP]) { 
+            this.moveUp();
+            this.resetMove(); 
+        }
+        if (this.keys && this.keys[P2_DOWN]) { 
+            this.moveDown();
+            this.resetMove();
+         }
+        if (this.keys && this.keys[P2_LEFT]) { this.moveLeft(); }
+        if (this.keys && this.keys[P2_RIGHT]) { this.moveRight(); }
+
         this.ctx.save();
         this.ctx.drawImage(
           this.sprite,
@@ -50,8 +62,10 @@ Player.prototype.draw = function(that) {
 }
 
 Player.prototype.move = function(that) {
-    if (that.keys && that.keys[P1_CHANGE_COLOR]) { this.changeColor() }
-    if (that.keys && that.keys[P1_SHOOT]) { this.shoot(that) }
+    if (this.keys && this.keys[P1_CHANGE_COLOR]) { this.changeColor() }
+    if (this.keys && this.keys[P1_SHOOT]) { this.shoot(that) }
+    if (this.keys && this.keys[P2_CHANGE_COLOR]) { this.changeColor() }
+    if (this.keys && this.keys[P2_SHOOT]) { this.shoot(that) }
 }
 
 Player.prototype.changeColor = function() {
