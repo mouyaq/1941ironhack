@@ -2,12 +2,10 @@ function Game(canvas) {
     this.canvas = canvas;
     this.ctx = this.canvas.getContext('2d');
     this.bg = new Bg(canvas);
-    // interval for each enemy in seconds.
-    this.enemyInterval = 1;
-    // Maximum number of enemies
-    this.maxEnemies = 10;
-    this.maxPlayerBullets = 25;
-    this.maxEnemyBullets = 50
+    this.setDificult("tutorial");
+    setTimeout(function(){
+        this.setDificult("easy");
+    }.bind(this), 22000);
     this.enemiesList = ["enemy1", "enemy2"];
     this.colorList = ["white", "black"];
     this.players = [];
@@ -20,7 +18,7 @@ function Game(canvas) {
     this.enemiesBullets = [];
     setInterval(function(){
         if(this.enemies.length < this.maxEnemies) { 
-            this.enemies.push(new Enemy(this.canvas, Math.floor(Math.random()*700), Math.floor(Math.random()*-500)-200, this.enemiesList[Math.floor(Math.random() * this.enemiesList.length)], this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, 1, 1, this.player1));
+            this.enemies.push(new Enemy(this.canvas, Math.floor(Math.random()*700), Math.floor(Math.random()*-500)-200, this.enemiesList[Math.floor(Math.random() * this.enemiesList.length)], this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, this.enemySpeedX, this.enemySpeedY, this.player1));
             // console.log("NUMERO DE ENEMIGOS: " + this.enemies.length);
         }
     }.bind(this), (Math.floor(Math.random() * this.enemyInterval) + 1) * 1000 );
@@ -99,18 +97,31 @@ Game.prototype.draw = function() {
 
 Game.prototype.setDificult = function(dificult) {
     switch(dificult) {
-        case tutorial:
+        case "tutorial":
             // interval for each enemy in seconds.
             this.enemyInterval = 5;
             // Maximum number of enemies
             this.maxEnemies = 1;
             this.maxPlayerBullets = 25;
             this.maxEnemyBullets = 1
+            this.enemySpeedX = 0.5;
+            this.enemySpeedY = 0.5;
+            console.log("SET DIFICULT TO TUTORIAL");
             break;
-        case easy:
-        case medium:
-        case hard:
-        case inferno:
+        case "easy":
+            // interval for each enemy in seconds.
+            this.enemyInterval = 1;
+            // Maximum number of enemies
+            this.maxEnemies = 10;
+            this.maxPlayerBullets = 25;
+            this.maxEnemyBullets = 15
+            this.enemySpeedX = 2;
+            this.enemySpeedY = 2;
+            console.log("SET DIFICULT TO EASY");
+            break;
+        case "medium":
+        case "hard":
+        case "inferno":
         default:
     }
 
