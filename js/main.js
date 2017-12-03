@@ -7,7 +7,6 @@ window.onload = function() {
 
 function startGame() {
     var canvas = document.getElementById("game");
-    var game = new Game(canvas);
     window.addEventListener('resize', resizeCanvas, false);
     function resizeCanvas() {
         canvas.width = window.innerWidth;
@@ -15,6 +14,15 @@ function startGame() {
         
     }
     resizeCanvas();
+    var game = new Game(canvas);
+    var audio = new Audio("./sounds/ik1.mp3");
     game.draw();
+    audio.play();
+    
+    /* Option with set interval
+    setInterval(function(){
+        game.draw()
+    }, 1000/60);
+    */
     
 }

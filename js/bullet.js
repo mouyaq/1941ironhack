@@ -9,7 +9,6 @@ function Bullet(canvas, x, y, type, index, color, speedX, speedY) {
     this.speedY = speedY;
     this.sprite = new Image();
     this.selectSprite(this.type, this.color);
-    this.scale = 1;
     this.damage = [1, 2];
     this.frameWidthArray = [85, 85, 85];
     this.frameHeightArray = [85, 195, 250];
@@ -19,8 +18,8 @@ function Bullet(canvas, x, y, type, index, color, speedX, speedY) {
     this.frameIndex = index ;
     this.frameWidth = this.frameWidthArray[this.frameIndex];
     this.frameHeight = this.frameHeightArray[this.frameIndex];
-    this.width = this.frameWidth * this.scale;
-    this.height = this.frameHeight * this.scale;
+    this.width = this.frameWidth;
+    this.height = this.frameHeight;
     this.removable = false;
 }
 
@@ -39,7 +38,7 @@ Bullet.prototype.draw = function(bullets) {
               this.framePositionY[this.frameIndex],
               this.frameWidth,
               this.frameHeight,
-              this.x,
+              this.x-this.width/2,
               this.y,
               this.width,
               this.height
@@ -71,10 +70,16 @@ Bullet.prototype.isOutOfScreen = function() {
 
 Bullet.prototype.checkCollision = function(ships) {
     ships.forEach(function(ship){
+        /*
         var shipColisionXmin = ship.x - (1/2 * ship.width);
         var shipColisionXmax = ship.x + (1/2 * ship.width);
         var shipColisionYmin = ship.y - (1/2 * ship.height);
         var shipColisionYmax = ship.y + (1/2 * ship.height);
+        */
+        var shipColisionXmin = ship.x;
+        var shipColisionXmax = ship.x + ship.width;
+        var shipColisionYmin = ship.y;
+        var shipColisionYmax = ship.y + ship.height;
         /*
         enemy.x + 1/4 * enemy.width
         enemy.x + 3/4 * enemy.width
@@ -86,6 +91,7 @@ Bullet.prototype.checkCollision = function(ships) {
              this.x < shipColisionXmax &&
              this.x > shipColisionXmin &&
              this.color != ship.color) {
+                //console.log("HIT DIFERENT COLOR");
                 ship.setDestroyed();
                 this.setRemovable();
         }
@@ -94,8 +100,9 @@ Bullet.prototype.checkCollision = function(ships) {
             this.x < shipColisionXmax &&
             this.x > shipColisionXmin &&
             this.color == ship.color) {
-               //enemy.increasePower();
-               this.setRemovable();
+                //console.log("HIT SAME COLOR");
+                ship.increaseSuperShot();
+                this.setRemovable();
        }
     }.bind(this))
 }

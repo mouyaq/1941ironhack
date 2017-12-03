@@ -11,12 +11,10 @@ function Game(canvas) {
     this.enemiesList = ["enemy1", "enemy2"];
     this.colorList = ["white", "black"];
     this.players = [];
-    this.player1 = new Player(this.canvas, this.canvas.width / 4, this.canvas.height, "player1", this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, 10, 5);
+    this.player1 = new Player(this.canvas, this.canvas.width / 4, this.canvas.height - 100, "player1", this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, 10, 5);
     this.players.push(this.player1);
-    this.player2 = new Player(this.canvas, this.canvas.width * 3 / 4, this.canvas.height, "player2", this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, 10, 5);
-    this.players.push(this.player2);
-    //this.player2 = new Player(canvas, this.canvas.width * 3/4, this.canvas.height - 100, "player1", this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, 10, 5);
-    //this.players.push(this.player2);
+    // this.player2 = new Player(this.canvas, this.canvas.width * 3 / 4, this.canvas.height - 100, "player2", this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, 10, 5);
+    // this.players.push(this.player2);
     this.playersBullets = [];
     this.enemies = [];
     this.enemiesBullets = [];
@@ -34,7 +32,7 @@ function Game(canvas) {
                 // console.log("PLAYER BULLETS: " + this.playersBullets.length);
             }
         }.bind(this));
-    }.bind(this), 1000);
+    }.bind(this), 2000);
     this.keysList = [];
     // document.onkeydown = this.onKeyDown.bind(this);
     // document.onkeyup = this.onKeyUp.bind(this);
@@ -80,6 +78,7 @@ Game.prototype.draw = function() {
         bullet.checkCollision(this.players);
         bullet.draw(this.enemiesBullets);
     }.bind(this))
+
     // Draw enemies
     this.enemies.forEach(function(enemy) {
         enemy.isOutOfScreen();
@@ -88,7 +87,7 @@ Game.prototype.draw = function() {
     }.bind(this))
     // Draw player1
     this.players.forEach(function(player) {
-        //player.checkCollision(this.players);
+        player.checkCollision(this.enemies);
         player.draw(this);
     }.bind(this))
     
@@ -96,4 +95,23 @@ Game.prototype.draw = function() {
     //this.player2.draw();
 
     window.requestAnimationFrame(this.draw.bind(this));
+}
+
+Game.prototype.setDificult = function(dificult) {
+    switch(dificult) {
+        case tutorial:
+            // interval for each enemy in seconds.
+            this.enemyInterval = 5;
+            // Maximum number of enemies
+            this.maxEnemies = 1;
+            this.maxPlayerBullets = 25;
+            this.maxEnemyBullets = 1
+            break;
+        case easy:
+        case medium:
+        case hard:
+        case inferno:
+        default:
+    }
+
 }

@@ -51,6 +51,12 @@ Enemy.prototype.draw = function(that) {
     }
     this.selectSprite(this.type, this.color);
     this.sprite.onload = function() {
+
+        this.ctx.save()
+        this.ctx.clearRect(this.x,this.y,this.width,this.height);
+        this.ctx.fillRect(this.x,this.y,this.width,this.height);
+        this.ctx.restore();
+
         this.ctx.save();
         this.ctx.drawImage(
           this.sprite,
@@ -74,36 +80,5 @@ Enemy.prototype.getPlayerPosition = function(player) {
 }
 
 Enemy.prototype.shoot = function(that) {
-    that.enemiesBullets.push(new Bullet(this.canvas, this.x, this.y, "PlasLaser", 0, this.color, -this.speedX*2, -this.speedY*2));
-}
-
-Enemy.prototype.checkCollision = function(ships) {
-    ships.forEach(function(ship){
-        var shipColisionXmin = ship.x - (1/2 * ship.width);
-        var shipColisionXmax = ship.x + (1/2 * ship.width);
-        var shipColisionYmin = ship.y - (1/2 * ship.height);
-        var shipColisionYmax = ship.y + (1/2 * ship.height);
-        /*
-        enemy.x + 1/4 * enemy.width
-        enemy.x + 3/4 * enemy.width
-        enemy.y + 1/4 * enemy.height
-        enemy.y + 3/4 * enemy.height
-        */
-        if ( this.y < shipColisionYmax && 
-             this.y > shipColisionYmin && 
-             this.x < shipColisionXmax &&
-             this.x > shipColisionXmin &&
-             this.color != ship.color) {
-                ship.setDestroyed();
-                this.setDestroyed();
-        }
-        if ( this.y < shipColisionYmax && 
-            this.y > shipColisionYmin && 
-            this.x < shipColisionXmax &&
-            this.x > shipColisionXmin &&
-            this.color == ship.color) {
-               ship.setDestroyed();
-               this.setDestroyed();
-       }
-    }.bind(this))
+    that.enemiesBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y, "PlasLaser", 0, this.color, -this.speedX*2, -this.speedY*2));
 }

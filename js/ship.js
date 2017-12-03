@@ -16,6 +16,11 @@ function Ship(canvas, x, y, type, color, health, speedX, speedY) {
     this.selectSprite(this.type, this.color);
     this.destroyed = false;
     this.removable = false;
+    this.superShot = 0;
+    this.posXmin = this.x;
+    this.posYmin = this.y;
+    this.posXmax = this.x + this.width;
+    this.posYmax = this.y + this.height;
 }
 
 
@@ -113,4 +118,33 @@ Ship.prototype.blowUp = function() {
             this.height
         );
     this.ctx.restore();
+}
+
+Ship.prototype.increaseSuperShot = function() {
+    this.superShot += 10;
+    console.log("SUPERSHOT: " + this.superShot + "%");
+}
+
+Ship.prototype.resetSuperShot = function() {
+    this.superShot = 0;
+    console.log("SUPERSHOT: " + this.superShot + "%");
+}
+
+Ship.prototype.checkCollision = function(ships) {
+    this.posXmin = this.x;
+    this.posYmin = this.y;
+    this.posXmax = this.x + this.width;
+    this.posYmax = this.y + this.height;
+    ships.forEach(function(ship){
+        if( 
+            (this.posXmin < ship.posXmax && this.posXmax > ship.posXmax && this.posYmin < ship.posYmax && this.posYmax > ship.posYmax) ||
+            (this.posXmin < ship.posXmax && this.posXmax > ship.posXmax && this.posYmin < ship.posYmin && this.posYmax > ship.posYmin) ||
+            (this.posXmin < ship.posXmin && this.posXmax > ship.posXmin && this.posYmin < ship.posYmax && this.posYmax > ship.posYmax) ||
+            (this.posXmin < ship.posXmin && this.posXmax > ship.posXmin && this.posYmin < ship.posYmin && this.posYmax > ship.posYmin)
+        ) {
+            console.log("SHIPS COLLISION");
+            ship.setDestroyed();
+            this.setDestroyed();
+        }
+    }.bind(this))
 }
