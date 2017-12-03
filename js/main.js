@@ -17,6 +17,7 @@ function startGame() {
     var game = new Game(canvas);
     var audio = new Audio("./sounds/ik1.mp3");
     audio.volume = 0.1;
+    audio.loop = "loop";
     game.draw();
     audio.play();
     
