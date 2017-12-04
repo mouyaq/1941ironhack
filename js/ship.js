@@ -1,4 +1,4 @@
-function Ship(canvas, x, y, type, color, health, speedX, speedY) {
+function Ship(canvas, x, y, type, name, color, health, speedX, speedY) {
     this.canvas = canvas;
     this.ctx = this.canvas.getContext("2d");
     this.x = x;
@@ -11,9 +11,10 @@ function Ship(canvas, x, y, type, color, health, speedX, speedY) {
     this.movementArray = ["straight", "angle", "circle"];
     this.movement = this.movementArray[Math.floor(Math.random() * this.movementArray.length)];
     this.type = type;
+    this.name = name;
     this.color = color;
     this.sprite = new Image();
-    this.selectSprite(this.type, this.color);
+    this.selectSprite(this.name, this.color);
     this.destroyed = false;
     this.removable = false;
     this.superShot = 0;
@@ -24,8 +25,8 @@ function Ship(canvas, x, y, type, color, health, speedX, speedY) {
 }
 
 
-Ship.prototype.selectSprite = function(type, color) {
-    var imgSrc = "./images/sprites/" + type;
+Ship.prototype.selectSprite = function(name, color) {
+    var imgSrc = "./images/sprites/" + name;
     switch(color) {
         case "white":
             imgSrc += "_white.png";
@@ -102,8 +103,8 @@ Ship.prototype.setDestroyed = function() {
 }
 
 Ship.prototype.blowUp = function() {
-    this.type = "blowup";
-    this.selectSprite(this.type, this.color);
+    this.name = "blowup";
+    this.selectSprite(this.name, this.color);
     this.ctx.save();
     // sprite explosion is 4x3 and 360x480px
         this.ctx.drawImage(
@@ -141,9 +142,9 @@ Ship.prototype.checkCollision = function(ships) {
             (this.posXmin < ship.posXmax && this.posXmax > ship.posXmax && this.posYmin < ship.posYmin && this.posYmax > ship.posYmin) ||
             (this.posXmin < ship.posXmin && this.posXmax > ship.posXmin && this.posYmin < ship.posYmax && this.posYmax > ship.posYmax) ||
             (this.posXmin < ship.posXmin && this.posXmax > ship.posXmin && this.posYmin < ship.posYmin && this.posYmax > ship.posYmin))
-            && (this.color != ship.color)
+            && ((this.color != ship.color) || (this.color == ship.color && this.type != ship.type))
         ) {
-            //console.log("SHIPS COLLISION");
+            console.log("SHIPS COLLISION");
             ship.setDestroyed();
             this.setDestroyed();
         }

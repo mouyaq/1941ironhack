@@ -1,13 +1,13 @@
 Enemy.prototype = Object.create(Ship.prototype);
 
-function Enemy(canvas, x, y, type, color, health, speedX, speedY, player) {
-    Ship.call(this, canvas, x, y, type, color, health, speedX, speedY);
+function Enemy(canvas, x, y, type, name, color, health, speedX, speedY, player) {
+    Ship.call(this, canvas, x, y, type, name, color, health, speedX, speedY);
     this.playerPositionX = player.x;
     this.playerPositionY = player.y;
     this.frameWidthArray = [154, 554];
     this.frameHeightArray = [224, 495];
     this.framePositionArray = [0, 0];
-    switch(this.type) {
+    switch(this.name) {
         case "enemy1":
             this.frameIndex = 0;
             // this.scale = this.getRandomSize(0.6, 0.8);
@@ -31,7 +31,7 @@ function Enemy(canvas, x, y, type, color, health, speedX, speedY, player) {
 
 Enemy.prototype.changeColor = function() {
     this.color == "white" ? this.color = "black" : this.color = "white";
-    this.selectSprite(this.type, this.color);
+    this.selectSprite(this.name, this.color);
 }
 
 Enemy.prototype.draw = function(that) {
@@ -49,7 +49,7 @@ Enemy.prototype.draw = function(that) {
         var index = that.enemies.indexOf(this);
         that.enemies.splice(index, 1);
     }
-    this.selectSprite(this.type, this.color);
+    this.selectSprite(this.name, this.color);
     this.sprite.onload = function() {
 /*
         this.ctx.save()

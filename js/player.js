@@ -1,7 +1,7 @@
 Player.prototype = Object.create(Ship.prototype);
 
-function Player(canvas, x, y, type, color, health, speedX, speedY) {
-    Ship.call(this, canvas, x, y, type, color, health, speedX, speedY);
+function Player(canvas, x, y, type, name, color, health, speedX, speedY) {
+    Ship.call(this, canvas, x, y, type, name, color, health, speedX, speedY);
     this.scale = 0.5;
     this.frameIndexArray = [185, 181, 172, 188, 181, 172, 188];
     this.framePositionArray = [0, 186, 367, 539, 727, 908, 1080];
@@ -34,7 +34,7 @@ Player.prototype.draw = function(that) {
         }
         //console.log("REMOVE ENEMY");
     }
-    this.selectSprite(this.type, this.color);
+    this.selectSprite(this.name, this.color);
     this.sprite.onload = function() {
         if (this.keys && this.keys[P1_UP]) { 
             this.moveUp();
@@ -98,7 +98,7 @@ Player.prototype.move = function(that) {
 
 Player.prototype.changeColor = function() {
     this.color == "white" ? this.color = "black" : this.color = "white";
-    this.selectSprite(this.type, this.color);
+    this.selectSprite(this.name, this.color);
 }
 
 Player.prototype.moveUp = function() {
