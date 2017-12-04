@@ -11,8 +11,8 @@ function Player(canvas, x, y, type, name, color, health, speedX, speedY) {
     this.width = this.frameWidth * this.scale;
     this.height = this.frameHeight * this.scale;
     this.bulletIndex = 0;
-    this.shootAudio = new Audio("./sounds/laser1.mp3");
-    this.shootAudio.volume = 0.4;
+    // this.shootAudio = new Audio("./sounds/laser1.mp3");
+    // this.shootAudio.volume = 0.4;
 }
 
 Player.prototype.draw = function(that) {
@@ -109,6 +109,8 @@ Player.prototype.move = function(that) {
     }
     if (this.keys && this.keys[P1_SHOOT]) { 
         this.shoot(that);
+        this.shootAudio = new Audio("./sounds/laser1.mp3");
+        this.shootAudio.volume = 0.4;
         this.shootAudio.play();
     }
     if (this.keys && this.keys[P2_CHANGE_COLOR]) { 
@@ -116,6 +118,8 @@ Player.prototype.move = function(that) {
     }
     if (this.keys && this.keys[P2_SHOOT]) { 
         this.shoot(that);
+        this.shootAudio = new Audio("./sounds/laser1.mp3");
+        this.shootAudio.volume = 0.4;
         this.shootAudio.play(); 
     }
 }

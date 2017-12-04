@@ -54,6 +54,7 @@ Bullet.prototype.draw = function(bullets) {
             this.ctx.restore();
         }.bind(this);
         this.y -= this.speedY;
+        //this.move();
     }   
 }
 

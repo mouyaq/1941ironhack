@@ -63,7 +63,6 @@ function Game(canvas, playerNumber, dificult) {
     }.bind(this))
 }
 
-
 Game.prototype.draw = function(mode) {
     // Draw background
     this.bg.draw();

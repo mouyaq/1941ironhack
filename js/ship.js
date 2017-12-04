@@ -23,6 +23,8 @@ function Ship(canvas, x, y, type, name, color, health, speedX, speedY) {
     this.posXmax = this.x + this.width;
     this.posYmax = this.y + this.height;
     this.score = 0;
+    this.explosionAudio = new Audio("./sounds/explosion.mp3");
+    this.explosionAudio.volume = 0.2;
 }
 
 
@@ -104,6 +106,7 @@ Ship.prototype.setDestroyed = function() {
 }
 
 Ship.prototype.blowUp = function() {
+    this.explosionAudio.play();
     this.name = "blowup";
     this.selectSprite(this.name, this.color);
     this.ctx.save();
@@ -123,7 +126,10 @@ Ship.prototype.blowUp = function() {
 }
 
 Ship.prototype.increaseSuperShot = function() {
-    if(this.superShot <= 90) {
+    if(this.superShot <= 90 && this.type == "player") {
+        this.superShotAudio = new Audio("./sounds/ole.mp3");
+        this.superShotAudio.volume = 0.2;
+        this.superShotAudio.play();
         this.superShot += 10;
     }
     console.log("SUPERSHOT: " + this.superShot + "%");
