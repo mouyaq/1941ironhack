@@ -1,8 +1,9 @@
-function Bullet(canvas, x, y, type, index, color, speedX, speedY) {
+function Bullet(canvas, x, y, owner, type, index, color, speedX, speedY) {
     this.canvas = canvas;
     this.ctx = this.canvas.getContext("2d");
     this.x = x;
     this.y = y;
+    this.owner = owner;
     this.type = type;
     this.color = color;
     this.speedX = speedX;
@@ -83,6 +84,9 @@ Bullet.prototype.checkCollision = function(ships) {
         ) {
             //console.log("BULLET COLLISION !=");
             //console.log("BULLET COLOR = " + this.color + " SHIP COLOR = " + ship.color);
+            if(ship.type == "enemy") {
+                this.owner.addScore();
+            }
             ship.setDestroyed();
             this.setRemovable();
         }

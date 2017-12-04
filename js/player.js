@@ -160,13 +160,13 @@ Player.prototype.shoot = function(that) {
     if(that.playersBullets.length < that.maxPlayerBullets) {
         if(this.superShot >= 100) {
             this.bulletIndex = 2;
-            that.playersBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y+this.height/2, "PlasLaser", this.bulletIndex, this.color, this.speedX, this.speedY));
+            that.playersBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y+this.height/2, this, "PlasLaser", this.bulletIndex, this.color, this.speedX, this.speedY));
             this.resetSuperShot();
         }
         else {
             this.bulletIndex = 0;
-            that.playersBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y+this.height/2, "PlasLaser", this.bulletIndex, this.color, this.speedX, this.speedY));
-            console.log(this.x);
+            that.playersBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y+this.height/2, this, "PlasLaser", this.bulletIndex, this.color, this.speedX, this.speedY));
+            //console.log(this.x);
         }
     }
 }

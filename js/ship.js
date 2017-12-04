@@ -22,6 +22,7 @@ function Ship(canvas, x, y, type, name, color, health, speedX, speedY) {
     this.posYmin = this.y;
     this.posXmax = this.x + this.width;
     this.posYmax = this.y + this.height;
+    this.score = 0;
 }
 
 
@@ -123,12 +124,12 @@ Ship.prototype.blowUp = function() {
 
 Ship.prototype.increaseSuperShot = function() {
     this.superShot += 10;
-    console.log("SUPERSHOT: " + this.superShot + "%");
+    //console.log("SUPERSHOT: " + this.superShot + "%");
 }
 
 Ship.prototype.resetSuperShot = function() {
     this.superShot = 0;
-    console.log("SUPERSHOT: " + this.superShot + "%");
+    //console.log("SUPERSHOT: " + this.superShot + "%");
 }
 
 Ship.prototype.checkCollision = function(ships) {
@@ -144,9 +145,20 @@ Ship.prototype.checkCollision = function(ships) {
             (this.posXmin < ship.posXmin && this.posXmax > ship.posXmin && this.posYmin < ship.posYmin && this.posYmax > ship.posYmin))
             && ((this.color != ship.color) || (this.color == ship.color && this.type != ship.type))
         ) {
-            console.log("SHIPS COLLISION");
+            //console.log("SHIPS COLLISION");
             ship.setDestroyed();
             this.setDestroyed();
         }
     }.bind(this))
+}
+
+Ship.prototype.addScore = function(){
+    this.score += 1;
+    console.log(this.score);
+    if(this.name == "player1") {
+        document.getElementById("score-p1").innerHTML=this.score;
+    }
+    if(this.name == "player2") {
+        document.getElementById("score-p2").innerHTML=this.score;
+    }
 }
