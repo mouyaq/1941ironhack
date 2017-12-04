@@ -51,12 +51,12 @@ Enemy.prototype.draw = function(that) {
     }
     this.selectSprite(this.name, this.color);
     this.sprite.onload = function() {
-/*
-        this.ctx.save()
-        this.ctx.clearRect(this.x,this.y,this.width,this.height);
-        this.ctx.fillRect(this.x,this.y,this.width,this.height);
-        this.ctx.restore();
-*/
+
+        // this.ctx.save()
+        // this.ctx.clearRect(this.x,this.y,this.width,this.height);
+        // this.ctx.fillRect(this.x,this.y,this.width,this.height);
+        // this.ctx.restore();
+
         this.ctx.save();
         this.ctx.drawImage(
           this.sprite,
@@ -80,5 +80,5 @@ Enemy.prototype.getPlayerPosition = function(player) {
 }
 
 Enemy.prototype.shoot = function(that) {
-    that.enemiesBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y, "PlasLaser", 0, this.color, -this.speedX*2, -this.speedY*2));
+    that.enemiesBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y, this, "PlasLaser", 0, this.color, -this.speedX*2, -this.speedY*2));
 }

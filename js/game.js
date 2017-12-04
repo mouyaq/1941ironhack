@@ -11,14 +11,14 @@ function Game(canvas, playerNumber, dificult) {
     this.enemiesList = ["enemy1", "enemy2"];
     this.colorList = ["white", "black"];
     this.players = [];
-    this.player1 = new Player(this.canvas, this.canvas.width * 3 / 4, this.canvas.height - 100, "player", "player1", this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, 10, 5);
+    this.player1 = new Player(this.canvas, this.canvas.width * 1/4, this.canvas.height - 100, "player", "player1", this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, 10, 5);
     this.players.push(this.player1);
     if(this.playerNumber == "2 players") {
-        this.player2 = new Player(this.canvas, this.canvas.width / 4, this.canvas.height - 100, "player", "player2", this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, 10, 5);
+        this.player2 = new Player(this.canvas, this.canvas.width * 3/4, this.canvas.height - 100, "player", "player2", this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, 10, 5);
         this.players.push(this.player2);
     }
     else {
-        console.log(this.playerNumber);
+        //console.log(this.playerNumber);
     }
     this.playersBullets = [];
     this.enemies = [];
@@ -28,7 +28,7 @@ function Game(canvas, playerNumber, dificult) {
             this.enemies.push(new Enemy(this.canvas, Math.floor(Math.random()*700), Math.floor(Math.random()*-500)-200, "enemy", this.enemiesList[Math.floor(Math.random() * this.enemiesList.length)], this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, this.enemySpeedX, this.enemySpeedY, this.player1));
             //console.log("NUMERO DE ENEMIGOS: " + this.enemies.length);
         }
-    }.bind(this), (Math.floor(Math.random() * this.enemyInterval) + 0.5) * 1000 );
+    }.bind(this), (Math.floor(Math.random() * this.enemyInterval) + 0.3) * 1000 );
     setInterval(function(){
         this.enemies.forEach(function(enemy){
             if(enemy.y > 0 && this.enemiesBullets.length < this.maxEnemyBullets) { 
@@ -37,7 +37,7 @@ function Game(canvas, playerNumber, dificult) {
                 // console.log("PLAYER BULLETS: " + this.playersBullets.length);
             }
         }.bind(this));
-    }.bind(this), 2000);
+    }.bind(this), this.enemyInterval);
     this.keysList = [];
     window.addEventListener('keydown', function (e) {
         if(e.keyCode == P1_UP || e.keyCode == P1_DOWN || e.keyCode == P1_LEFT || e.keyCode == P1_RIGHT || e.keyCode == P1_CHANGE_COLOR || e.keyCode == P1_SHOOT) {
@@ -143,11 +143,11 @@ Game.prototype.setDificult = function(dificult) {
            break;
         case "inferno":
            // interval for each enemy in seconds.
-           this.enemyInterval = this.myRandom(0,2);
+           this.enemyInterval = this.myRandom(0.5,1);
            // Maximum number of enemies
-           this.maxEnemies = 15;
-           this.maxPlayerBullets = 25;
-           this.maxEnemyBullets = 50
+           this.maxEnemies = 30;
+           this.maxPlayerBullets = 15;
+           this.maxEnemyBullets = 100
            this.enemySpeedX = 6;
            this.enemySpeedY = 6;
            console.log("SET DIFICULT TO INFERNO");

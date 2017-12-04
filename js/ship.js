@@ -123,8 +123,10 @@ Ship.prototype.blowUp = function() {
 }
 
 Ship.prototype.increaseSuperShot = function() {
-    this.superShot += 10;
-    //console.log("SUPERSHOT: " + this.superShot + "%");
+    if(this.superShot <= 90) {
+        this.superShot += 10;
+    }
+    console.log("SUPERSHOT: " + this.superShot + "%");
 }
 
 Ship.prototype.resetSuperShot = function() {
@@ -133,10 +135,16 @@ Ship.prototype.resetSuperShot = function() {
 }
 
 Ship.prototype.checkCollision = function(ships) {
+    this.posXmin = this.x + 1/4 * this.width;
+    this.posYmin = this.y + 1/4 * this.height;
+    this.posXmax = this.x + 3/4 * this.width;
+    this.posYmax = this.y + 3/4 * this.height;
+    /*
     this.posXmin = this.x;
     this.posYmin = this.y;
     this.posXmax = this.x + this.width;
     this.posYmax = this.y + this.height;
+    */
     ships.forEach(function(ship){
         if( 
             ((this.posXmin < ship.posXmax && this.posXmax > ship.posXmax && this.posYmin < ship.posYmax && this.posYmax > ship.posYmax) ||

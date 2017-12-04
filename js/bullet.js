@@ -22,6 +22,7 @@ function Bullet(canvas, x, y, owner, type, index, color, speedX, speedY) {
     this.width = this.frameWidth;
     this.height = this.frameHeight;
     this.removable = false;
+    this.x -= this.width / 2;
 }
 
 Bullet.prototype.draw = function(bullets) {
@@ -32,6 +33,12 @@ Bullet.prototype.draw = function(bullets) {
     else {
         this.selectSprite(this.type, this.color);
         this.sprite.onload = function() {
+
+            // this.ctx.save()
+            // this.ctx.clearRect(this.x,this.y,this.width,this.height);
+            // this.ctx.fillRect(this.x,this.y,this.width,this.height);
+            // this.ctx.restore();
+
             this.ctx.save();
             this.ctx.drawImage(
               this.sprite,
@@ -39,7 +46,7 @@ Bullet.prototype.draw = function(bullets) {
               this.framePositionY[this.frameIndex],
               this.frameWidth,
               this.frameHeight,
-              this.x-this.width/2,
+              this.x,
               this.y,
               this.width,
               this.height
@@ -70,10 +77,10 @@ Bullet.prototype.isOutOfScreen = function() {
 }
 
 Bullet.prototype.checkCollision = function(ships) {
-    this.posXmin = this.x;
-    this.posYmin = this.y;
-    this.posXmax = this.x + this.width;
-    this.posYmax = this.y + this.height;
+    this.posXmin = this.x + 1/4 * this.width;
+    this.posYmin = this.y + 1/4 * this.height;
+    this.posXmax = this.x + 3/4 * this.width;
+    this.posYmax = this.y + 3/4 * this.height;
     ships.forEach(function(ship){
         if( 
             ((this.posXmin < ship.posXmax && this.posXmax > ship.posXmax && this.posYmin < ship.posYmax && this.posYmax > ship.posYmax) ||

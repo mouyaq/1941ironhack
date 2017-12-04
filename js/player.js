@@ -57,12 +57,12 @@ Player.prototype.draw = function(that) {
          }
         if (this.keys && this.keys[P2_LEFT]) { this.moveLeft(); }
         if (this.keys && this.keys[P2_RIGHT]) { this.moveRight(); }
-/*
-        this.ctx.save()
-        this.ctx.clearRect(this.x,this.y,this.width,this.height);
-        this.ctx.fillRect(this.x,this.y,this.width,this.height);
-        this.ctx.restore();
-*/
+
+        // this.ctx.save()
+        // this.ctx.clearRect(this.x,this.y,this.width,this.height);
+        // this.ctx.fillRect(this.x,this.y,this.width,this.height);
+        // this.ctx.restore();
+
         this.ctx.save();
         this.ctx.drawImage(
           this.sprite,
@@ -76,6 +76,30 @@ Player.prototype.draw = function(that) {
           this.height
         );
         this.ctx.restore();
+
+        // draw supershot p1
+        if(this.name == "player1") {
+            this.ctx.save();
+            this.ctx.fillStyle="#0000FF";
+            this.ctx.strokeRect(10,100,10,600);
+            this.ctx.restore();
+            this.ctx.save();
+            this.ctx.fillStyle="#0000FF";
+            this.ctx.fillRect(10, 700, 10, -6 * this.superShot);
+            this.ctx.restore();
+        }
+        // draw supershot p2
+        if(this.name == "player2") {
+            this.ctx.save();
+            this.ctx.fillStyle="#FF0000";
+            this.ctx.strokeRect(this.canvas.width - 20,100,10,600);
+            this.ctx.restore();
+            this.ctx.save();
+            this.ctx.fillStyle="#FF0000";
+            this.ctx.fillRect(this.canvas.width - 20, 700, 10, -6 * this.superShot);
+            this.ctx.restore();
+        }
+
     }.bind(this);
 }
 
