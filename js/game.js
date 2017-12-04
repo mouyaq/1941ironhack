@@ -76,7 +76,6 @@ Game.prototype.draw = function() {
         bullet.checkCollision(this.players);
         bullet.draw(this.enemiesBullets);
     }.bind(this))
-
     // Draw enemies
     this.enemies.forEach(function(enemy) {
         enemy.isOutOfScreen();

@@ -16,6 +16,16 @@ function Player(canvas, x, y, type, color, health, speedX, speedY) {
 }
 
 Player.prototype.draw = function(that) {
+    if(this.destroyed) {
+        //window.requestAnimationFrame(this.blowUp.bind(this));
+        this.blowUp();
+        setTimeout(this.setRemovable.bind(this), 250);
+        //console.log("TIMER: " + this.timer);
+        //setTimeout(this.setDestroyed(), 2000);
+        //clearInterval(this.timer);
+        //this.blowUp();
+        //console.log("REMOVE ENEMY");
+    }
     if(this.removable) {
         var index = that.players.indexOf(this);
         that.players.splice(index, 1);
@@ -47,12 +57,12 @@ Player.prototype.draw = function(that) {
          }
         if (this.keys && this.keys[P2_LEFT]) { this.moveLeft(); }
         if (this.keys && this.keys[P2_RIGHT]) { this.moveRight(); }
-
+/*
         this.ctx.save()
         this.ctx.clearRect(this.x,this.y,this.width,this.height);
         this.ctx.fillRect(this.x,this.y,this.width,this.height);
         this.ctx.restore();
-
+*/
         this.ctx.save();
         this.ctx.drawImage(
           this.sprite,

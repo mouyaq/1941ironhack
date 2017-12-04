@@ -69,41 +69,35 @@ Bullet.prototype.isOutOfScreen = function() {
 }
 
 Bullet.prototype.checkCollision = function(ships) {
+    this.posXmin = this.x;
+    this.posYmin = this.y;
+    this.posXmax = this.x + this.width;
+    this.posYmax = this.y + this.height;
     ships.forEach(function(ship){
-        /*
-        var shipColisionXmin = ship.x - (1/2 * ship.width);
-        var shipColisionXmax = ship.x + (1/2 * ship.width);
-        var shipColisionYmin = ship.y - (1/2 * ship.height);
-        var shipColisionYmax = ship.y + (1/2 * ship.height);
-        */
-        var shipColisionXmin = ship.x;
-        var shipColisionXmax = ship.x + ship.width;
-        var shipColisionYmin = ship.y;
-        var shipColisionYmax = ship.y + ship.height;
-        /*
-        enemy.x + 1/4 * enemy.width
-        enemy.x + 3/4 * enemy.width
-        enemy.y + 1/4 * enemy.height
-        enemy.y + 3/4 * enemy.height
-        */
-        if ( this.y < shipColisionYmax && 
-             this.y > shipColisionYmin && 
-             this.x < shipColisionXmax &&
-             this.x > shipColisionXmin &&
-             this.color != ship.color) {
-                //console.log("HIT DIFERENT COLOR");
-                ship.setDestroyed();
-                this.setRemovable();
+        if( 
+            ((this.posXmin < ship.posXmax && this.posXmax > ship.posXmax && this.posYmin < ship.posYmax && this.posYmax > ship.posYmax) ||
+            (this.posXmin < ship.posXmax && this.posXmax > ship.posXmax && this.posYmin < ship.posYmin && this.posYmax > ship.posYmin) ||
+            (this.posXmin < ship.posXmin && this.posXmax > ship.posXmin && this.posYmin < ship.posYmax && this.posYmax > ship.posYmax) ||
+            (this.posXmin < ship.posXmin && this.posXmax > ship.posXmin && this.posYmin < ship.posYmin && this.posYmax > ship.posYmin)) 
+            && (this.color != ship.color)
+        ) {
+            console.log("BULLET COLLISION !=");
+            console.log("BULLET COLOR = " + this.color + " SHIP COLOR = " + ship.color);
+            ship.setDestroyed();
+            this.setRemovable();
         }
-        if ( this.y < shipColisionYmax && 
-            this.y > shipColisionYmin && 
-            this.x < shipColisionXmax &&
-            this.x > shipColisionXmin &&
-            this.color == ship.color) {
-                //console.log("HIT SAME COLOR");
-                ship.increaseSuperShot();
-                this.setRemovable();
-       }
+        if( 
+            ((this.posXmin < ship.posXmax && this.posXmax > ship.posXmax && this.posYmin < ship.posYmax && this.posYmax > ship.posYmax) ||
+            (this.posXmin < ship.posXmax && this.posXmax > ship.posXmax && this.posYmin < ship.posYmin && this.posYmax > ship.posYmin) ||
+            (this.posXmin < ship.posXmin && this.posXmax > ship.posXmin && this.posYmin < ship.posYmax && this.posYmax > ship.posYmax) ||
+            (this.posXmin < ship.posXmin && this.posXmax > ship.posXmin && this.posYmin < ship.posYmin && this.posYmax > ship.posYmin)) 
+            && (this.color == ship.color)
+        ) {
+            console.log("BULLET COLLISION ==");
+            console.log("BULLET COLOR = " + this.color + " SHIP COLOR = " + ship.color);            
+            ship.increaseSuperShot();
+            this.setRemovable();
+        }
     }.bind(this))
 }
 

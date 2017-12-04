@@ -51,12 +51,12 @@ Enemy.prototype.draw = function(that) {
     }
     this.selectSprite(this.type, this.color);
     this.sprite.onload = function() {
-
+/*
         this.ctx.save()
         this.ctx.clearRect(this.x,this.y,this.width,this.height);
         this.ctx.fillRect(this.x,this.y,this.width,this.height);
         this.ctx.restore();
-
+*/
         this.ctx.save();
         this.ctx.drawImage(
           this.sprite,
