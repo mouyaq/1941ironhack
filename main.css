@@ -5,6 +5,11 @@ body {
     padding: 0;
 }
 
+.center {
+    margin: 0 auto;
+    width: 1280px;
+}
+
 #game {
     /*border: 5px solid red;*/
     height: 700px;
