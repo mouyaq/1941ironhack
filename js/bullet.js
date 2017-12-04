@@ -1,4 +1,4 @@
-function Bullet(canvas, x, y, owner, type, index, color, speedX, speedY) {
+function Bullet(canvas, x, y, yAdjust, owner, type, index, color, speedX, speedY, scale, god) {
     this.canvas = canvas;
     this.ctx = this.canvas.getContext("2d");
     this.x = x;
@@ -19,10 +19,12 @@ function Bullet(canvas, x, y, owner, type, index, color, speedX, speedY) {
     this.frameIndex = index ;
     this.frameWidth = this.frameWidthArray[this.frameIndex];
     this.frameHeight = this.frameHeightArray[this.frameIndex];
-    this.width = this.frameWidth;
-    this.height = this.frameHeight;
+    this.width = this.frameWidth * scale;
+    this.height = this.frameHeight * scale;
     this.removable = false;
     this.x -= this.width / 2;
+    this.y += yAdjust * this.height / 2;
+    this.god = god;
 }
 
 Bullet.prototype.draw = function(bullets) {
@@ -96,7 +98,10 @@ Bullet.prototype.checkCollision = function(ships) {
                 this.owner.addScore();
             }
             ship.setDestroyed();
-            this.setRemovable();
+            if(!this.god) {
+                this.setRemovable();
+            }
+            
         }
         if( 
             ((this.posXmin < ship.posXmax && this.posXmax > ship.posXmax && this.posYmin < ship.posYmax && this.posYmax > ship.posYmax) ||
@@ -108,7 +113,9 @@ Bullet.prototype.checkCollision = function(ships) {
             //console.log("BULLET COLLISION ==");
             //console.log("BULLET COLOR = " + this.color + " SHIP COLOR = " + ship.color);            
             ship.increaseSuperShot();
-            this.setRemovable();
+            if(!this.god) {
+                this.setRemovable();
+            }
         }
     }.bind(this))
 }
