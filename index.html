@@ -25,25 +25,26 @@
     <div class="row align-items-center">
       <div id="playerSelector" class="col-1 help">
         <select id="ps">
-          <option>Players</option>
           <option>1 Player</option>
           <option>2 Players</option>
         </select>
       </div>
       <div id="dificultSelector" class="col-1 help">
         <select id="ds">
-          <option>Dificult</option>
           <option>Easy</option>
           <option>Normal</option>
+          <option>Hard</option>
           <option>Inferno</option>
         </select>
       </div>
       <div><button id="start-button" class="col-12 help">StartGame</button></div>
       <div id="score" class="col-1 help">Score: </div>
-      </div>
     </div>
-    <br> 
-
+  </div>
+  <br> 
+  <video id="intro" autoplay="" muted="" loop="true">
+    <source src="./intro/intro.mp4" type="video/mp4">
+  </video>
   <div id="game-board">
     <canvas id="game" class="container-fluid"></canvas>
   </div>

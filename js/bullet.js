@@ -81,8 +81,8 @@ Bullet.prototype.checkCollision = function(ships) {
             (this.posXmin < ship.posXmin && this.posXmax > ship.posXmin && this.posYmin < ship.posYmin && this.posYmax > ship.posYmin)) 
             && (this.color != ship.color)
         ) {
-            console.log("BULLET COLLISION !=");
-            console.log("BULLET COLOR = " + this.color + " SHIP COLOR = " + ship.color);
+            //console.log("BULLET COLLISION !=");
+            //console.log("BULLET COLOR = " + this.color + " SHIP COLOR = " + ship.color);
             ship.setDestroyed();
             this.setRemovable();
         }
@@ -93,8 +93,8 @@ Bullet.prototype.checkCollision = function(ships) {
             (this.posXmin < ship.posXmin && this.posXmax > ship.posXmin && this.posYmin < ship.posYmin && this.posYmax > ship.posYmin)) 
             && (this.color == ship.color)
         ) {
-            console.log("BULLET COLLISION ==");
-            console.log("BULLET COLOR = " + this.color + " SHIP COLOR = " + ship.color);            
+            //console.log("BULLET COLLISION ==");
+            //console.log("BULLET COLOR = " + this.color + " SHIP COLOR = " + ship.color);            
             ship.increaseSuperShot();
             this.setRemovable();
         }

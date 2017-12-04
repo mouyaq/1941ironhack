@@ -143,7 +143,7 @@ Ship.prototype.checkCollision = function(ships) {
             (this.posXmin < ship.posXmin && this.posXmax > ship.posXmin && this.posYmin < ship.posYmin && this.posYmax > ship.posYmin))
             && (this.color != ship.color)
         ) {
-            console.log("SHIPS COLLISION");
+            //console.log("SHIPS COLLISION");
             ship.setDestroyed();
             this.setDestroyed();
         }
