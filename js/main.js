@@ -15,12 +15,16 @@ function startGame() {
     }
     resizeCanvas();
     var game = new Game(canvas);
-    var audio = new Audio("./sounds/ik1.mp3");
+    var audioTutorial = new Audio("./sounds/ik0.mp3");
+    audioTutorial.volume = 0.1;
+    var audio = new Audio("./sounds/ik1_loop.mp3");
     audio.volume = 0.1;
     audio.loop = "loop";
+    audioTutorial.play();
+    setTimeout(function() {
+        audio.play();
+    }, 23000);
     game.draw();
-    audio.play();
-    
     /* Option with set interval
     setInterval(function(){
         game.draw()
