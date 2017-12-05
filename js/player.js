@@ -1,6 +1,6 @@
 Player.prototype = Object.create(Ship.prototype);
 
-function Player(canvas, x, y, type, name, color, health, speedX, speedY) {
+function Player(canvas, x, y, type, name, color, health, speedX, speedY, shotIncrement) {
     Ship.call(this, canvas, x, y, type, name, color, health, speedX, speedY);
     this.scale = 0.5;
     this.frameIndexArray = [185, 181, 172, 188, 181, 172, 188];
@@ -11,6 +11,7 @@ function Player(canvas, x, y, type, name, color, health, speedX, speedY) {
     this.width = this.frameWidth * this.scale;
     this.height = this.frameHeight * this.scale;
     this.bulletIndex = 0;
+    this.shotIncrement = shotIncrement;
 }
 
 Player.prototype.draw = function(that) {

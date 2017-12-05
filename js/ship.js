@@ -126,11 +126,12 @@ Ship.prototype.blowUp = function() {
 }
 
 Ship.prototype.increaseSuperShot = function() {
-    if(this.superShot <= 90 && this.type == "player") {
+    console.log(this.shotIncrement);
+    if(this.superShot < 100 && this.type == "player") {
         this.superShotAudio = new Audio("./sounds/ole.mp3");
         this.superShotAudio.volume = 0.2;
         this.superShotAudio.play();
-        this.superShot += 10;
+        this.superShot += this.shotIncrement;
     }
     console.log("SUPERSHOT: " + this.superShot + "%");
 }

@@ -80,5 +80,6 @@ Enemy.prototype.getPlayerPosition = function(player) {
 }
 
 Enemy.prototype.shot = function(that) {
+    console.log("SHOT");
     that.enemiesBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y, 0, this, "PlasLaser", 0, this.color, -this.speedX*2, -this.speedY*2, 2, false));
 }
