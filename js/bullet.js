@@ -15,7 +15,7 @@ function Bullet(canvas, x, y, yAdjust, owner, type, index, color, speedX, speedY
     this.frameHeightArray = [85, 195, 250];
     this.framePositionX = [907, 365, 15];
     this.framePositionY = [85, 30, 3];
-    // shoot power changes index 0 = min   
+    // shot power changes index 0 = min   
     this.frameIndex = index ;
     this.frameWidth = this.frameWidthArray[this.frameIndex];
     this.frameHeight = this.frameHeightArray[this.frameIndex];

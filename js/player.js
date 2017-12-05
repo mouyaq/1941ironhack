@@ -11,20 +11,12 @@ function Player(canvas, x, y, type, name, color, health, speedX, speedY) {
     this.width = this.frameWidth * this.scale;
     this.height = this.frameHeight * this.scale;
     this.bulletIndex = 0;
-    // this.shootAudio = new Audio("./sounds/laser1.mp3");
-    // this.shootAudio.volume = 0.4;
 }
 
 Player.prototype.draw = function(that) {
     if(this.destroyed) {
-        //window.requestAnimationFrame(this.blowUp.bind(this));
         this.blowUp();
         setTimeout(this.setRemovable.bind(this), 250);
-        //console.log("TIMER: " + this.timer);
-        //setTimeout(this.setDestroyed(), 2000);
-        //clearInterval(this.timer);
-        //this.blowUp();
-        //console.log("REMOVE ENEMY");
     }
     if(this.removable) {
         var index = that.players.indexOf(this);
@@ -32,7 +24,6 @@ Player.prototype.draw = function(that) {
         if(that.players.length <= 0) {
             alert("GAME OVER");
         }
-        //console.log("REMOVE ENEMY");
     }
     this.selectSprite(this.name, this.color);
     this.sprite.onload = function() {
@@ -107,20 +98,32 @@ Player.prototype.move = function(that) {
     if (this.keys && this.keys[P1_CHANGE_COLOR]) { 
         this.changeColor(); 
     }
-    if (this.keys && this.keys[P1_SHOOT]) { 
-        this.shoot(that);
-        this.shootAudio = new Audio("./sounds/laser1.mp3");
-        this.shootAudio.volume = 0.4;
-        this.shootAudio.play();
+    if (this.keys && this.keys[P1_SHOT]) { 
+        this.shot(that);
+        this.shotAudio = new Audio("./sounds/laser1.mp3");
+        this.shotAudio.volume = 0.4;
+        this.shotAudio.play();
+    }
+    if (this.keys && this.keys[P1_SUPERSHOT]) { 
+        this.shotSuper(that);
+        // this.shotAudio = new Audio("./sounds/laser1.mp3");
+        // this.shotAudio.volume = 0.4;
+        // this.shotAudio.play();
     }
     if (this.keys && this.keys[P2_CHANGE_COLOR]) { 
         this.changeColor(); 
     }
-    if (this.keys && this.keys[P2_SHOOT]) { 
-        this.shoot(that);
-        this.shootAudio = new Audio("./sounds/laser1.mp3");
-        this.shootAudio.volume = 0.4;
-        this.shootAudio.play(); 
+    if (this.keys && this.keys[P2_SHOT]) { 
+        this.shot(that);
+        this.shotAudio = new Audio("./sounds/laser1.mp3");
+        this.shotAudio.volume = 0.4;
+        this.shotAudio.play(); 
+    }
+    if (this.keys && this.keys[P2_SUPERSHOT]) { 
+        this.shotSuper(that);
+        // this.shotAudio = new Audio("./sounds/laser1.mp3");
+        // this.shotAudio.volume = 0.4;
+        // this.shotAudio.play();
     }
 }
 
@@ -184,17 +187,30 @@ Player.prototype.resetMove = function() {
     // this.player2.frameIndex = 0;
 }
 
-Player.prototype.shoot = function(that) {
+Player.prototype.shot = function(that) {
     if(that.playersBullets.length < that.maxPlayerBullets) {
-        if(this.superShot >= 100) {
-            this.bulletIndex = 2;
-            that.playersBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y+this.height/2, -1, this, "PlasLaser", this.bulletIndex, this.color, this.speedX, this.speedY, 4, true));
-            this.resetSuperShot();
-        }
-        else {
-            this.bulletIndex = 0;
-            that.playersBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y+this.height/2, -1, this, "PlasLaser", this.bulletIndex, this.color, this.speedX, this.speedY, 2, false));
-            //console.log(this.x);
-        }
+        this.bulletIndex = 1;
+        that.playersBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y+this.height/2, -1, this, "PlasLaser", this.bulletIndex, this.color, this.speedX, this.speedY, 1, false));
+        //console.log(this.x);
     }
+}
+
+Player.prototype.shotSuper = function(that) {
+    if(this.superShot >= 100) {
+        this.bulletIndex = 2;
+        that.playersBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y+this.height/2, -1, this, "PlasLaser", this.bulletIndex, this.color, this.speedX, this.speedY, 16, true));
+        this.removeEnemies(that.enemies, that.enemiesBullets);
+        this.resetSuperShot();
+    }
+}
+
+Player.prototype.removeEnemies = function(enemies, enemiesBullets) {
+    enemies.forEach(function(enemy){
+        if(enemy.color != this.color) {
+            enemy.setDestroyed();
+        }
+    }.bind(this));
+    enemiesBullets.forEach(function(enemyBullet) {
+        enemyBullet.setRemovable();
+    }.bind(this));
 }

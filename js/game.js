@@ -32,7 +32,7 @@ function Game(canvas, playerNumber, dificult) {
     setInterval(function(){
         this.enemies.forEach(function(enemy){
             if(enemy.y > 0 && this.enemiesBullets.length < this.maxEnemyBullets) { 
-                enemy.shoot(this);
+                enemy.shot(this);
                 // console.log("ENEMIES BULLETS: " + this.enemiesBullets.length);
                 // console.log("PLAYER BULLETS: " + this.playersBullets.length);
             }
@@ -40,23 +40,23 @@ function Game(canvas, playerNumber, dificult) {
     }.bind(this), this.enemyInterval);
     this.keysList = [];
     window.addEventListener('keydown', function (e) {
-        if(e.keyCode == P1_UP || e.keyCode == P1_DOWN || e.keyCode == P1_LEFT || e.keyCode == P1_RIGHT || e.keyCode == P1_CHANGE_COLOR || e.keyCode == P1_SHOOT) {
+        if(e.keyCode == P1_UP || e.keyCode == P1_DOWN || e.keyCode == P1_LEFT || e.keyCode == P1_RIGHT || e.keyCode == P1_CHANGE_COLOR || e.keyCode == P1_SHOT || e.keyCode == P1_SUPERSHOT) {
             this.player1.keys = (this.player1.keys || []);
             this.player1.keys[e.keyCode] = true;
             this.player1.move(this);
         }
-        if(e.keyCode == P2_UP || e.keyCode == P2_DOWN || e.keyCode == P2_LEFT || e.keyCode == P2_RIGHT || e.keyCode == P2_CHANGE_COLOR || e.keyCode == P2_SHOOT) {
+        if(e.keyCode == P2_UP || e.keyCode == P2_DOWN || e.keyCode == P2_LEFT || e.keyCode == P2_RIGHT || e.keyCode == P2_CHANGE_COLOR || e.keyCode == P2_SHOT || e.keyCode == P2_SUPERSHOT) {
             this.player2.keys = (this.player2.keys || []);
             this.player2.keys[e.keyCode] = true;
             this.player2.move(this);
         }
     }.bind(this))
     window.addEventListener('keyup', function (e) {
-        if(e.keyCode == P1_UP || e.keyCode == P1_DOWN || e.keyCode == P1_LEFT || e.keyCode == P1_RIGHT || e.keyCode == P1_CHANGE_COLOR || e.keyCode == P1_SHOOT) {
+        if(e.keyCode == P1_UP || e.keyCode == P1_DOWN || e.keyCode == P1_LEFT || e.keyCode == P1_RIGHT || e.keyCode == P1_CHANGE_COLOR || e.keyCode == P1_SHOT || e.keyCode == P1_SUPERSHOT) {
             this.player1.keys[e.keyCode] = false; 
             this.player1.resetMove();
         }
-        if(e.keyCode == P2_UP || e.keyCode == P2_DOWN || e.keyCode == P2_LEFT || e.keyCode == P2_RIGHT || e.keyCode == P2_CHANGE_COLOR || e.keyCode == P2_SHOOT) {
+        if(e.keyCode == P2_UP || e.keyCode == P2_DOWN || e.keyCode == P2_LEFT || e.keyCode == P2_RIGHT || e.keyCode == P2_CHANGE_COLOR || e.keyCode == P2_SHOT || e.keyCode == P2_SUPERSHOT) {
             this.player2.keys[e.keyCode] = false;
             this.player2.resetMove();
         }

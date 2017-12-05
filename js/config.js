@@ -9,7 +9,9 @@ var P1_RIGHT = 39;
 // n
 var P1_CHANGE_COLOR = 78;
 // m
-var P1_SHOOT = 77;
+var P1_SHOT = 77;
+// b
+var P1_SUPERSHOT = 66;
 // w
 var P2_UP = 87;
 // s
@@ -18,7 +20,9 @@ var P2_DOWN = 83;
 var P2_LEFT = 65;
 // d
 var P2_RIGHT = 68;
-// g
-var P2_CHANGE_COLOR = 71;
 // f
-var P2_SHOOT = 70;
+var P2_CHANGE_COLOR = 70;
+// g
+var P2_SHOT = 71;
+// h
+var P2_SUPERSHOT = 72;

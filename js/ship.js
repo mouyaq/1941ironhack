@@ -41,7 +41,7 @@ Ship.prototype.selectSprite = function(name, color) {
     this.sprite.src = imgSrc;
 }
 
-// Ship.prototype.shoot = function(that) {
+// Ship.prototype.shot = function(that) {
 //     that.bullets.push(new Bullet(this.canvas, this.x, this.y, "PlasLaser", 1, this.color, this.speedX, this.speedY));
 // }
 
