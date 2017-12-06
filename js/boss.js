@@ -17,9 +17,10 @@ function Boss(canvas, x, y, type, name, color, health, speedX, speedY, player) {
     this.frameWidth = this.frameWidthArray[this.frameIndex];
     this.width = this.frameWidth * this.scale;
     this.height = this.frameHeight * this.scale;
+    this.isSettled = false;
 }
 
-Enemy.prototype.draw = function(that) {
+Boss.prototype.draw = function(that) {
     if(this.destroyed) {
         //window.requestAnimationFrame(this.blowUp.bind(this));
         this.blowUp();
@@ -56,12 +57,66 @@ Enemy.prototype.draw = function(that) {
         );
         this.ctx.restore();
     }.bind(this);
-    this.move(this.movement);
+    this.move("angle");
 }
 
 Boss.prototype.shot = function(that) {
-    that.enemiesBullets.push(new Bullet(this.canvas, this.x, this.y, 0, this, "PlasLaser", 2, this.color, -this.speedX*2, -this.speedY*2, 2, false));
-    that.enemiesBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y, 0, this, "PlasLaser", 2, this.color, -this.speedX*2, -this.speedY*2, 2, false));
-    that.enemiesBullets.push(new Bullet(this.canvas, this.x+this.width, this.y, 0, this, "PlasLaser", 2, this.color, -this.speedX*2, -this.speedY*2, 2, false));
-    
+    that.enemiesBullets.push(new Bullet(this.canvas, this.x, this.y, 0, this, "PlasLaser", 0, this.color, -this.speedX*2, -Math.abs(this.speedY), 2, false));
+    that.enemiesBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y, 0, this, "PlasLaser", 0, this.color, -this.speedX*2, -Math.abs(this.speedY), 2, false));
+    that.enemiesBullets.push(new Bullet(this.canvas, this.x+this.width, this.y, 0, this, "PlasLaser", 0, this.color, -this.speedX*2, -Math.abs(this.speedY), 2, false));
+}
+
+Boss.prototype.move = function(movement) {
+    switch(movement) {
+        case "straight":
+            this.y += this.speedY;
+            break;
+        case "angle":
+        
+            if(this.isSettled) {
+                console.log("ISSET");
+                if(this.x <= 0 || this.x + this.width >= this.canvas.width) {
+                    this.speedX *= -1;       
+                } 
+                if(this.y <= 0 || this.y + this.height >= this.canvas.height) {
+                    this.speedY *= -1;
+                }
+            }
+            else {
+                console.log("NOTSET");
+                if(this.y < this.canvas.height/2){
+                    this.y += this.speedY;
+                }
+                else {
+                    this.y -= this.speedY;
+                }
+                if(this.x < this.canvas.width/2) {
+                    this.x += this.speedX;
+                }
+                else {
+                    this.x -= this.speedX;
+                }
+                this.isSettled = this.isOnScreen();
+            }
+            this.x += this.speedX;
+            this.y += this.speedY;
+            break;
+        case "circle":
+            while(this.y + this.height < 0){
+                this.y += this.speedY;
+            }
+            // each modification
+            this.rad += Math.PI/1024;
+            this.x += Math.sin(this.rad);
+            this.y += Math.cos(this.rad);
+            break;
+    }
+}
+
+Boss.prototype.detectBorder = function() {
+    return this.x < 0 || this.x + this.width >= this.canvas.width || this.y < 0 || this.y + this.height>= this.canvas.height;
+}
+
+Boss.prototype.isOnScreen = function() {
+    return this.x > 0 && this.x + this.width < this.canvas.width && this.y - this.height > 0 && this.y + this.height < this.canvas.height; 
 }
