@@ -23,7 +23,7 @@ Player.prototype.draw = function(that) {
         var index = that.players.indexOf(this);
         that.players.splice(index, 1);
         if(that.players.length <= 0) {
-            alert("GAME OVER");
+            that.gameOver();
         }
     }
     this.selectSprite(this.name, this.color);

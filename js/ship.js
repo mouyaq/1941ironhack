@@ -169,7 +169,6 @@ Ship.prototype.checkCollision = function(ships) {
 
 Ship.prototype.addScore = function(){
     this.score += 1;
-    console.log(this.score);
     if(this.name == "player1") {
         document.getElementById("score-p1").innerHTML=this.score;
     }

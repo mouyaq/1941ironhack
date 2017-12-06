@@ -23,13 +23,18 @@ function Game(canvas, playerNumber, dificult) {
     this.playersBullets = [];
     this.enemies = [];
     this.enemiesBullets = [];
-    setInterval(function(){
+    var enemyPush = setInterval(function(){
         if(this.enemies.length < this.maxEnemies) { 
             this.enemies.push(new Enemy(this.canvas, Math.floor(Math.random()*700), Math.floor(Math.random()*-500)-200, "enemy", this.enemiesList[Math.floor(Math.random() * this.enemiesList.length)], this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, this.enemySpeedX, this.enemySpeedY, this.player1));
             //console.log("NUMERO DE ENEMIGOS: " + this.enemies.length);
         }
+        if( parseInt(document.getElementById("score-p1").innerHTML) > 10) {
+            this.enemies = [];
+            this.enemies.push(new Boss(this.canvas, Math.floor(Math.random()*700), Math.floor(Math.random()*-500)-200, "boss", "boss1", this.colorList[Math.floor(Math.random() * this.colorList.length)], 1000, this.enemySpeedX, this.enemySpeedY, this.player1));
+            clearInterval(enemyPush);
+        }
     }.bind(this), (Math.floor(Math.random() * this.enemyInterval) + 0.3) * 1000 );
-    setInterval(function(){
+    var enemyShoot = setInterval(function(){
         this.enemies.forEach(function(enemy){
             //if(enemy.y > 0 && this.enemiesBullets.length < this.maxEnemyBullets) { 
             if(enemy.y > 0) { 
@@ -171,4 +176,22 @@ Game.prototype.myRandom = function(min, max) {
       num = min;
     }
     return num;
-  }
+}
+
+Game.prototype.gameOver = function() {
+    /*
+    this.sprite = new Image();
+    this.sprite.src = "./images/bg/game-over.png";
+    this.width = this.sprite.width;
+    this.height = this.sprite.height;
+    this.sprite.onload = function() {
+        this.ctx.clearRect(0,0,this.width, this.height);
+        this.ctx.drawImage(this.sprite, this.x, this.y);
+    }.bind(this);
+    */
+    this.ctx.fillRect(0,0,this.canvas.width, this.canvas.height);
+    alert("GAME OVER");
+    setTimeout(function() {
+        window.location.replace("./index.html");
+    }, 5000);
+}
