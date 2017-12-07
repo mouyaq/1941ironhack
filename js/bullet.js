@@ -102,12 +102,16 @@ Bullet.prototype.checkCollision = function(ships) {
             (this.posXmin < ship.posXmin && this.posXmax > ship.posXmin && this.posYmin < ship.posYmin && this.posYmax > ship.posYmin)) 
             && (this.color != ship.color)
         ) {
-            //console.log("BULLET COLLISION !=");
-            //console.log("BULLET COLOR = " + this.color + " SHIP COLOR = " + ship.color);
-            if(ship.type == "enemy") {
-                this.owner.addScore();
+            // console.log("BULLET COLLISION !=");
+            // console.log("BULLET COLOR = " + this.color + " SHIP COLOR = " + ship.color);
+
+            this.owner.addScore();
+            ship.receiveDamage();
+
+            if(!ship.isAlive()) {
+                ship.setDestroyed();
             }
-            ship.setDestroyed();
+            
             if(!this.god) {
                 this.setRemovable();
             }

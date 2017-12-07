@@ -126,19 +126,16 @@ Ship.prototype.blowUp = function() {
 }
 
 Ship.prototype.increaseSuperShot = function() {
-    console.log(this.shotIncrement);
     if(this.superShot < 100 && this.type == "player") {
         this.superShotAudio = new Audio("./sounds/ole.mp3");
         this.superShotAudio.volume = 0.2;
         this.superShotAudio.play();
         this.superShot += this.shotIncrement;
     }
-    console.log("SUPERSHOT: " + this.superShot + "%");
 }
 
 Ship.prototype.resetSuperShot = function() {
     this.superShot = 0;
-    //console.log("SUPERSHOT: " + this.superShot + "%");
 }
 
 Ship.prototype.checkCollision = function(ships) {
@@ -160,9 +157,14 @@ Ship.prototype.checkCollision = function(ships) {
             (this.posXmin < ship.posXmin && this.posXmax > ship.posXmin && this.posYmin < ship.posYmin && this.posYmax > ship.posYmin))
             && ((this.color != ship.color) || (this.color == ship.color && this.type != ship.type))
         ) {
-            //console.log("SHIPS COLLISION");
-            ship.setDestroyed();
-            this.setDestroyed();
+            ship.receiveDamage();
+            this.receiveDamage();
+            if(!ship.isAlive()) {
+                ship.setDestroyed();
+            }
+            if(!this.isAlive()) {
+                this.setDestroyed();
+            }
         }
     }.bind(this))
 }
@@ -175,4 +177,13 @@ Ship.prototype.addScore = function(){
     if(this.name == "player2") {
         document.getElementById("score-p2").innerHTML=this.score;
     }
+}
+
+Ship.prototype.receiveDamage = function() {
+    this.health -= 1;
+    console.log(this.health);
+}
+
+Ship.prototype.isAlive = function() {
+    return this.health > 0;
 }

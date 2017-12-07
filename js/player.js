@@ -2,6 +2,7 @@ Player.prototype = Object.create(Ship.prototype);
 
 function Player(canvas, x, y, type, name, color, health, speedX, speedY, shotIncrement) {
     Ship.call(this, canvas, x, y, type, name, color, health, speedX, speedY);
+    this.life = this.health;
     this.scale = 0.5;
     this.frameIndexArray = [185, 181, 172, 188, 181, 172, 188];
     this.framePositionArray = [0, 186, 367, 539, 727, 908, 1080];
@@ -69,6 +70,19 @@ Player.prototype.draw = function(that) {
         );
         this.ctx.restore();
 
+        // draw player1 health
+        if(this.name == "player1") {
+            this.ctx.save();
+            this.ctx.strokeStyle="#0000FF";
+            this.ctx.lineWidth = 2;
+            this.ctx.strokeRect(this.x, this.y + this.height, this.width, 10);
+            this.ctx.restore();
+            this.ctx.save();
+            this.ctx.fillStyle="#0000FF";
+            this.ctx.fillRect(this.x, this.y + this.height, (this.width/this.life)*this.health, 10);
+            this.ctx.restore();
+        }
+
         // draw supershot p1
         if(this.name == "player1") {
             this.ctx.save();
@@ -81,6 +95,20 @@ Player.prototype.draw = function(that) {
             this.ctx.fillRect(10, 700, 20, -6 * this.superShot);
             this.ctx.restore();
         }
+
+        // draw player1 health
+        if(this.name == "player2") {
+            this.ctx.save();
+            this.ctx.strokeStyle="#FF0000";
+            this.ctx.lineWidth = 2;
+            this.ctx.strokeRect(this.x, this.y + this.height, this.width, 10);
+            this.ctx.restore();
+            this.ctx.save();
+            this.ctx.fillStyle="#FF0000";
+            this.ctx.fillRect(this.x, this.y + this.height, (this.width/this.life)*this.health, 10);
+            this.ctx.restore();
+        }
+
         // draw supershot p2
         if(this.name == "player2") {
             this.ctx.save();

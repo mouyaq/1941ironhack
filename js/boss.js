@@ -21,7 +21,7 @@ function Boss(canvas, x, y, type, name, color, health, speedX, speedY, player) {
     this.isSettled = false;
     setInterval(function(){
         this.changeColor();
-    }.bind(this), 2000);
+    }.bind(this), Math.floor((Math.random()*5)+1)*1000);
 }
 
 Boss.prototype.draw = function(that) {
@@ -45,17 +45,17 @@ Boss.prototype.draw = function(that) {
         this.ctx.save();
         this.ctx.strokeStyle="#FFFF00";
         this.ctx.lineWidth = 5;
-        this.ctx.strokeRect(this.canvas.width/2 - this.life/2, 10, this.life, 20);
+        this.ctx.strokeRect(this.x, this.y - 20, (this.width/this.life)*this.health, 20);
         this.ctx.restore();
         this.ctx.save();
         this.ctx.fillStyle="#FFFF00";
-        this.ctx.fillRect(this.canvas.width/2 - this.life/2, 10, this.health, 20);
+        this.ctx.fillRect(this.x, this.y - 20, (this.width/this.life)*this.health, 20);
         this.ctx.restore();
 
-        this.ctx.save()
-        this.ctx.clearRect(this.x,this.y,this.width,this.height);
-        this.ctx.fillRect(this.x,this.y,this.width,this.height);
-        this.ctx.restore();
+        // this.ctx.save()
+        // this.ctx.clearRect(this.x,this.y,this.width,this.height);
+        // this.ctx.fillRect(this.x,this.y,this.width,this.height);
+        // this.ctx.restore();
 
         this.ctx.save();
         this.ctx.drawImage(

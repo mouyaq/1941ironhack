@@ -2,6 +2,7 @@ Enemy.prototype = Object.create(Ship.prototype);
 
 function Enemy(canvas, x, y, type, name, color, health, speedX, speedY, player) {
     Ship.call(this, canvas, x, y, type, name, color, health, speedX, speedY);
+    this.life = this.health;
     this.playerPositionX = player.x;
     this.playerPositionY = player.y;
     this.frameWidthArray = [154, 554];
@@ -56,6 +57,18 @@ Enemy.prototype.draw = function(that) {
         // this.ctx.clearRect(this.x,this.y,this.width,this.height);
         // this.ctx.fillRect(this.x,this.y,this.width,this.height);
         // this.ctx.restore();
+
+        this.color == "white" ? this.colorHealth = "#FFFFFF" : this.colorHealth = "#000000";
+
+        this.ctx.save();
+        this.ctx.strokeStyle=this.colorHealth;
+        this.ctx.lineWidth = 2;
+        this.ctx.strokeRect(this.x, this.y-10, this.width, 10);
+        this.ctx.restore();
+        this.ctx.save();
+        this.ctx.fillStyle=this.colorHealth;
+        this.ctx.fillRect(this.x, this.y-10, (this.width/this.life)*this.health, 10);
+        this.ctx.restore();
 
         this.ctx.save();
         this.ctx.drawImage(
