@@ -42,13 +42,15 @@ Boss.prototype.draw = function(that) {
     this.selectSprite(this.name, this.color);
     this.sprite.onload = function() {
 
+        this.color == "white" ? this.colorHealth = "#FFFFFF" : this.colorHealth = "#000000";
+
         this.ctx.save();
-        this.ctx.strokeStyle="#FFFF00";
+        this.ctx.strokeStyle = this.colorHealth;
         this.ctx.lineWidth = 5;
-        this.ctx.strokeRect(this.x, this.y - 20, (this.width/this.life)*this.health, 20);
+        this.ctx.strokeRect(this.x, this.y - 20, this.width, 20);
         this.ctx.restore();
         this.ctx.save();
-        this.ctx.fillStyle="#FFFF00";
+        this.ctx.fillStyle = this.colorHealth;
         this.ctx.fillRect(this.x, this.y - 20, (this.width/this.life)*this.health, 20);
         this.ctx.restore();
 

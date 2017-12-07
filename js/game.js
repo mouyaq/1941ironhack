@@ -24,6 +24,7 @@ function Game(canvas, playerNumber, dificult) {
         //console.log(this.playerNumber);
     }
     this.keysList = [];
+
     window.addEventListener('keydown', function (e) {
         if(e.keyCode == P1_UP || e.keyCode == P1_DOWN || e.keyCode == P1_LEFT || e.keyCode == P1_RIGHT || e.keyCode == P1_CHANGE_COLOR || e.keyCode == P1_SHOT || e.keyCode == P1_SUPERSHOT) {
             this.player1.keys = (this.player1.keys || []);
@@ -46,6 +47,7 @@ function Game(canvas, playerNumber, dificult) {
             this.player2.resetMove();
         }
     }.bind(this))
+
 }
 
 Game.prototype.draw = function(mode) {

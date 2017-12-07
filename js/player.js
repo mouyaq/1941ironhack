@@ -37,8 +37,12 @@ Player.prototype.draw = function(that) {
             this.moveDown();
             this.resetMove();
          }
-        if (this.keys && this.keys[P1_LEFT]) { this.moveLeft(); }
-        if (this.keys && this.keys[P1_RIGHT]) { this.moveRight(); }
+        if (this.keys && this.keys[P1_LEFT]) { 
+            this.moveLeft(); 
+        }
+        if (this.keys && this.keys[P1_RIGHT]) { 
+            this.moveRight(); 
+        }
         
         if (this.keys && this.keys[P2_UP]) { 
             this.moveUp();
