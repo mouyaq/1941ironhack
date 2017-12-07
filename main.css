@@ -1,19 +1,21 @@
+@font-face {
+    font-family: ikaruga;
+    src: url("./fonts/ikaruga.ttf");
+}
+
 body {
     /*text-align: center;*/
-    background-image: url("ikaruga1.jpg");
+    background-image: url("./images/bg/ikaruga1.jpg");
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-}
-
-.center {
-    margin: 0 auto;
-    width: 1280px;
+    font-family: ikaruga;
+    font-size: 1.2em;
 }
 
 #game {
     /*border: 5px solid red;*/
-    height: 700px;
+    /*height: 700px;*/
 }
 
 #game-board {
@@ -26,6 +28,14 @@ body {
 
 .help {
     /*border: 1px solid red;*/
+}
+
+.intro-video {
+    margin: 0 auto;
+    width: 1280px;
+}
+.score {
+    color: white;
 }
 
 #start-button {

@@ -148,8 +148,8 @@ Game.prototype.setDificult = function(dificult) {
            this.maxEnemies = 15;
            this.maxPlayerBullets = 25;
            this.maxEnemyBullets = 50
-           this.enemySpeedX = 6;
-           this.enemySpeedY = 6;
+           this.enemySpeedX = 8;
+           this.enemySpeedY = 8;
            this.shotIncrement = 5;
            console.log("SET DIFICULT TO HARD");
            break;
@@ -161,8 +161,8 @@ Game.prototype.setDificult = function(dificult) {
            this.maxEnemies = 30;
            this.maxPlayerBullets = 15;
            this.maxEnemyBullets = 100
-           this.enemySpeedX = 8;
-           this.enemySpeedY = 8;
+           this.enemySpeedX = 16;
+           this.enemySpeedY = 16;
            this.shotIncrement = 1;
            console.log("SET DIFICULT TO INFERNO");
            break;

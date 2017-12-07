@@ -2,6 +2,7 @@ Boss.prototype = Object.create(Enemy.prototype);
 
 function Boss(canvas, x, y, type, name, color, health, speedX, speedY, player) {
     Enemy.call(this, canvas, x, y, type, name, color, health, speedX, speedY, player);
+    this.life = this.health;
     this.playerPositionX = player.x;
     this.playerPositionY = player.y;
     this.frameWidthArray = [928];
@@ -18,6 +19,9 @@ function Boss(canvas, x, y, type, name, color, health, speedX, speedY, player) {
     this.width = this.frameWidth * this.scale;
     this.height = this.frameHeight * this.scale;
     this.isSettled = false;
+    setInterval(function(){
+        this.changeColor();
+    }.bind(this), 2000);
 }
 
 Boss.prototype.draw = function(that) {
@@ -38,10 +42,20 @@ Boss.prototype.draw = function(that) {
     this.selectSprite(this.name, this.color);
     this.sprite.onload = function() {
 
-        // this.ctx.save()
-        // this.ctx.clearRect(this.x,this.y,this.width,this.height);
-        // this.ctx.fillRect(this.x,this.y,this.width,this.height);
-        // this.ctx.restore();
+        this.ctx.save();
+        this.ctx.strokeStyle="#FFFF00";
+        this.ctx.lineWidth = 5;
+        this.ctx.strokeRect(this.canvas.width/2 - this.life/2, 10, this.life, 20);
+        this.ctx.restore();
+        this.ctx.save();
+        this.ctx.fillStyle="#FFFF00";
+        this.ctx.fillRect(this.canvas.width/2 - this.life/2, 10, this.health, 20);
+        this.ctx.restore();
+
+        this.ctx.save()
+        this.ctx.clearRect(this.x,this.y,this.width,this.height);
+        this.ctx.fillRect(this.x,this.y,this.width,this.height);
+        this.ctx.restore();
 
         this.ctx.save();
         this.ctx.drawImage(
@@ -61,9 +75,9 @@ Boss.prototype.draw = function(that) {
 }
 
 Boss.prototype.shot = function(that) {
-    that.enemiesBullets.push(new Bullet(this.canvas, this.x, this.y, 0, this, "PlasLaser", 0, this.color, -this.speedX*2, -Math.abs(this.speedY), 2, false));
-    that.enemiesBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y, 0, this, "PlasLaser", 0, this.color, -this.speedX*2, -Math.abs(this.speedY), 2, false));
-    that.enemiesBullets.push(new Bullet(this.canvas, this.x+this.width, this.y, 0, this, "PlasLaser", 0, this.color, -this.speedX*2, -Math.abs(this.speedY), 2, false));
+    that.enemiesBullets.push(new Bullet(this.canvas, this.x, this.y, 0, this, "PlasLaser", 0, this.color, -this.speedX*2, -Math.abs(this.speedY * 4), 2, false));
+    that.enemiesBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y, 0, this, "PlasLaser", 0, this.color, -this.speedX*2, -Math.abs(this.speedY * 4), 2, false));
+    that.enemiesBullets.push(new Bullet(this.canvas, this.x+this.width, this.y, 0, this, "PlasLaser", 0, this.color, -this.speedX*2, -Math.abs(this.speedY * 4), 2, false));
 }
 
 Boss.prototype.move = function(movement) {
@@ -119,4 +133,9 @@ Boss.prototype.detectBorder = function() {
 
 Boss.prototype.isOnScreen = function() {
     return this.x > 0 && this.x + this.width < this.canvas.width && this.y - this.height > 0 && this.y + this.height < this.canvas.height; 
+}
+
+Boss.prototype.changeColor = function() {
+    this.color == "white" ? this.color = "black" : this.color = "white";
+    this.selectSprite(this.name, this.color);
 }

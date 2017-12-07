@@ -39,20 +39,21 @@
         </select>
       </div>
       <div><button id="start-button" class="col-12 help">StartGame</button></div>
-      <div id="score-label-p1" class="col-1 help">Score: </div>
-      <div id="score-p1" class="col-1 help">0</div>
-      <div id="score-label-p2" class="col-1 help">Score: </div>
-      <div id="score-p2" class="col-1 help">0</div>
+      <div id="score-label-p1" class="col-2 score help">Score Player1: </div>
+      <div id="score-p1" class="col-1 score help">0</div>
+      <div id="score-label-p2" class="col-2 score help">Score Player2: </div>
+      <div id="score-p2" class="col-1 score help">0</div>
+
     </div>
   </div>
   <br> 
-  <div class="center">
+  <div class="intro-video">
     <video id="intro"  autoplay="" muted="" loop="true">
       <source src="./intro/intro.mp4" type="video/mp4">
     </video>
   </div>
   <div id="game-board">
-    <canvas id="game" class="container-fluid"></canvas>
+    <canvas id="game" class="container"></canvas>
   </div>
 </body>
 </html>

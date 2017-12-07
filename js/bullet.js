@@ -11,10 +11,12 @@ function Bullet(canvas, x, y, yAdjust, owner, type, index, color, speedX, speedY
     this.sprite = new Image();
     this.selectSprite(this.type, this.color);
     this.damage = [1, 2];
-    this.frameWidthArray = [85, 85, 85];
-    this.frameHeightArray = [85, 195, 250];
-    this.framePositionX = [907, 365, 15];
-    this.framePositionY = [85, 30, 3];
+    this.frameWidthArray = [85, 85, 85, 206, 165, 105];
+    this.frameHeightArray = [85, 195, 250, 962, 185, 355];
+    this.framePositionX = [907, 365, 15, 0, 26, 239];
+    this.framePositionY = [85, 30, 3, 0, 623, 433];
+
+
     // shot power changes index 0 = min   
     this.frameIndex = index ;
     this.frameWidth = this.frameWidthArray[this.frameIndex];
@@ -56,6 +58,14 @@ Bullet.prototype.draw = function(bullets) {
             this.ctx.restore();
         }.bind(this);
         this.y -= this.speedY;
+        if(this.frameIndex == 4) {
+            this.frameIndex +=1;
+        }
+        else {
+            if(this.frameIndex == 5) {           
+                this.frameIndex -=1;
+            }
+        }
         //this.move();
     }   
 }

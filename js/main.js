@@ -13,6 +13,8 @@ function startGame(players, dificult) {
     function resizeCanvas() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
+        console.log("ANCHO: " + canvas.width);
+        console.log("ALTO: " + canvas.height);
     }
     resizeCanvas();
     var game = new Game(canvas, players, dificult);

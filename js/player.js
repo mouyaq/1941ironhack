@@ -72,23 +72,25 @@ Player.prototype.draw = function(that) {
         // draw supershot p1
         if(this.name == "player1") {
             this.ctx.save();
-            this.ctx.fillStyle="#0000FF";
-            this.ctx.strokeRect(10,100,10,600);
+            this.ctx.strokeStyle="#0000FF";
+            this.ctx.lineWidth = 5;
+            this.ctx.strokeRect(10,100,20,600);
             this.ctx.restore();
             this.ctx.save();
             this.ctx.fillStyle="#0000FF";
-            this.ctx.fillRect(10, 700, 10, -6 * this.superShot);
+            this.ctx.fillRect(10, 700, 20, -6 * this.superShot);
             this.ctx.restore();
         }
         // draw supershot p2
         if(this.name == "player2") {
             this.ctx.save();
-            this.ctx.fillStyle="#FF0000";
-            this.ctx.strokeRect(this.canvas.width - 20,100,10,600);
+            this.ctx.strokeStyle="#FF0000";
+            this.ctx.lineWidth = 5;
+            this.ctx.strokeRect(this.canvas.width - 30,100,20,600);
             this.ctx.restore();
             this.ctx.save();
             this.ctx.fillStyle="#FF0000";
-            this.ctx.fillRect(this.canvas.width - 20, 700, 10, -6 * this.superShot);
+            this.ctx.fillRect(this.canvas.width - 30, 700, 20, -6 * this.superShot);
             this.ctx.restore();
         }
 
@@ -190,8 +192,8 @@ Player.prototype.resetMove = function() {
 
 Player.prototype.shot = function(that) {
     if(that.playersBullets.length < that.maxPlayerBullets) {
-        this.bulletIndex = 1;
-        that.playersBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y+this.height/2, -1, this, "PlasLaser", this.bulletIndex, this.color, this.speedX, this.speedY, 1, false));
+        this.bulletIndex = 0;
+        that.playersBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y+this.height/2, -1, this, "PlasLaser", this.bulletIndex, this.color, this.speedX, this.speedY, 2, false));
         //console.log(this.x);
     }
 }
@@ -199,7 +201,7 @@ Player.prototype.shot = function(that) {
 Player.prototype.shotSuper = function(that) {
     if(this.superShot >= 100) {
         this.bulletIndex = 2;
-        that.playersBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y+this.height/2, -1, this, "PlasLaser", this.bulletIndex, this.color, this.speedX, this.speedY, 16, true));
+        that.playersBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y+this.height/2, -1, this, "PlasLaser", this.bulletIndex, this.color, this.speedX, this.speedY, 2, true));
         this.removeEnemies(that.enemies, that.enemiesBullets);
         this.resetSuperShot();
     }
