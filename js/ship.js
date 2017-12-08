@@ -168,10 +168,10 @@ Ship.prototype.checkCollision = function(ships) {
 Ship.prototype.addScore = function(){
     this.score += 1;
     if(this.name == "player1") {
-        document.getElementById("score-p1").innerHTML=this.score;
+        document.getElementById("score-points-p1").innerHTML=this.score;
     }
     if(this.name == "player2") {
-        document.getElementById("score-p2").innerHTML=this.score;
+        document.getElementById("score-points-p2").innerHTML=this.score;
     }
 }
 

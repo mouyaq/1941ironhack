@@ -166,11 +166,11 @@ Game.prototype.createEnemies = function() {
             this.enemies.push(new Enemy(this.canvas, Math.floor(Math.random()*700), Math.floor(Math.random()*-500)-200, "enemy", this.enemiesList[Math.floor(Math.random() * this.enemiesList.length)], this.colorList[Math.floor(Math.random() * this.colorList.length)], 1, this.enemySpeedX, this.enemySpeedY, this.player1));
             //console.log("NUMERO DE ENEMIGOS: " + this.enemies.length);
         }
-        if( parseInt(document.getElementById("score-p1").innerHTML) > 10) {
+        if( parseInt(document.getElementById("score-points-p1").innerHTML) > 100) {
             this.enemies = [];
-            this.enemies.push(new Boss(this.canvas, Math.floor(Math.random()*700), Math.floor(Math.random()*-500)-200, "boss", "boss1", this.colorList[Math.floor(Math.random() * this.colorList.length)], 10, this.enemySpeedX, this.enemySpeedY, this.player1));
+            this.enemies.push(new Boss(this.canvas, Math.floor(Math.random()*700), Math.floor(Math.random()*-500)-200, "boss", "boss1", this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, this.enemySpeedX, this.enemySpeedY, this.player1));
             clearInterval(this.enemyPushInterval);
-            console.log("NUMERO DE ENEMIGOS: " + this.enemies.length);
+            //console.log("NUMERO DE ENEMIGOS: " + this.enemies.length);
         }
     }.bind(this), (Math.floor(Math.random() * this.enemyInterval) + 0.3) * 1000 );
 
