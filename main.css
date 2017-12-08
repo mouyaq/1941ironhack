@@ -13,6 +13,10 @@ body {
     font-size: 1em;
 }
 
+#backgrounds-label {
+    color: white;
+}
+
 #game {
     /*border: 5px solid red;*/
     height: 700px;
@@ -59,7 +63,7 @@ body {
 }
 
 #start-button {
-    background-color: #fff;
+    background-color: yellow;
     /*
     position: fixed;
     top: 200px;
