@@ -10,12 +10,12 @@ body {
     margin: 0;
     padding: 0;
     font-family: ikaruga;
-    font-size: 1.2em;
+    font-size: 1em;
 }
 
 #game {
     /*border: 5px solid red;*/
-    /*height: 700px;*/
+    height: 700px;
 }
 
 #game-board {
@@ -23,7 +23,8 @@ body {
 }
 
 #header {
-    height: 50px;
+    background-color: black;
+
 }
 
 .help {
@@ -34,8 +35,26 @@ body {
     margin: 0 auto;
     width: 1280px;
 }
+
+#options, #start-button {
+    background-color: black;
+}
+
+#scores {
+    background-color: white;
+}
 .score {
     color: white;
+}
+
+#score-points-p1, #score-label-p1 {
+    font-size: 1em;
+    color: blue;
+}
+
+#score-points-p2, #score-label-p2 {
+    font-size: 1em;
+    color: red;
 }
 
 #start-button {
@@ -50,7 +69,7 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     */
-    font-size: 2em;
+    font-size: 1.5em;
 }
 
 video {

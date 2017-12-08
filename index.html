@@ -24,26 +24,35 @@
   <br>
   <div id="header" class="container-fluid">
     <div class="row align-items-center">
-      <div id="player-selector" class="col-1 help">
-        <select id="ps">
-          <option>1 Player</option>
-          <option>2 Players</option>
-        </select>
+      <div id="options" class="col help">
+        <div id="players" class="row justify-content-center help">
+          <select id="ps">
+            <option>1 Player</option>
+            <option>2 Players</option>
+          </select>
+        </div>
+        <div id="dificult-selector" class="row justify-content-center help">
+          <select id="ds">
+            <option>Easy</option>
+            <option>Normal</option>
+            <option>Hard</option>
+            <option>Inferno</option>
+          </select>
+        </div>
       </div>
-      <div id="dificult-selector" class="col-1 help">
-        <select id="ds">
-          <option>Easy</option>
-          <option>Normal</option>
-          <option>Hard</option>
-          <option>Inferno</option>
-        </select>
+      <div>
+        <button id="start-button" class="col help">StartGame</button>
       </div>
-      <div><button id="start-button" class="col-12 help">StartGame</button></div>
-      <div id="score-label-p1" class="col-2 score help">Score Player1: </div>
-      <div id="score-p1" class="col-1 score help">0</div>
-      <div id="score-label-p2" class="col-2 score help">Score Player2: </div>
-      <div id="score-p2" class="col-1 score help">0</div>
-
+      <div id="scores" class="col">
+        <div id="score-p1" class="row score help">
+          <div id="score-label-p1" class="col score help">Score Player1: </div>
+          <div id="score-points-p1" class="col score help">0</div>
+        </div>
+        <div id="score-p2" class="row score help">
+            <div id="score-label-p2" class="col score help">Score Player2: </div>
+            <div id="score-points-p2" class="col score help">0</div>
+        </div>    
+      </div>
     </div>
   </div>
   <br> 
@@ -53,7 +62,7 @@
     </video>
   </div>
   <div id="game-board">
-    <canvas id="game" class="container"></canvas>
+    <canvas id="game" class="container-fluid"></canvas>
   </div>
 </body>
 </html>

@@ -18,10 +18,6 @@ function Ship(canvas, x, y, type, name, color, health, speedX, speedY) {
     this.destroyed = false;
     this.removable = false;
     this.superShot = 0;
-    this.posXmin = this.x;
-    this.posYmin = this.y;
-    this.posXmax = this.x + this.width;
-    this.posYmax = this.y + this.height;
     this.score = 0;
     this.explosionAudio = new Audio("./sounds/explosion.mp3");
     this.explosionAudio.volume = 0.2;
@@ -139,10 +135,10 @@ Ship.prototype.resetSuperShot = function() {
 }
 
 Ship.prototype.checkCollision = function(ships) {
-    this.posXmin = this.x + 1/4 * this.width;
-    this.posYmin = this.y + 1/4 * this.height;
-    this.posXmax = this.x + 3/4 * this.width;
-    this.posYmax = this.y + 3/4 * this.height;
+    this.posXmin = this.x + 1/8 * this.width;
+    this.posYmin = this.y + 1/8 * this.height;
+    this.posXmax = this.x + 7/8 * this.width;
+    this.posYmax = this.y + 7/8 * this.height;
     /*
     this.posXmin = this.x;
     this.posYmin = this.y;
@@ -180,8 +176,9 @@ Ship.prototype.addScore = function(){
 }
 
 Ship.prototype.receiveDamage = function() {
-    this.health -= 1;
-    console.log(this.health);
+    if(this.health > 0) {
+        this.health -= 1;
+    }
 }
 
 Ship.prototype.isAlive = function() {

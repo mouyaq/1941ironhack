@@ -59,6 +59,10 @@ Player.prototype.draw = function(that) {
         // this.ctx.clearRect(this.x,this.y,this.width,this.height);
         // this.ctx.fillRect(this.x,this.y,this.width,this.height);
         // this.ctx.restore();
+        // this.ctx.save()
+        // this.ctx.fillStyle = "#FF0000"
+        // this.ctx.fillRect(this.posXmin,this.posYmin,this.posXmax-this.posXmin,this.posYmax-this.posYmin);
+        // this.ctx.restore();
 
         this.ctx.save();
         this.ctx.drawImage(
@@ -225,7 +229,7 @@ Player.prototype.resetMove = function() {
 Player.prototype.shot = function(that) {
     if(that.playersBullets.length < that.maxPlayerBullets) {
         this.bulletIndex = 0;
-        that.playersBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y+this.height/2, -1, this, "PlasLaser", this.bulletIndex, this.color, this.speedX, this.speedY, 2, false));
+        that.playersBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y+this.height/2, -1, this, this.bulletIndex, this.color, this.speedX, this.speedY, false));
         //console.log(this.x);
     }
 }
@@ -233,7 +237,7 @@ Player.prototype.shot = function(that) {
 Player.prototype.shotSuper = function(that) {
     if(this.superShot >= 100) {
         this.bulletIndex = 2;
-        that.playersBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y+this.height/2, -1, this, "PlasLaser", this.bulletIndex, this.color, this.speedX, this.speedY, 2, true));
+        that.playersBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y+this.height/2, -1, this, this.bulletIndex, this.color, this.speedX, this.speedY, true));
         this.removeEnemies(that.enemies, that.enemiesBullets);
         this.resetSuperShot();
     }
