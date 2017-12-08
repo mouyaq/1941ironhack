@@ -1,7 +1,7 @@
 window.onload = function() {
     document.getElementById("start-button").onclick = function() {
         document.getElementById("intro").remove();
-        var players = document.getElementById("ps").value
+        var players = document.getElementById("ps").value;
         var dificult = document.getElementById("ds").value;
         startGame(players, dificult);
     }

@@ -24,7 +24,7 @@
   <br>
   <div id="header" class="container-fluid">
     <div class="row align-items-center">
-      <div id="options" class="col help">
+      <div id="options" class="col-2 help">
         <div id="players" class="row justify-content-center help">
           <select id="ps">
             <option>1 Player</option>
@@ -40,10 +40,23 @@
           </select>
         </div>
       </div>
+      <div id="options2" class="col-2 help">
+          <div id="backgrounds-label" class="row justify-content-center help">Select background</div>
+        <div id="backgrounds" class="row justify-content-center help">
+          <select id="background">
+            <option>bg13b-min.png</option>
+            <option>bg12.png</option>
+            <option>bg14c.png</option>
+            <option>bg16b.jpg</option>
+            <option>bg17.jpg</option>
+          </select>
+        </div>
+      </div>
       <div>
         <button id="start-button" class="col help">StartGame</button>
       </div>
-      <div id="scores" class="col">
+      <div class="col-1"></div>
+      <div id="scores" class="col-4">
         <div id="score-p1" class="row score help">
           <div id="score-label-p1" class="col score help">Score Player1: </div>
           <div id="score-points-p1" class="col score help">0</div>

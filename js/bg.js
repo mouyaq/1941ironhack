@@ -8,7 +8,9 @@ function Bg(canvas) {
 
 Bg.prototype.draw = function() {
     this.sprite = new Image();
-    this.sprite.src = "./images/bg/bg13b-min.png";
+    var bgFile = document.getElementById("background").value;
+    var bgFilePath = "./images/bg/" + bgFile;
+    this.sprite.src =bgFilePath;
     //this.sprite.src = "./images/bg/bg16.jpg";
     this.width = this.sprite.width;
     this.height = this.sprite.height;
