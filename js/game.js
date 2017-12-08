@@ -1,6 +1,7 @@
 function Game(canvas, playerNumber, dificult) {
     this.canvas = canvas;
     this.playerNumber = playerNumber.toLowerCase();
+    this.gameOver = false;
     this.dificult = dificult.toLowerCase();
     this.ctx = this.canvas.getContext('2d');
     this.bg = new Bg(canvas);
@@ -51,34 +52,45 @@ function Game(canvas, playerNumber, dificult) {
 }
 
 Game.prototype.draw = function(mode) {
-    // Draw background
-    this.bg.draw();
-    // Draw players bullets
-    this.playersBullets.forEach(function(bullet) {
-        bullet.isOutOfScreen();
-        bullet.checkCollision(this.enemies);
-        bullet.draw(this.playersBullets);
-    }.bind(this))
-    // Draw enemies bullets
-    this.enemiesBullets.forEach(function(bullet) {
-        bullet.isOutOfScreen();
-        bullet.checkCollision(this.players);
-        bullet.draw(this.enemiesBullets);
-    }.bind(this))
-    // Draw enemies
-    this.enemies.forEach(function(enemy) {
-        enemy.isOutOfScreen();
-        enemy.checkCollision(this.players);
-        enemy.draw(this);
-    }.bind(this))
-    // Draw player1
-    this.players.forEach(function(player) {
-        //player.checkCollision(this.enemies);
-        player.checkCollision(this.players);
-        player.draw(this);
-    }.bind(this))
+   // if(!this.gameOver) {
+        // Draw background
+        this.bg.draw();
+        // Draw players bullets
+        this.playersBullets.forEach(function(bullet) {
+            bullet.isOutOfScreen();
+            bullet.checkCollision(this.enemies);
+            bullet.draw(this.playersBullets);
+        }.bind(this))
+        // Draw enemies bullets
+        this.enemiesBullets.forEach(function(bullet) {
+            bullet.isOutOfScreen();
+            bullet.checkCollision(this.players);
+            bullet.draw(this.enemiesBullets);
+        }.bind(this))
+        // Draw enemies
+        this.enemies.forEach(function(enemy) {
+            enemy.isOutOfScreen();
+            enemy.checkCollision(this.players);
+            enemy.draw(this);
+        }.bind(this))
+        // Draw player1
+        this.players.forEach(function(player) {
+            //player.checkCollision(this.enemies);
+            player.checkCollision(this.players);
+            player.draw(this);
+        }.bind(this))
 
-    window.requestAnimationFrame(this.draw.bind(this));
+        window.requestAnimationFrame(this.draw.bind(this));
+  // }
+    // else {
+    //     var gameOverSprite = new Image();
+    //     gameOverSprite.src = url("./images/bg/gameo-over.png");
+    //     this.ctx.clearRect(0,0,gameOverSprite.width, gameOverSprite.height);
+    //     this.ctx.drawImage(gameOverSprite, 0, 0);
+    //     window.requestAnimationFrame(this.draw.bind(this));
+    // }
+
+    
 }
 
 Game.prototype.setDificult = function(dificult) {
@@ -199,7 +211,7 @@ Game.prototype.myRandom = function(min, max) {
     return num;
 }
 
-Game.prototype.gameOver = function() {
+Game.prototype.setGameOver = function() {
     /*
     this.sprite = new Image();
     this.sprite.src = "./images/bg/game-over.png";
@@ -210,8 +222,15 @@ Game.prototype.gameOver = function() {
         this.ctx.drawImage(this.sprite, this.x, this.y);
     }.bind(this);
     */
-    this.ctx.fillRect(0,0,this.canvas.width, this.canvas.height);
-    alert("GAME OVER");
+    // this.ctx.fillRect(0,0,this.canvas.width, this.canvas.height);
+    
+    this.gameOver = true;
+    $("#game").hide();
+    $("#gameover").show();
+
+    // this.gameOver.src = url("./images/bg/gameo-over.png");
+    // this.ctx.clearRect(0,0,this.gameOver.width, this.gameOver.height);
+    // this.ctx.drawImage(this.gameOver, 0, 0);
     setTimeout(function() {
         window.location.replace("./index.html");
     }, 5000);

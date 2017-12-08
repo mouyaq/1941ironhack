@@ -24,7 +24,8 @@ Player.prototype.draw = function(that) {
         var index = that.players.indexOf(this);
         that.players.splice(index, 1);
         if(that.players.length <= 0) {
-            that.gameOver();
+            console.log(that);
+            that.setGameOver();
         }
     }
     this.selectSprite(this.name, this.color);
