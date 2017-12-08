@@ -28,7 +28,6 @@ body {
 
 #header {
     background-color: black;
-
 }
 
 .help {
@@ -41,7 +40,12 @@ body {
     width: 1280px;
 }
 
-#options, #start-button {
+.gameover-video {
+    text-align: center;
+    margin: 0 auto;
+}
+
+#options, #options2, #start-button {
     background-color: black;
 }
 
