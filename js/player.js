@@ -2,6 +2,7 @@ Player.prototype = Object.create(Ship.prototype);
 
 function Player(canvas, x, y, type, name, color, health, speedX, speedY, shotIncrement) {
     Ship.call(this, canvas, x, y, type, name, color, health, speedX, speedY);
+    this.life = this.health;
     this.scale = 0.5;
     this.frameIndexArray = [185, 181, 172, 188, 181, 172, 188];
     this.framePositionArray = [0, 186, 367, 539, 727, 908, 1080];
@@ -23,7 +24,7 @@ Player.prototype.draw = function(that) {
         var index = that.players.indexOf(this);
         that.players.splice(index, 1);
         if(that.players.length <= 0) {
-            alert("GAME OVER");
+            that.gameOver();
         }
     }
     this.selectSprite(this.name, this.color);
@@ -36,8 +37,12 @@ Player.prototype.draw = function(that) {
             this.moveDown();
             this.resetMove();
          }
-        if (this.keys && this.keys[P1_LEFT]) { this.moveLeft(); }
-        if (this.keys && this.keys[P1_RIGHT]) { this.moveRight(); }
+        if (this.keys && this.keys[P1_LEFT]) { 
+            this.moveLeft(); 
+        }
+        if (this.keys && this.keys[P1_RIGHT]) { 
+            this.moveRight(); 
+        }
         
         if (this.keys && this.keys[P2_UP]) { 
             this.moveUp();
@@ -54,6 +59,10 @@ Player.prototype.draw = function(that) {
         // this.ctx.clearRect(this.x,this.y,this.width,this.height);
         // this.ctx.fillRect(this.x,this.y,this.width,this.height);
         // this.ctx.restore();
+        // this.ctx.save()
+        // this.ctx.fillStyle = "#FF0000"
+        // this.ctx.fillRect(this.posXmin,this.posYmin,this.posXmax-this.posXmin,this.posYmax-this.posYmin);
+        // this.ctx.restore();
 
         this.ctx.save();
         this.ctx.drawImage(
@@ -69,26 +78,55 @@ Player.prototype.draw = function(that) {
         );
         this.ctx.restore();
 
+        // draw player1 health
+        if(this.name == "player1") {
+            this.ctx.save();
+            this.ctx.strokeStyle="#0000FF";
+            this.ctx.lineWidth = 2;
+            this.ctx.strokeRect(this.x, this.y + this.height, this.width, 10);
+            this.ctx.restore();
+            this.ctx.save();
+            this.ctx.fillStyle="#0000FF";
+            this.ctx.fillRect(this.x, this.y + this.height, (this.width/this.life)*this.health, 10);
+            this.ctx.restore();
+        }
+
         // draw supershot p1
         if(this.name == "player1") {
             this.ctx.save();
-            this.ctx.fillStyle="#0000FF";
-            this.ctx.strokeRect(10,100,10,600);
+            this.ctx.strokeStyle="#0000FF";
+            this.ctx.lineWidth = 5;
+            this.ctx.strokeRect(10,100,20,600);
             this.ctx.restore();
             this.ctx.save();
             this.ctx.fillStyle="#0000FF";
-            this.ctx.fillRect(10, 700, 10, -6 * this.superShot);
+            this.ctx.fillRect(10, 700, 20, -6 * this.superShot);
             this.ctx.restore();
         }
+
+        // draw player1 health
+        if(this.name == "player2") {
+            this.ctx.save();
+            this.ctx.strokeStyle="#FF0000";
+            this.ctx.lineWidth = 2;
+            this.ctx.strokeRect(this.x, this.y + this.height, this.width, 10);
+            this.ctx.restore();
+            this.ctx.save();
+            this.ctx.fillStyle="#FF0000";
+            this.ctx.fillRect(this.x, this.y + this.height, (this.width/this.life)*this.health, 10);
+            this.ctx.restore();
+        }
+
         // draw supershot p2
         if(this.name == "player2") {
             this.ctx.save();
-            this.ctx.fillStyle="#FF0000";
-            this.ctx.strokeRect(this.canvas.width - 20,100,10,600);
+            this.ctx.strokeStyle="#FF0000";
+            this.ctx.lineWidth = 5;
+            this.ctx.strokeRect(this.canvas.width - 30,100,20,600);
             this.ctx.restore();
             this.ctx.save();
             this.ctx.fillStyle="#FF0000";
-            this.ctx.fillRect(this.canvas.width - 20, 700, 10, -6 * this.superShot);
+            this.ctx.fillRect(this.canvas.width - 30, 700, 20, -6 * this.superShot);
             this.ctx.restore();
         }
 
@@ -190,8 +228,8 @@ Player.prototype.resetMove = function() {
 
 Player.prototype.shot = function(that) {
     if(that.playersBullets.length < that.maxPlayerBullets) {
-        this.bulletIndex = 1;
-        that.playersBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y+this.height/2, -1, this, "PlasLaser", this.bulletIndex, this.color, this.speedX, this.speedY, 1, false));
+        this.bulletIndex = 0;
+        that.playersBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y+this.height/2, -1, this, this.bulletIndex, this.color, this.speedX, this.speedY, false));
         //console.log(this.x);
     }
 }
@@ -199,7 +237,7 @@ Player.prototype.shot = function(that) {
 Player.prototype.shotSuper = function(that) {
     if(this.superShot >= 100) {
         this.bulletIndex = 2;
-        that.playersBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y+this.height/2, -1, this, "PlasLaser", this.bulletIndex, this.color, this.speedX, this.speedY, 16, true));
+        that.playersBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y+this.height/2, -1, this, this.bulletIndex, this.color, this.speedX, this.speedY, true));
         this.removeEnemies(that.enemies, that.enemiesBullets);
         this.resetSuperShot();
     }

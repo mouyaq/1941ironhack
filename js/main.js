@@ -26,10 +26,4 @@ function startGame(players, dificult) {
         audio.play();
     }, 23000);
     game.draw("play");
-    /* Option with set interval
-    setInterval(function(){
-        game.draw()
-    }, 1000/60);
-    */
-    
 }
