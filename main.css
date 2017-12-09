@@ -41,6 +41,7 @@ body {
 }
 
 .gameover-video {
+    visibility: hidden;
     text-align: center;
     margin: 0 auto;
 }
