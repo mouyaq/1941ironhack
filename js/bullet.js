@@ -122,11 +122,11 @@ Bullet.prototype.checkCollision = function(ships) {
             // console.log("BULLET COLLISION !=");
             // console.log("BULLET COLOR = " + this.color + " SHIP COLOR = " + ship.color);
 
-            this.owner.addScore();
             ship.receiveDamage();
 
             if(!ship.isAlive()) {
-                ship.setDestroyed();
+                ship.setDestroyed(this.owner);
+                // this.owner.addScore();
             }
             
             if(!this.god) {

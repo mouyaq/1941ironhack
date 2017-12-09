@@ -24,7 +24,6 @@ Player.prototype.draw = function(that) {
         var index = that.players.indexOf(this);
         that.players.splice(index, 1);
         if(that.players.length <= 0) {
-            console.log(that);
             that.setGameOver();
         }
     }
@@ -247,7 +246,7 @@ Player.prototype.shotSuper = function(that) {
 Player.prototype.removeEnemies = function(enemies, enemiesBullets) {
     enemies.forEach(function(enemy){
         if(enemy.color != this.color) {
-            enemy.setDestroyed();
+            enemy.setDestroyed(this);
         }
     }.bind(this));
     enemiesBullets.forEach(function(enemyBullet) {

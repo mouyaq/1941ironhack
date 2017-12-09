@@ -97,7 +97,10 @@ Ship.prototype.setRemovable = function() {
     this.removable = true;
 }
 
-Ship.prototype.setDestroyed = function() {
+Ship.prototype.setDestroyed = function(that) {
+    if(that.type = "player") {
+        that.addScore();
+    }
     this.destroyed = true;
 }
 
@@ -156,10 +159,10 @@ Ship.prototype.checkCollision = function(ships) {
             ship.receiveDamage();
             this.receiveDamage();
             if(!ship.isAlive()) {
-                ship.setDestroyed();
+                ship.setDestroyed(this);
             }
             if(!this.isAlive()) {
-                this.setDestroyed();
+                this.setDestroyed(ship);
             }
         }
     }.bind(this))
