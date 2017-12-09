@@ -226,6 +226,7 @@ Game.prototype.setGameOver = function() {
     
     this.gameOver = true;
     $("#game").hide();
+    $("#gameover").css("visibility", "visible");
     $("#gameover").show();
 
     // this.gameOver.src = url("./images/bg/gameo-over.png");
@@ -233,5 +234,5 @@ Game.prototype.setGameOver = function() {
     // this.ctx.drawImage(this.gameOver, 0, 0);
     setTimeout(function() {
         window.location.replace("./index.html");
-    }, 5000);
+    }, 7000);
 }
