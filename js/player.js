@@ -181,8 +181,8 @@ Player.prototype.moveUp = function() {
 }
 
 Player.prototype.moveDown = function() {
-    if(this.y + this.height >= this.canvas.height) {
-        this.y = this.canvas.height - this.height;
+    if(this.y + this.height >= this.canvas.height - 20) {
+        this.y = this.canvas.height - this.height - 20;
     }
     else {
         this.y += this.speedY;
