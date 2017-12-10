@@ -130,7 +130,13 @@ Ship.prototype.increaseSuperShot = function() {
         this.superShotAudio.volume = 0.2;
         this.superShotAudio.play();
         this.superShot += this.shotIncrement;
+        console.log(this.superShot);
     }
+}
+
+Ship.prototype.setShotIncrement = function(shotIncrement) {
+    this.shotIncrement = shotIncrement;
+    console.log("SHOT INCREMENT = " + this.shotIncrement);
 }
 
 Ship.prototype.resetSuperShot = function() {

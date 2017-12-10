@@ -8,22 +8,24 @@ function Game(canvas, playerNumber, dificult) {
     this.playersBullets = [];
     this.enemies = [];
     this.enemiesBullets = [];
-    this.setDificult("tutorial");
-    setTimeout(function(){
-        this.setDificult(this.dificult);
-    }.bind(this), 22000);
     this.enemiesList = ["enemy1", "enemy2"];
     this.colorList = ["white", "black"];
     this.players = [];
-    this.player1 = new Player(this.canvas, this.canvas.width * 1/4, this.canvas.height - 100, "player", "player1", this.colorList[Math.floor(Math.random() * this.colorList.length)], 5, 10, 5, this.shotIncrement);
+    this.player1 = new Player(this.canvas, this.canvas.width * 1/4, this.canvas.height - 100, "player", "player1", this.colorList[Math.floor(Math.random() * this.colorList.length)], 5, 10, 5);
     this.players.push(this.player1);
     if(this.playerNumber == "2 players") {
-        this.player2 = new Player(this.canvas, this.canvas.width * 3/4, this.canvas.height - 100, "player", "player2", this.colorList[Math.floor(Math.random() * this.colorList.length)], 5, 10, 5, this.shotIncrement);
+        this.player2 = new Player(this.canvas, this.canvas.width * 3/4, this.canvas.height - 100, "player", "player2", this.colorList[Math.floor(Math.random() * this.colorList.length)], 5, 10, 5);
         this.players.push(this.player2);
     }
     else {
         //console.log(this.playerNumber);
     }
+    // First 22 seconds always are tutorial mode
+    this.setDificult("tutorial");
+    // After 22 seconds set real dificult
+    setTimeout(function(){
+        this.setDificult(this.dificult);
+    }.bind(this), 22000);
     this.keysList = [];
 
     window.addEventListener('keydown', function (e) {
@@ -105,6 +107,9 @@ Game.prototype.setDificult = function(dificult) {
             this.enemySpeedX = 0.5;
             this.enemySpeedY = 0.5;
             this.shotIncrement = 25;
+            this.players.forEach(function(player) {
+                player.setShotIncrement(this.shotIncrement);
+            }.bind(this));
             console.log("SET DIFICULT TO TUTORIAL");
             this.createEnemies();
             break;
@@ -119,55 +124,67 @@ Game.prototype.setDificult = function(dificult) {
             this.enemySpeedX = 2;
             this.enemySpeedY = 2;
             this.shotIncrement = 25;
+            this.players.forEach(function(player) {
+                player.setShotIncrement(this.shotIncrement);
+            }.bind(this));
             console.log("SET DIFICULT TO EASY");
             this.deleteEnemiesInterval();
             this.createEnemies();
             break;
         case "normal":
-           // interval for each enemy in seconds.
-           // this.enemyInterval = this.myRandom(2,4);
-           this.enemyInterval = 3;
-           // Maximum number of enemies
-           this.maxEnemies = 10;
-           this.maxPlayerBullets = 25;
-           this.maxEnemyBullets = 30
-           this.enemySpeedX = 4;
-           this.enemySpeedY = 4;
-           this.shotIncrement = 10;
-           console.log("SET DIFICULT TO MEDIUM");
-           this.deleteEnemiesInterval();
-           this.createEnemies();
-           break;
+            // interval for each enemy in seconds.
+            // this.enemyInterval = this.myRandom(2,4);
+            this.enemyInterval = 3;
+            // Maximum number of enemies
+            this.maxEnemies = 10;
+            this.maxPlayerBullets = 25;
+            this.maxEnemyBullets = 30
+            this.enemySpeedX = 4;
+            this.enemySpeedY = 4;
+            this.shotIncrement = 10;
+            this.players.forEach(function(player) {
+                player.setShotIncrement(this.shotIncrement);
+            }.bind(this)); 
+            console.log("SET DIFICULT TO MEDIUM");
+            this.deleteEnemiesInterval();
+            this.createEnemies();
+            break;
         case "hard":
-           // interval for each enemy in seconds.
-        //    this.enemyInterval = this.myRandom(1,3);
+            // interval for each enemy in seconds.
+            // this.enemyInterval = this.myRandom(1,3);
             this.enemyInterval = 2;
-           // Maximum number of enemies
-           this.maxEnemies = 15;
-           this.maxPlayerBullets = 25;
-           this.maxEnemyBullets = 50
-           this.enemySpeedX = 8;
-           this.enemySpeedY = 8;
-           this.shotIncrement = 5;
-           console.log("SET DIFICULT TO HARD");
-           this.deleteEnemiesInterval();
-           this.createEnemies();
-           break;
+            // Maximum number of enemies
+            this.maxEnemies = 15;
+            this.maxPlayerBullets = 25;
+            this.maxEnemyBullets = 50
+            this.enemySpeedX = 8;
+            this.enemySpeedY = 8;
+            this.shotIncrement = 5;
+            this.players.forEach(function(player) {
+                player.setShotIncrement(this.shotIncrement);
+            }.bind(this));
+            console.log("SET DIFICULT TO HARD");
+            this.deleteEnemiesInterval();
+            this.createEnemies();
+            break;
         case "inferno":
-           // interval for each enemy in seconds.
-           //this.enemyInterval = this.myRandom(0.5,1);
-           this.enemyInterval = 1;
-           // Maximum number of enemies
-           this.maxEnemies = 30;
-           this.maxPlayerBullets = 15;
-           this.maxEnemyBullets = 100
-           this.enemySpeedX = 16;
-           this.enemySpeedY = 16;
-           this.shotIncrement = 1;
-           console.log("SET DIFICULT TO INFERNO");
-           this.deleteEnemiesInterval();
-           this.createEnemies();
-           break;
+            // interval for each enemy in seconds.
+            //this.enemyInterval = this.myRandom(0.5,1);
+            this.enemyInterval = 1;
+            // Maximum number of enemies
+            this.maxEnemies = 30;
+            this.maxPlayerBullets = 15;
+            this.maxEnemyBullets = 100
+            this.enemySpeedX = 16;
+            this.enemySpeedY = 16;
+            this.shotIncrement = 1;
+            this.players.forEach(function(player) {
+                player.setShotIncrement(this.shotIncrement);
+            }.bind(this));
+            console.log("SET DIFICULT TO INFERNO");
+            this.deleteEnemiesInterval();
+            this.createEnemies();
+            break;
         default:
     }
 }
