@@ -77,9 +77,9 @@ Boss.prototype.draw = function(that) {
 }
 
 Boss.prototype.shot = function(that) {
-    that.enemiesBullets.push(new Bullet(this.canvas, this.x, this.y, 0, this, 0, this.color, -this.speedX*2, -Math.abs(this.speedY * 4), false));
-    that.enemiesBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y, 0, this, 0, this.color, -this.speedX*2, -Math.abs(this.speedY * 4), false));
-    that.enemiesBullets.push(new Bullet(this.canvas, this.x+this.width, this.y, 0, this, 0, this.color, -this.speedX*2, -Math.abs(this.speedY * 4), false));
+    that.enemiesBullets.push(new Bullet(this.canvas, this.x, this.y, 0, this, 0, this.color, "straight", -this.speedX*2, -Math.abs(this.speedY * 4), false));
+    that.enemiesBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y, 0, this, 0, this.color, "straight", -this.speedX*2, -Math.abs(this.speedY * 4), false));
+    that.enemiesBullets.push(new Bullet(this.canvas, this.x+this.width, this.y, 0, this, 0, this.color, "straight", -this.speedX*2, -Math.abs(this.speedY * 4), false));
 }
 
 Boss.prototype.move = function(movement) {

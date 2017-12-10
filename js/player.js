@@ -229,7 +229,7 @@ Player.prototype.resetMove = function() {
 Player.prototype.shot = function(that) {
     if(that.playersBullets.length < that.maxPlayerBullets) {
         this.bulletIndex = 0;
-        that.playersBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y+this.height/2, -1, this, this.bulletIndex, this.color, this.speedX, this.speedY, false));
+        that.playersBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y+this.height/2, -1, this, this.bulletIndex, this.color, "straight", this.speedX, this.speedY, false));
         //console.log(this.x);
     }
 }
@@ -237,7 +237,7 @@ Player.prototype.shot = function(that) {
 Player.prototype.shotSuper = function(that) {
     if(this.superShot >= 100) {
         this.bulletIndex = 2;
-        that.playersBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y+this.height/2, -1, this, this.bulletIndex, this.color, this.speedX, this.speedY, true));
+        that.playersBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y+this.height/2, -1, this, this.bulletIndex, this.color, "straight", this.speedX, this.speedY, true));
         this.removeEnemies(that.enemies, that.enemiesBullets);
         this.resetSuperShot();
     }

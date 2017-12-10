@@ -37,6 +37,7 @@ function Game(canvas, playerNumber, dificult) {
     setTimeout(function(){
         this.setDificult(this.dificult);
     }.bind(this), 22000);
+    this.bossPoints = 10;
     this.keysList = [];
 
     window.addEventListener('keydown', function (e) {
@@ -115,8 +116,8 @@ Game.prototype.setDificult = function(dificult) {
             this.maxEnemies = 5;
             this.maxPlayerBullets = 25;
             this.maxEnemyBullets = 1
-            this.enemySpeedX = 0.5;
-            this.enemySpeedY = 0.5;
+            this.enemySpeedX = 1;
+            this.enemySpeedY = 1;
             this.shotIncrement = 25;
             this.players.forEach(function(player) {
                 player.setShotIncrement(this.shotIncrement);
@@ -206,7 +207,7 @@ Game.prototype.createEnemies = function() {
             this.enemies.push(new Enemy(this.canvas, Math.floor(Math.random()*700), Math.floor(Math.random()*-500)-200, "enemy", this.enemiesList[Math.floor(Math.random() * this.enemiesList.length)], this.colorList[Math.floor(Math.random() * this.colorList.length)], 1, this.enemySpeedX, this.enemySpeedY, this.player1));
             //console.log("NUMERO DE ENEMIGOS: " + this.enemies.length);
         }
-        if( parseInt(document.getElementById("score-points-p1").innerHTML) > 100) {
+        if( parseInt(document.getElementById("score-points-p1").innerHTML) > this.bossPoints) {
             this.enemies = [];
             this.enemies.push(new Boss(this.canvas, Math.floor(Math.random()*700), Math.floor(Math.random()*-500)-200, "boss", "boss1", this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, this.enemySpeedX, this.enemySpeedY, this.player1));
             clearInterval(this.enemyPushInterval);

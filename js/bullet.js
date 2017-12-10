@@ -1,14 +1,16 @@
-function Bullet(canvas, x, y, yAdjust, owner, index, color, speedX, speedY, god) {
+function Bullet(canvas, x, y, yAdjust, owner, index, color, movement, speedX, speedY, god) {
     this.canvas = canvas;
     this.ctx = this.canvas.getContext("2d");
     this.frameType = ["PlasLaser", "PlasLaser", "PlasLaser", "Energy"];
     this.x = x;
     this.y = y;
+    this.bulletTime = 0;
     this.yAdjust = yAdjust;
     this.owner = owner;
     this.frameIndex = index ;
     this.type = this.frameType[this.frameIndex];
     this.color = color;
+    this.movement = movement;
     this.speedX = speedX;
     this.speedY = speedY;
     this.sprite = new Image();
@@ -70,16 +72,16 @@ Bullet.prototype.draw = function(bullets) {
             );
             this.ctx.restore();
         }.bind(this);
-        this.y -= this.speedY;
-        if(this.frameIndex == 4) {
-            this.frameIndex +=1;
-        }
-        else {
-            if(this.frameIndex == 5) {           
-                this.frameIndex -=1;
-            }
-        }
-        //this.move();
+        //this.y -= this.speedY;
+        // if(this.frameIndex == 4) {
+        //     this.frameIndex +=1;
+        // }
+        // else {
+        //     if(this.frameIndex == 5) {           
+        //         this.frameIndex -=1;
+        //     }
+        // }
+        this.move(this.movement);
     }   
 }
 
@@ -157,4 +159,24 @@ Bullet.prototype.checkCollision = function(ships) {
 
 Bullet.prototype.setRemovable = function() {
     this.removable = true;
+}
+
+Bullet.prototype.move = function(movement) {
+    switch(movement) {
+        case "straight":
+            this.y -= this.speedY;
+            break;
+        case "angleLeft":
+            this.y -= this.speedY;
+            this.x += this.speedX/2;
+            break;
+        case "angleRight":
+            this.y -= this.speedY;
+            this.x -= this.speedX/4;
+            break;
+        case "sin":
+            this.y -= this.speedY;
+            this.x += Math.sin(this.bulletTime * (Math.PI/90));
+            this.bulletTime += 1;
+    }
 }
