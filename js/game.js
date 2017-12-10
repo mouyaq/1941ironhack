@@ -5,6 +5,17 @@ function Game(canvas, playerNumber, dificult) {
     this.dificult = dificult.toLowerCase();
     this.ctx = this.canvas.getContext('2d');
     this.bg = new Bg(canvas);
+    this.audioTutorial = new Audio("./sounds/ik0.mp3");
+    this.audioTutorial.volume = 0.1;
+    this.audioGame = new Audio("./sounds/ik1_loop.mp3");
+    this.audioGame.volume = 0.1;
+    this.audioGame.loop = "loop";
+    this.audioTutorial.play();
+    setTimeout(function() {
+        this.audioGame.play();
+        this.audioTutorial.pause();
+        this.audioTutorial.currentTime = 0;
+    }.bind(this), 23000);
     this.playersBullets = [];
     this.enemies = [];
     this.enemiesBullets = [];
@@ -228,28 +239,19 @@ Game.prototype.myRandom = function(min, max) {
     return num;
 }
 
-Game.prototype.setGameOver = function() {
-    /*
-    this.sprite = new Image();
-    this.sprite.src = "./images/bg/game-over.png";
-    this.width = this.sprite.width;
-    this.height = this.sprite.height;
-    this.sprite.onload = function() {
-        this.ctx.clearRect(0,0,this.width, this.height);
-        this.ctx.drawImage(this.sprite, this.x, this.y);
-    }.bind(this);
-    */
-    // this.ctx.fillRect(0,0,this.canvas.width, this.canvas.height);
-    
+Game.prototype.setGameOver = function() { 
     this.gameOver = true;
+    this.audioTutorial.pause();
+    this.audioTutorial.currentTime = 0;
+    this.audioGame.pause();
+    this.audioGame.currentTime = 0;
+    // this.audioGame.src = "";
     $("#game").hide();
     $("#gameover").css("visibility", "visible");
+    $("#gameover").get(0).play();
     $("#gameover").show();
 
-    // this.gameOver.src = url("./images/bg/gameo-over.png");
-    // this.ctx.clearRect(0,0,this.gameOver.width, this.gameOver.height);
-    // this.ctx.drawImage(this.gameOver, 0, 0);
     setTimeout(function() {
         window.location.replace("./index.html");
-    }, 7000);
+    }, 10000);
 }
