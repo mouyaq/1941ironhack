@@ -1,7 +1,7 @@
 Enemy.prototype = Object.create(Ship.prototype);
 
-function Enemy(canvas, x, y, type, name, color, health, speedX, speedY, player) {
-    Ship.call(this, canvas, x, y, type, name, color, health, speedX, speedY);
+function Enemy(game, canvas, x, y, type, name, color, health, speedX, speedY, player) {
+    Ship.call(this, game, canvas, x, y, type, name, color, health, speedX, speedY);
     this.life = this.health;
     this.playerPositionX = player.x;
     this.playerPositionY = player.y;
@@ -99,29 +99,30 @@ Enemy.prototype.getPlayerPosition = function(player) {
 
 Enemy.prototype.shot = function(that) {
     // ["straight", "double", "triple", "tripeAngled"];
+    this.bulletIndex = 0;
     switch(this.shotType) {
         case "single":
-            that.enemiesBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y, 0, this, 0, this.color, "straight", -this.speedX*2, -this.speedY*2, false));
+            that.enemiesBullets.push(new Bullet(this.game, this.canvas, this.x+this.width/2, this.y, 0, this, this.bulletIndex, this.color, "straight", -this.speedX*2, -this.speedY*2, false));
             break;
         case "double":
-            that.enemiesBullets.push(new Bullet(this.canvas, this.x+this.width/4, this.y, 0, this, 0, this.color, "straight", -this.speedX*2, -this.speedY*2, false));
-            that.enemiesBullets.push(new Bullet(this.canvas, this.x+this.width*3/4, this.y, 0, this, 0, this.color, "straight", -this.speedX*2, -this.speedY*2, false));
+            that.enemiesBullets.push(new Bullet(this.game, this.canvas, this.x+this.width/4, this.y, 0, this, this.bulletIndex, this.color, "straight", -this.speedX*2, -this.speedY*2, false));
+            that.enemiesBullets.push(new Bullet(this.game, this.canvas, this.x+this.width*3/4, this.y, 0, this, this.bulletIndex, this.color, "straight", -this.speedX*2, -this.speedY*2, false));
             break;
         case "triple":
-            that.enemiesBullets.push(new Bullet(this.canvas, this.x+this.width/8, this.y, 0, this, 0, this.color, "straight", -this.speedX*2, -this.speedY*2, false));
-            that.enemiesBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y, 0, this, 0, this.color, "straight", -this.speedX*2, -this.speedY*2, false));            
-            that.enemiesBullets.push(new Bullet(this.canvas, this.x+this.width*7/8, this.y, 0, this, 0, this.color, "straight", -this.speedX*2, -this.speedY*2, false));
+            that.enemiesBullets.push(new Bullet(this.game, this.canvas, this.x+this.width/8, this.y, 0, this, this.bulletIndex, this.color, "straight", -this.speedX*2, -this.speedY*2, false));
+            that.enemiesBullets.push(new Bullet(this.game, this.canvas, this.x+this.width/2, this.y, 0, this, this.bulletIndex, this.color, "straight", -this.speedX*2, -this.speedY*2, false));            
+            that.enemiesBullets.push(new Bullet(this.game, this.canvas, this.x+this.width*7/8, this.y, 0, this, this.bulletIndex, this.color, "straight", -this.speedX*2, -this.speedY*2, false));
             break;
         case "tripeAngled":
-            that.enemiesBullets.push(new Bullet(this.canvas, this.x+this.width/8, this.y, 0, this, 0, this.color, "angleLeft", -this.speedX*2, -this.speedY*2, false));
-            that.enemiesBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y, 0, this, 0, this.color, "straight", -this.speedX*2, -this.speedY*2, false));            
-            that.enemiesBullets.push(new Bullet(this.canvas, this.x+this.width*7/8, this.y, 0, this, 0, this.color, "angleRight", -this.speedX*2, -this.speedY*2, false));
+            that.enemiesBullets.push(new Bullet(this.game, this.canvas, this.x+this.width/8, this.y, 0, this, this.bulletIndex, this.color, "angleLeft", -this.speedX*2, -this.speedY*2, false));
+            that.enemiesBullets.push(new Bullet(this.game, this.canvas, this.x+this.width/2, this.y, 0, this, this.bulletIndex, this.color, "straight", -this.speedX*2, -this.speedY*2, false));            
+            that.enemiesBullets.push(new Bullet(this.game, this.canvas, this.x+this.width*7/8, this.y, 0, this, this.bulletIndex, this.color, "angleRight", -this.speedX*2, -this.speedY*2, false));
             break;
         case "sin":
-            that.enemiesBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y, 0, this, 0, this.color, "sin", -this.speedX*2, -this.speedY*2, false));
+            that.enemiesBullets.push(new Bullet(this.game, this.canvas, this.x+this.width/2, this.y, 0, this, this.bulletIndex, this.color, "sin", -this.speedX*2, -this.speedY*2, false));
             break;
     default:
-            that.enemiesBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y, 0, this, 0, this.color, -this.speedX*2, -this.speedY*2, false));
+            that.enemiesBullets.push(new Bullet(this.game, this.canvas, this.x+this.width/2, this.y, 0, this, this.bulletIndex, this.color, -this.speedX*2, -this.speedY*2, false));
             break;
     }
 }

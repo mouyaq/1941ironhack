@@ -1,7 +1,7 @@
 Player.prototype = Object.create(Ship.prototype);
 
-function Player(canvas, x, y, type, name, color, health, speedX, speedY) {
-    Ship.call(this, canvas, x, y, type, name, color, health, speedX, speedY);
+function Player(game, canvas, x, y, type, name, color, health, speedX, speedY) {
+    Ship.call(this, game, canvas, x, y, type, name, color, health, speedX, speedY);
     this.life = this.health;
     this.scale = 0.5;
     this.frameIndexArray = [185, 181, 172, 188, 181, 172, 188];
@@ -13,6 +13,7 @@ function Player(canvas, x, y, type, name, color, health, speedX, speedY) {
     this.height = this.frameHeight * this.scale;
     this.bulletIndex = 0;
     this.shotIncrement = 0;
+    this.superShotSpeed = 40;
 }
 
 Player.prototype.draw = function(that) {
@@ -129,7 +130,6 @@ Player.prototype.draw = function(that) {
             this.ctx.fillRect(this.canvas.width - 30, 700, 20, -6 * this.superShot);
             this.ctx.restore();
         }
-
     }.bind(this);
 }
 
@@ -229,15 +229,19 @@ Player.prototype.resetMove = function() {
 Player.prototype.shot = function(that) {
     if(that.playersBullets.length < that.maxPlayerBullets) {
         this.bulletIndex = 0;
-        that.playersBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y+this.height/2, -1, this, this.bulletIndex, this.color, "straight", this.speedX, this.speedY, false));
+        that.playersBullets.push(new Bullet(this.game, this.canvas, this.x+this.width/2, this.y+this.height/2, -1, this, this.bulletIndex, this.color, "straight", this.speedX, this.speedY, false));
         //console.log(this.x);
     }
 }
 
 Player.prototype.shotSuper = function(that) {
     if(this.superShot >= 100) {
-        this.bulletIndex = 2;
-        that.playersBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y+this.height/2, -1, this, this.bulletIndex, this.color, "straight", this.speedX, this.speedY, true));
+        this.bulletIndex = 1;
+        //that.playersBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y+this.height/2, -1, this, this.bulletIndex, this.color, "straight", this.speedX, this.speedY, true));
+        for(var i = 0; i < 32; i++){
+            that.playersBullets.push(new Bullet(this.game, this.canvas, this.x+this.width/2, this.y+this.height/2, -1, this, this.bulletIndex, this.color, "concentric", this.superShotSpeed*Math.cos(i*Math.PI/16), this.superShotSpeed*Math.sin(i*Math.PI/16), true));            
+        }
+        //this.superShotEnabled = true;
         this.removeEnemies(that.enemies, that.enemiesBullets);
         this.resetSuperShot();
     }
@@ -246,7 +250,7 @@ Player.prototype.shotSuper = function(that) {
 Player.prototype.removeEnemies = function(enemies, enemiesBullets) {
     enemies.forEach(function(enemy){
         if(enemy.color != this.color) {
-            enemy.setDestroyed(this);
+            //enemy.setDestroyed(this);
         }
     }.bind(this));
     enemiesBullets.forEach(function(enemyBullet) {
