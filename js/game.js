@@ -6,31 +6,32 @@ function Game(canvas, playerNumber, dificult) {
     this.dificultArray = ["tutorial", "easy", "normal", "hard", "inferno"];
     this.dificult = this.dificultArray.indexOf(dificult.toLowerCase());
     this.actualDificult = 0;
-    this.nextDificult = 1;
+    this.nextDificult = this.dificult;
     this.actualBg = 0;
-    this.gameBgArray = ["tutorial-min", "evilSky", "sunnySky", "beePanels", "cartoonCity", "realSky"];
-    this.bg = new Bg(this, canvas);
-    this.playersBullets = [];
-    this.enemies = [];
-    this.enemiesBullets = [];
-    this.enemiesList = ["enemy1", "enemy2"];
-    this.colorList = ["white", "black"];
-    this.players = [];
-    this.player1 = new Player(this, this.canvas, this.canvas.width * 1/4, this.canvas.height - 150, "player", "player1", this.colorList[Math.floor(Math.random() * this.colorList.length)], 5, 10, 5);
-    this.players.push(this.player1);
-    if(this.playerNumber == "2 players") {
-        this.player2 = new Player(this, this.canvas, this.canvas.width * 3/4, this.canvas.height - 150, "player", "player2", this.colorList[Math.floor(Math.random() * this.colorList.length)], 5, 10, 5);
-        this.players.push(this.player2);
-    }
-    else {
-        //console.log(this.playerNumber);
-    }
     // First 22 seconds always are tutorial mode
     this.setDificult(this.actualDificult);
     // After 22 seconds set real dificult
     setTimeout(function(){
         this.setDificult(this.dificult);
     }.bind(this), 22000);
+    this.gameBgArray = ["tutorial-min", "cartoonCity", "evilSky", "sunnySky", "beePanels", "realSky"];
+    this.bg = new Bg(this, this.canvas);
+    this.playersBullets = [];
+    this.enemies = [];
+    this.enemiesBullets = [];
+    this.enemiesList = ["enemy1", "enemy2", "enemy3", "enemy4", "enemy5", "enemy6"];
+    this.colorList = ["white", "black"];
+    this.players = [];
+    this.player1 = new Player(this, this.canvas, this.canvas.width * 1/4, this.canvas.height - 150, "player", "player1", this.colorList[Math.floor(Math.random() * this.colorList.length)], 5, 10, 5, this.shotIncrement);
+    this.players.push(this.player1);
+    if(this.playerNumber == "2 players") {
+        this.player2 = new Player(this, this.canvas, this.canvas.width * 3/4, this.canvas.height - 150, "player", "player2", this.colorList[Math.floor(Math.random() * this.colorList.length)], 5, 10, 5, this.shotIncrement);
+        this.players.push(this.player2);
+    }
+    else {
+        //console.log(this.playerNumber);
+    }
+
     this.keysList = [];
 
     window.addEventListener('keydown', function (e) {
@@ -93,7 +94,6 @@ Game.prototype.setDificult = function(dificult) {
     switch(this.dificultArray[dificult]) {
         case "tutorial":
             $("#dificult-screen").text("TUTORIAL");
-            // interval for each enemy in seconds.
             this.audioTutorial = new Audio("./sounds/ik0.mp3");
             this.audioTutorial.volume = 0.1;
             this.audioTutorial.play();
@@ -107,17 +107,16 @@ Game.prototype.setDificult = function(dificult) {
             this.enemySpeedX = 1;
             this.enemySpeedY = 1;
             this.shotIncrement = 25;
-            this.bossPoints = 10;
-            this.players.forEach(function(player) {
-                player.setShotIncrement(this.shotIncrement);
-            }.bind(this));
+            this.bossPoints = 50;
+            this.bossLife = 100;
+            // this.players.forEach(function(player) {
+            //     player.setShotIncrement(this.shotIncrement);
+            // }.bind(this));
             //console.log("SET DIFICULT TO TUTORIAL");
             this.createEnemies();
             break;
         case "easy":
             $("#dificult-screen").text("EASY");
-            // interval for each enemy in seconds.
-            // this.enemyInterval = this.myRandom(3,5);
             this.audioGame = new Audio("./sounds/ik1_loop.mp3");
             this.audioGame.volume = 0.1;
             this.audioGame.loop = "loop";
@@ -134,18 +133,17 @@ Game.prototype.setDificult = function(dificult) {
             this.enemySpeedX = 2;
             this.enemySpeedY = 2;
             this.shotIncrement = 10;
-            this.bossPoints = 10;
-            this.players.forEach(function(player) {
-                player.setShotIncrement(this.shotIncrement);
-            }.bind(this));
+            this.bossPoints = 50;
+            this.bossLife = 100;
+            // this.players.forEach(function(player) {
+            //     player.setShotIncrement(this.shotIncrement);
+            // }.bind(this));
             //console.log("SET DIFICULT TO EASY");
             this.deleteEnemiesInterval();
             this.createEnemies();
             break;
         case "normal":
             $("#dificult-screen").text("NORMAL");
-            // interval for each enemy in seconds.
-            // this.enemyInterval = this.myRandom(2,4);
             this.audioGame = new Audio("./sounds/ik1_loop.mp3");
             this.audioGame.volume = 0.1;
             this.audioGame.loop = "loop";
@@ -163,17 +161,16 @@ Game.prototype.setDificult = function(dificult) {
             this.enemySpeedY = 4;
             this.shotIncrement = 5;
             this.bossPoints = 100;
-            this.players.forEach(function(player) {
-                player.setShotIncrement(this.shotIncrement);
-            }.bind(this)); 
+            this.bossLife = 200;
+            // this.players.forEach(function(player) {
+            //     player.setShotIncrement(this.shotIncrement);
+            // }.bind(this)); 
             //console.log("SET DIFICULT TO MEDIUM");
             this.deleteEnemiesInterval();
             this.createEnemies();
             break;
         case "hard":
             $("#dificult-screen").text("HARD");
-            // interval for each enemy in seconds.
-            // this.enemyInterval = this.myRandom(1,3);
             this.audioGame = new Audio("./sounds/ik1_loop.mp3");
             this.audioGame.volume = 0.1;
             this.audioGame.loop = "loop";
@@ -191,17 +188,16 @@ Game.prototype.setDificult = function(dificult) {
             this.enemySpeedY = 8;
             this.shotIncrement = 1;
             this.bossPoints = 200;
-            this.players.forEach(function(player) {
-                player.setShotIncrement(this.shotIncrement);
-            }.bind(this));
+            this.bossLife = 300;
+            // this.players.forEach(function(player) {
+            //     player.setShotIncrement(this.shotIncrement);
+            // }.bind(this));
             //console.log("SET DIFICULT TO HARD");
             this.deleteEnemiesInterval();
             this.createEnemies();
             break;
         case "inferno":
             $("#dificult-screen").text("INFERNO");
-            // interval for each enemy in seconds.
-            //this.enemyInterval = this.myRandom(0.5,1);
             this.audioGame = new Audio("./sounds/ik1_loop.mp3");
             this.audioGame.volume = 0.1;
             this.audioGame.loop = "loop";
@@ -218,10 +214,11 @@ Game.prototype.setDificult = function(dificult) {
             this.enemySpeedX = 16;
             this.enemySpeedY = 16;
             this.shotIncrement = 0.5;
-            this.bossPoints = 300;            
-            this.players.forEach(function(player) {
-                player.setShotIncrement(this.shotIncrement);
-            }.bind(this));
+            this.bossPoints = 400;  
+            this.bossLife = 400;          
+            // this.players.forEach(function(player) {
+            //     player.setShotIncrement(this.shotIncrement);
+            // }.bind(this));
             //console.log("SET DIFICULT TO INFERNO");
             this.deleteEnemiesInterval();
             this.createEnemies();
@@ -233,7 +230,31 @@ Game.prototype.setDificult = function(dificult) {
 Game.prototype.createEnemies = function() {
     this.enemyPushInterval = setInterval(function(){
         if(this.enemies.length < this.maxEnemies) { 
-            this.enemies.push(new Enemy(this, this.canvas, Math.floor(Math.random()*700), Math.floor(Math.random()*-500)-200, "enemy", this.enemiesList[Math.floor(Math.random() * this.enemiesList.length)], this.colorList[Math.floor(Math.random() * this.colorList.length)], 1, this.enemySpeedX, this.enemySpeedY, this.player1));
+            var enemyName = this.enemiesList[Math.floor(Math.random() * this.enemiesList.length)];
+            var enemyColor = this.colorList[Math.floor(Math.random() * this.colorList.length)];
+            console.log(enemyName);
+            var enemyLife = 0;
+            switch(enemyName) {
+                case "enemy1":
+                    enemyLife = 1;
+                    break;
+                case "enemy2":
+                    enemyLife = 2;
+                    break;
+                case "enemy3":
+                    enemyLife = 3;
+                    break;
+                case "enemy4":
+                    enemyLife = 4;
+                    break;
+                case "enemy5":
+                    enemyLife = 5;
+                    break;
+                case "enemy6":
+                    enemyLife = 6;
+                    break;
+            }
+            this.enemies.push(new Enemy(this, this.canvas, Math.floor(Math.random()*this.canvas.width), Math.floor(Math.random()*-500)-200, "enemy", enemyName, enemyColor, enemyLife, this.enemySpeedX, this.enemySpeedY, this.player1));
             //console.log("NUMERO DE ENEMIGOS: " + this.enemies.length);
         }
         if( parseInt(document.getElementById("score-points-p1").innerHTML) > this.bossPoints && this.actualDificult != 0 ) {
@@ -271,12 +292,7 @@ Game.prototype.myRandom = function(min, max) {
 }
 
 Game.prototype.setGameOver = function() { 
-    this.gameOver = true;
-    this.audioTutorial.pause();
-    this.audioTutorial.currentTime = 0;
-    this.audioGame.pause();
-    this.audioGame.currentTime = 0;
-    // this.audioGame.src = "";
+    this.cleanGame();
     $("#game").hide();
     $("#gameover").css("visibility", "visible");
     $("#gameover").get(0).play();
@@ -291,13 +307,7 @@ Game.prototype.nextLevel = function() {
     if(this.nextDificult < 4) {
         this.nextDificult += 1;
         this.actualBg += 1;
-        this.gameOver = false;
-        this.audioTutorial.pause();
-        this.audioTutorial.currentTime = 0;
-        this.audioGame.pause();
-        this.audioGame.currentTime = 0;
-        cancelAnimationFrame(this.animationId);
-        //clearInterval(this.animation);
+        this.cleanGame();
         // First 22 seconds always are tutorial mode
         this.setDificult(0);
         // After 22 seconds set real dificult
@@ -314,9 +324,16 @@ Game.prototype.setWinner = function() {
     alert("YOU WIN!!!");
 }
 
-Game.prototype.started = function() {
-    // this.animation = setInterval(function() {
-    //     this.draw();
-    // }.bind(this), 1000/30);
-    // this.animation = window.requestAnimationFrame(this.draw.bind(this));
+Game.prototype.cleanGame = function() {
+    this.gameOver = false;
+    this.audioTutorial.pause();
+    this.audioTutorial.currentTime = 0;
+    if(this.audioGame) {
+        this.audioGame.pause();
+        this.audioGame.currentTime = 0;
+    }
+    cancelAnimationFrame(this.animationId);
+    this.enemies = [];
+    this.enemiesBullets = [];
+    this.playersBullets = [];
 }

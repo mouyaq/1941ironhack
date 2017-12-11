@@ -28,6 +28,7 @@ function Ship(game, canvas, x, y, type, name, color, health, speedX, speedY) {
 
 
 Ship.prototype.selectSprite = function(name, color) {
+    
     var imgSrc = "./images/sprites/" + name;
     switch(color) {
         case "white":

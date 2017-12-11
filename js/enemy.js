@@ -5,23 +5,33 @@ function Enemy(game, canvas, x, y, type, name, color, health, speedX, speedY, pl
     this.life = this.health;
     this.playerPositionX = player.x;
     this.playerPositionY = player.y;
-    this.frameWidthArray = [154, 554];
-    this.frameHeightArray = [224, 495];
-    this.framePositionArray = [0, 0];
+    this.frameWidthArray = [154, 554, 388, 301, 266, 377];
+    this.frameHeightArray = [224, 495, 327, 397, 279, 433];
+    this.framePositionArray = [0, 0, 0, 0, 0, 0];
     switch(this.name) {
         case "enemy1":
             this.frameIndex = 0;
-            // this.scale = this.getRandomSize(0.6, 0.8);
             this.scale = 0.6;
-            // console.log("ENEMY1 SCALE: " + this.scale);
-            // console.log(this.movement);
             break;
         case "enemy2":
             this.frameIndex = 1;
-            //this.scale = this.getRandomSize(0.1, 0.3);
             this.scale = 0.2;
-            // console.log("ENEMY2 SCALE: " + this.scale);
-            // console.log(this.movement);
+            break;
+        case "enemy3":
+            this.frameIndex = 2;
+            this.scale = 0.4;
+            break;
+        case "enemy4":
+            this.frameIndex = 3;
+            this.scale = 0.4;
+            break;
+        case "enemy5":
+            this.frameIndex = 4;
+            this.scale = 0.6;
+            break;
+        case "enemy6":
+            this.frameIndex = 5;
+            this.scale = 0.4;
             break;
     }
     this.frameHeight = this.frameHeightArray[this.frameIndex];

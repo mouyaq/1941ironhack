@@ -1,6 +1,6 @@
 Player.prototype = Object.create(Ship.prototype);
 
-function Player(game, canvas, x, y, type, name, color, health, speedX, speedY) {
+function Player(game, canvas, x, y, type, name, color, health, speedX, speedY, shotIncrement) {
     Ship.call(this, game, canvas, x, y, type, name, color, health, speedX, speedY);
     this.life = this.health;
     this.scale = 0.5;
@@ -12,7 +12,7 @@ function Player(game, canvas, x, y, type, name, color, health, speedX, speedY) {
     this.width = this.frameWidth * this.scale;
     this.height = this.frameHeight * this.scale;
     this.bulletIndex = 0;
-    this.shotIncrement = 0;
+    this.shotIncrement = shotIncrement;
     this.superShotSpeed = 40;
 }
 
