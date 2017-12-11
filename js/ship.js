@@ -1,4 +1,5 @@
-function Ship(canvas, x, y, type, name, color, health, speedX, speedY) {
+function Ship(game, canvas, x, y, type, name, color, health, speedX, speedY) {
+    this.game = game;
     this.canvas = canvas;
     this.ctx = this.canvas.getContext("2d");
     this.x = x;
@@ -9,7 +10,9 @@ function Ship(canvas, x, y, type, name, color, health, speedX, speedY) {
     this.rad = 0;
     //this.movementArray = ["straight", "angle", "circle", "sin", "persecution"];
     this.movementArray = ["straight", "angle", "circle"];
+    this.shootTypeArray = ["single", "double", "triple", "tripeAngled", "sin"];
     this.movement = this.movementArray[Math.floor(Math.random() * this.movementArray.length)];
+    this.shotType = this.shootTypeArray[Math.floor(Math.random() * this.shootTypeArray.length)];
     this.type = type;
     this.name = name;
     this.color = color;
@@ -83,6 +86,8 @@ Ship.prototype.move = function(movement) {
     }
 }
 
+
+
 Ship.prototype.detectBorder = function() {
     return this.x < 0 || this.x + this.width >= this.canvas.width || this.y < 0;
 }
@@ -100,6 +105,8 @@ Ship.prototype.setRemovable = function() {
 Ship.prototype.setDestroyed = function(that) {
     if(that.type = "player") {
         that.addScore();
+        this.bulletIndex = 1;
+        this.game.enemiesBullets.push(new Bullet(this.game, this.canvas, this.x+this.width/2, this.y+this.height/2, -1, this, this.bulletIndex, this.color, "straight", 0, 0, false));
     }
     this.destroyed = true;
 }

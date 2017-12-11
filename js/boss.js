@@ -1,7 +1,7 @@
 Boss.prototype = Object.create(Enemy.prototype);
 
-function Boss(canvas, x, y, type, name, color, health, speedX, speedY, player) {
-    Enemy.call(this, canvas, x, y, type, name, color, health, speedX, speedY, player);
+function Boss(game, canvas, x, y, type, name, color, health, speedX, speedY, player) {
+    Enemy.call(this, game, canvas, x, y, type, name, color, health, speedX, speedY, player);
     this.life = this.health;
     this.playerPositionX = player.x;
     this.playerPositionY = player.y;
@@ -22,6 +22,7 @@ function Boss(canvas, x, y, type, name, color, health, speedX, speedY, player) {
     setInterval(function(){
         this.changeColor();
     }.bind(this), Math.floor((Math.random()*5)+1)*1000);
+    this.superShotSpeed = 5;
 }
 
 Boss.prototype.draw = function(that) {
@@ -77,10 +78,20 @@ Boss.prototype.draw = function(that) {
 }
 
 Boss.prototype.shot = function(that) {
-    that.enemiesBullets.push(new Bullet(this.canvas, this.x, this.y, 0, this, 0, this.color, -this.speedX*2, -Math.abs(this.speedY * 4), false));
-    that.enemiesBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y, 0, this, 0, this.color, -this.speedX*2, -Math.abs(this.speedY * 4), false));
-    that.enemiesBullets.push(new Bullet(this.canvas, this.x+this.width, this.y, 0, this, 0, this.color, -this.speedX*2, -Math.abs(this.speedY * 4), false));
+//     this.bulletIndex = 4;
+//     // that.enemiesBullets.push(new Bullet(this.canvas, this.x, this.y, 0, this, this.bulletIndex, this.color, "straight", -this.speedX*2, -Math.abs(this.speedY * 4), false));
+//     // that.enemiesBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y, 0, this, this.bulletIndex, this.color, "straight", -this.speedX*2, -Math.abs(this.speedY * 4), false));
+//     // that.enemiesBullets.push(new Bullet(this.canvas, this.x+this.width, this.y, 0, this, this.bulletIndex, this.color, "straight", -this.speedX*2, -Math.abs(this.speedY * 4), false));
+
+//     that.enemiesBullets.push(new Bullet(this.canvas, this.x, this.y, 0, this, this.bulletIndex, this.color, "straight", -this.speedX*2, -Math.abs(this.speedY * 4), false));
+//     that.enemiesBullets.push(new Bullet(this.canvas, this.x+30, this.y, 0, this, this.bulletIndex, this.color, "straight", -this.speedX*2, -Math.abs(this.speedY * 4), false));
+//     that.enemiesBullets.push(new Bullet(this.canvas, this.x-30, this.y, 0, this, this.bulletIndex, this.color, "straight", -this.speedX*2, -Math.abs(this.speedY * 4), false));
+    this.bulletIndex = 1;
+    for(var i = 0; i < 32; i++){
+        this.game.enemiesBullets.push(new Bullet(this.game, this.canvas, this.x+this.width/2, this.y+this.height/2, -1, this, this.bulletIndex, this.color, "concentric", this.superShotSpeed*Math.cos(i*Math.PI/16), this.superShotSpeed*Math.sin(i*Math.PI/16), true));            
+    }
 }
+
 
 Boss.prototype.move = function(movement) {
     switch(movement) {
@@ -88,7 +99,6 @@ Boss.prototype.move = function(movement) {
             this.y += this.speedY;
             break;
         case "angle":
-        
             if(this.isSettled) {
                 console.log("ISSET");
                 if(this.x <= 0 || this.x + this.width >= this.canvas.width) {
