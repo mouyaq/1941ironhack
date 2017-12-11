@@ -18,5 +18,6 @@ function startGame(players, dificult) {
     }
     resizeCanvas();
     var game = new Game(canvas, players, dificult);
-    game.draw("play");
+    //game.started();
+    game.draw();
 }

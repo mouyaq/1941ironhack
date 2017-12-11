@@ -1,3 +1,5 @@
+/* KEYS */
+
 // up arrow
 var P1_UP = 38;
 // down arrow

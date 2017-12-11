@@ -28,6 +28,7 @@ function Ship(game, canvas, x, y, type, name, color, health, speedX, speedY) {
 
 
 Ship.prototype.selectSprite = function(name, color) {
+    
     var imgSrc = "./images/sprites/" + name;
     switch(color) {
         case "white":
@@ -137,13 +138,11 @@ Ship.prototype.increaseSuperShot = function() {
         this.superShotAudio.volume = 0.2;
         this.superShotAudio.play();
         this.superShot += this.shotIncrement;
-        console.log(this.superShot);
     }
 }
 
 Ship.prototype.setShotIncrement = function(shotIncrement) {
     this.shotIncrement = shotIncrement;
-    console.log("SHOT INCREMENT = " + this.shotIncrement);
 }
 
 Ship.prototype.resetSuperShot = function() {
@@ -155,12 +154,7 @@ Ship.prototype.checkCollision = function(ships) {
     this.posYmin = this.y + 1/8 * this.height;
     this.posXmax = this.x + 7/8 * this.width;
     this.posYmax = this.y + 7/8 * this.height;
-    /*
-    this.posXmin = this.x;
-    this.posYmin = this.y;
-    this.posXmax = this.x + this.width;
-    this.posYmax = this.y + this.height;
-    */
+
     ships.forEach(function(ship){
         if( 
             ((this.posXmin < ship.posXmax && this.posXmax > ship.posXmax && this.posYmin < ship.posYmax && this.posYmax > ship.posYmax) ||
