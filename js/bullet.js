@@ -102,15 +102,7 @@ Bullet.prototype.draw = function(bullets) {
                 
             }
         }.bind(this);
-        //this.y -= this.speedY;
-        // if(this.frameIndex == 4) {
-        //     this.frameIndex +=1;
-        // }
-        // else {
-        //     if(this.frameIndex == 5) {           
-        //         this.frameIndex -=1;
-        //     }
-        // }
+
         this.move(this.movement);
     }   
 }
@@ -151,16 +143,11 @@ Bullet.prototype.checkCollision = function(ships) {
             (this.posXmax > ship.posXmin && this.posXmax < ship.posXmax && this.posYmax > ship.posYmin && this.posYmax < ship.posYmax)) &&
             (this.color != ship.color)
         ) {
-            // console.log("BULLET COLLISION !=");
-            // console.log("BULLET COLOR = " + this.color + " SHIP COLOR = " + ship.color);
-
             ship.receiveDamage();
-
             if(!ship.isAlive()) {
                 ship.setDestroyed(this.owner);
                 // this.owner.addScore();
             }
-            
             if(!this.god) {
                 this.setRemovable();
             }
@@ -177,8 +164,6 @@ Bullet.prototype.checkCollision = function(ships) {
             (this.posXmax > ship.posXmin && this.posXmax < ship.posXmax && this.posYmax > ship.posYmin && this.posYmax < ship.posYmax)) &&
             (this.color == ship.color)
         ) {
-            //console.log("BULLET COLLISION ==");
-            //console.log("BULLET COLOR = " + this.color + " SHIP COLOR = " + ship.color);            
             ship.increaseSuperShot();
             if(!this.god) {
                 this.setRemovable();

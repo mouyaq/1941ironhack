@@ -17,6 +17,10 @@ body {
     color: white;
 }
 
+#dificult-screen {
+    color: magenta;
+}
+
 #game {
     /*border: 5px solid red;*/
     height: 700px;

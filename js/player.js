@@ -16,16 +16,16 @@ function Player(game, canvas, x, y, type, name, color, health, speedX, speedY) {
     this.superShotSpeed = 40;
 }
 
-Player.prototype.draw = function(that) {
+Player.prototype.draw = function() {
     if(this.destroyed) {
         this.blowUp();
         setTimeout(this.setRemovable.bind(this), 250);
     }
     if(this.removable) {
-        var index = that.players.indexOf(this);
-        that.players.splice(index, 1);
-        if(that.players.length <= 0) {
-            that.setGameOver();
+        var index = this.game.players.indexOf(this);
+        this.game.players.splice(index, 1);
+        if(this.game.players.length <= 0) {
+            this.game.setGameOver();
         }
     }
     this.selectSprite(this.name, this.color);
@@ -142,12 +142,10 @@ Player.prototype.move = function(that) {
         this.shotAudio = new Audio("./sounds/laser1.mp3");
         this.shotAudio.volume = 0.4;
         this.shotAudio.play();
+        //console.log("NUM. ENEMIES: " + this.game.enemies.length);
     }
     if (this.keys && this.keys[P1_SUPERSHOT]) { 
         this.shotSuper(that);
-        // this.shotAudio = new Audio("./sounds/laser1.mp3");
-        // this.shotAudio.volume = 0.4;
-        // this.shotAudio.play();
     }
     if (this.keys && this.keys[P2_CHANGE_COLOR]) { 
         this.changeColor(); 
@@ -241,6 +239,9 @@ Player.prototype.shotSuper = function(that) {
         for(var i = 0; i < 32; i++){
             that.playersBullets.push(new Bullet(this.game, this.canvas, this.x+this.width/2, this.y+this.height/2, -1, this, this.bulletIndex, this.color, "concentric", this.superShotSpeed*Math.cos(i*Math.PI/16), this.superShotSpeed*Math.sin(i*Math.PI/16), true));            
         }
+        this.superShotAudio = new Audio("./sounds/supershot.wav");
+        this.superShotAudio.volume = 0.5;
+        this.superShotAudio.play();
         //this.superShotEnabled = true;
         this.removeEnemies(that.enemies, that.enemiesBullets);
         this.resetSuperShot();

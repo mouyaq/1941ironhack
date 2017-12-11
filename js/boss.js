@@ -25,20 +25,17 @@ function Boss(game, canvas, x, y, type, name, color, health, speedX, speedY, pla
     this.superShotSpeed = 5;
 }
 
-Boss.prototype.draw = function(that) {
+Boss.prototype.draw = function() {
     if(this.destroyed) {
-        //window.requestAnimationFrame(this.blowUp.bind(this));
         this.blowUp();
         setTimeout(this.setRemovable.bind(this), 250);
-        //console.log("TIMER: " + this.timer);
-        //setTimeout(this.setDestroyed(), 2000);
-        //clearInterval(this.timer);
-        //this.blowUp();
-        //console.log("REMOVE ENEMY");
     }
     if(this.removable) {
-        var index = that.enemies.indexOf(this);
-        that.enemies.splice(index, 1);
+        var index = this.game.enemies.indexOf(this);
+        this.game.enemies.splice(index, 1);
+        if(this.game.enemies.length <= 0) {
+            this.game.nextLevel();
+        }
     }
     this.selectSprite(this.name, this.color);
     this.sprite.onload = function() {
@@ -100,7 +97,6 @@ Boss.prototype.move = function(movement) {
             break;
         case "angle":
             if(this.isSettled) {
-                console.log("ISSET");
                 if(this.x <= 0 || this.x + this.width >= this.canvas.width) {
                     this.speedX *= -1;       
                 } 
@@ -109,7 +105,6 @@ Boss.prototype.move = function(movement) {
                 }
             }
             else {
-                console.log("NOTSET");
                 if(this.y < this.canvas.height/2){
                     this.y += this.speedY;
                 }

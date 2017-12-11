@@ -35,7 +35,7 @@ Enemy.prototype.changeColor = function() {
     this.selectSprite(this.name, this.color);
 }
 
-Enemy.prototype.draw = function(that) {
+Enemy.prototype.draw = function() {
     if(this.destroyed) {
         //window.requestAnimationFrame(this.blowUp.bind(this));
         this.blowUp();
@@ -47,8 +47,8 @@ Enemy.prototype.draw = function(that) {
         //console.log("REMOVE ENEMY");
     }
     if(this.removable) {
-        var index = that.enemies.indexOf(this);
-        that.enemies.splice(index, 1);
+        var index = this.game.enemies.indexOf(this);
+        this.game.enemies.splice(index, 1);
     }
     this.selectSprite(this.name, this.color);
     this.sprite.onload = function() {
@@ -98,7 +98,6 @@ Enemy.prototype.getPlayerPosition = function(player) {
 }
 
 Enemy.prototype.shot = function(that) {
-    // ["straight", "double", "triple", "tripeAngled"];
     this.bulletIndex = 0;
     switch(this.shotType) {
         case "single":
