@@ -151,10 +151,19 @@ Game.prototype.setDificult = function(dificult) {
             this.bossLife = 100;
             this.numMaxBosses = 1;
             this.deleteEnemiesInterval();
-            this.createEnemies();
-            this.createShotEnemies();
-            this.createBoss();    
-            this.createShotBoss();    
+            $("#level").attr("src", "./images/levels/level1.jpg");
+            $("#game").hide();
+            $("#level").css("visibility", "visible");
+            $("#level").show();
+            setTimeout(function() {
+                $("#level").css("visibility", "hidden");
+                $("#level").hide();
+                $("#game").show();
+                this.createEnemies();
+                this.createShotEnemies();
+                this.createBoss();    
+                this.createShotBoss();
+            }.bind(this), 2000);
             break;
         case "normal":
             $("#dificult-screen").text("NORMAL");
@@ -177,10 +186,19 @@ Game.prototype.setDificult = function(dificult) {
             this.bossLife = 200;
             this.numMaxBosses = 1;
             this.deleteEnemiesInterval();
-            this.createEnemies();
-            this.createShotEnemies();    
-            this.createBoss();
-            this.createShotBoss();     
+            $("#level").attr("src", "./images/levels/level2.jpg");
+            $("#game").hide();
+            $("#level").css("visibility", "visible");
+            $("#level").show();
+            setTimeout(function() {
+                $("#level").css("visibility", "hidden");
+                $("#level").hide();
+                $("#game").show();
+                this.createEnemies();
+                this.createShotEnemies();
+                this.createBoss();    
+                this.createShotBoss();
+            }.bind(this), 2000);
             break;
         case "hard":
             $("#dificult-screen").text("HARD");
@@ -203,10 +221,19 @@ Game.prototype.setDificult = function(dificult) {
             this.bossLife = 300;
             this.numMaxBosses = 1;
             this.deleteEnemiesInterval();
-            this.createEnemies();
-            this.createShotEnemies();
-            this.createBoss();    
-            this.createShotBoss();       
+            $("#level").attr("src", "./images/levels/level3.jpg");
+            $("#game").hide();
+            $("#level").css("visibility", "visible");
+            $("#level").show();
+            setTimeout(function() {
+                $("#level").css("visibility", "hidden");
+                $("#level").hide();
+                $("#game").show();
+                this.createEnemies();
+                this.createShotEnemies();
+                this.createBoss();    
+                this.createShotBoss();
+            }.bind(this), 2000); 
             break;
         case "inferno":
             $("#dificult-screen").text("INFERNO");
@@ -229,10 +256,19 @@ Game.prototype.setDificult = function(dificult) {
             this.bossLife = 400;
             this.numMaxBosses = 2;          
             this.deleteEnemiesInterval();
-            this.createEnemies();
-            this.createShotEnemies();
-            this.createBoss();   
-            this.createShotBoss();          
+            $("#level").attr("src", "./images/levels/level4.jpg");
+            $("#game").hide();
+            $("#level").css("visibility", "visible");
+            $("#level").show();
+            setTimeout(function() {
+                $("#level").css("visibility", "hidden");
+                $("#level").hide();
+                $("#game").show();
+                this.createEnemies();
+                this.createShotEnemies();
+                this.createBoss();    
+                this.createShotBoss();
+            }.bind(this), 2000);       
             break;
         default:
     }
