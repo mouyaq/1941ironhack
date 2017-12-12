@@ -1,5 +1,6 @@
 window.onload = function() {
     $("#gameover").hide();
+    $("#ending").hide();
     document.getElementById("start-button").onclick = function() {
         $("#intro").hide();
         //document.getElementById("intro").remove();
@@ -18,6 +19,5 @@ function startGame(players, dificult) {
     }
     resizeCanvas();
     var game = new Game(canvas, players, dificult);
-    //game.started();
     game.draw();
 }

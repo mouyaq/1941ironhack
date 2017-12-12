@@ -50,6 +50,12 @@ body {
     margin: 0 auto;
 }
 
+.ending-video {
+    visibility: hidden;
+    text-align: center;
+    margin: 0 auto;
+}
+
 #options, #options2, #start-button {
     background-color: black;
 }

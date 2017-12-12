@@ -26,55 +26,61 @@ function Boss(game, canvas, x, y, type, name, color, health, speedX, speedY, pla
 }
 
 Boss.prototype.draw = function() {
-    if(this.destroyed) {
-        this.blowUp();
-        setTimeout(this.setRemovable.bind(this), 250);
-    }
-    if(this.removable) {
-        var index = this.game.enemies.indexOf(this);
-        this.game.enemies.splice(index, 1);
-        if(this.game.enemies.length <= 0) {
-            this.game.nextLevel();
+    if(this.destroyed || this.removable) {
+        if(this.destroyed) {
+            this.blowUp();
+            setTimeout(this.setRemovable.bind(this), 250);
+        }
+        if(this.removable) {
+            this.destroyed = false;
+            this.removable = false;
+            var index = this.game.bosses.indexOf(this);
+            this.game.bosses.splice(index, 1);
+            if(this.game.bosses.length <= 0) {
+                this.game.nextLevel();
+            }
         }
     }
-    this.selectSprite(this.name, this.color);
-    this.sprite.onload = function() {
-
-        this.color == "white" ? this.colorHealth = "#FFFFFF" : this.colorHealth = "#000000";
-
-        this.ctx.save();
-        this.ctx.strokeStyle = this.colorHealth;
-        this.ctx.lineWidth = 5;
-        this.ctx.strokeRect(this.x, this.y - 20, this.width, 20);
-        this.ctx.restore();
-        this.ctx.save();
-        this.ctx.fillStyle = this.colorHealth;
-        this.ctx.fillRect(this.x, this.y - 20, (this.width/this.life)*this.health, 20);
-        this.ctx.restore();
-
-        // this.ctx.save()
-        // this.ctx.clearRect(this.x,this.y,this.width,this.height);
-        // this.ctx.fillRect(this.x,this.y,this.width,this.height);
-        // this.ctx.restore();
-
-        this.ctx.save();
-        this.ctx.drawImage(
-          this.sprite,
-          this.framePositionArray[this.frameIndex],
-          0,
-          this.frameWidth,
-          this.frameHeight,
-          this.x,
-          this.y,
-          this.width,
-          this.height
-        );
-        this.ctx.restore();
-    }.bind(this);
-    this.move("angle");
+    else {
+        this.selectSprite(this.name, this.color);
+        this.sprite.onload = function() {
+    
+            this.color == "white" ? this.colorHealth = "#FFFFFF" : this.colorHealth = "#000000";
+    
+            this.ctx.save();
+            this.ctx.strokeStyle = this.colorHealth;
+            this.ctx.lineWidth = 5;
+            this.ctx.strokeRect(this.x, this.y - 20, this.width, 20);
+            this.ctx.restore();
+            this.ctx.save();
+            this.ctx.fillStyle = this.colorHealth;
+            this.ctx.fillRect(this.x, this.y - 20, (this.width/this.life)*this.health, 20);
+            this.ctx.restore();
+    
+            // this.ctx.save()
+            // this.ctx.clearRect(this.x,this.y,this.width,this.height);
+            // this.ctx.fillRect(this.x,this.y,this.width,this.height);
+            // this.ctx.restore();
+    
+            this.ctx.save();
+            this.ctx.drawImage(
+              this.sprite,
+              this.framePositionArray[this.frameIndex],
+              0,
+              this.frameWidth,
+              this.frameHeight,
+              this.x,
+              this.y,
+              this.width,
+              this.height
+            );
+            this.ctx.restore();
+        }.bind(this);
+        this.move("angle");
+    }
 }
 
-Boss.prototype.shot = function(that) {
+Boss.prototype.shot = function() {
 //     this.bulletIndex = 4;
 //     // that.enemiesBullets.push(new Bullet(this.canvas, this.x, this.y, 0, this, this.bulletIndex, this.color, "straight", -this.speedX*2, -Math.abs(this.speedY * 4), false));
 //     // that.enemiesBullets.push(new Bullet(this.canvas, this.x+this.width/2, this.y, 0, this, this.bulletIndex, this.color, "straight", -this.speedX*2, -Math.abs(this.speedY * 4), false));
@@ -85,7 +91,7 @@ Boss.prototype.shot = function(that) {
 //     that.enemiesBullets.push(new Bullet(this.canvas, this.x-30, this.y, 0, this, this.bulletIndex, this.color, "straight", -this.speedX*2, -Math.abs(this.speedY * 4), false));
     this.bulletIndex = 1;
     for(var i = 0; i < 32; i++){
-        this.game.enemiesBullets.push(new Bullet(this.game, this.canvas, this.x+this.width/2, this.y+this.height/2, -1, this, this.bulletIndex, this.color, "concentric", this.superShotSpeed*Math.cos(i*Math.PI/16), this.superShotSpeed*Math.sin(i*Math.PI/16), true));            
+        this.game.bossBullets.push(new Bullet(this.game, this.canvas, this.x+this.width/2, this.y+this.height/2, -1, this, this.bulletIndex, this.color, "concentric", this.superShotSpeed*Math.cos(i*Math.PI/16), this.superShotSpeed*Math.sin(i*Math.PI/16), true));            
     }
 }
 
