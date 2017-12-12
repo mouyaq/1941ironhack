@@ -276,7 +276,7 @@ Game.prototype.createBoss = function() {
         if( parseInt(document.getElementById("score-points-p1").innerHTML) > this.bossPoints && this.actualDificult != 0 && this.bosses <= this.numMaxBosses) {
             //this.enemies = [];
                 //console.log("BOSS GENERATED dificult = " + this.dificult);
-                this.bosses.push(new Boss(this, this.canvas, Math.floor(Math.random()*700), Math.floor(Math.random()*-500)-200, "boss", this.bossList[this.bossIndex], this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, this.enemySpeedX, this.enemySpeedY, this.player1));
+                this.bosses.push(new Boss(this, this.canvas, Math.floor(Math.random()*700), Math.floor(Math.random()*-500)-200, "boss", this.bossList[this.bossIndex], this.colorList[Math.floor(Math.random() * this.colorList.length)], this.bossLife, this.enemySpeedX, this.enemySpeedY, this.player1));
                 clearInterval(this.enemyPushInterval);
                 clearInterval(this.enemyShootInterval);
             //console.log("NUMERO DE ENEMIGOS: " + this.enemies.length);

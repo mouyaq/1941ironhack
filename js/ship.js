@@ -138,13 +138,13 @@ Ship.prototype.increaseSuperShot = function() {
         this.superShotAudio = new Audio("./sounds/ole.mp3");
         this.superShotAudio.volume = 0.2;
         this.superShotAudio.play();
-        this.superShot += this.shotIncrement;
+        this.superShot += this.game.shotIncrement;
     }
 }
 
-Ship.prototype.setShotIncrement = function(shotIncrement) {
-    this.shotIncrement = shotIncrement;
-}
+// Ship.prototype.setShotIncrement = function(shotIncrement) {
+//     this.shotIncrement = shotIncrement;
+// }
 
 Ship.prototype.resetSuperShot = function() {
     this.superShot = 0;
