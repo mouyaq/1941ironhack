@@ -101,6 +101,7 @@ Ship.prototype.isOutOfScreen = function() {
 
 Ship.prototype.setRemovable = function() {
     this.removable = true;
+    this.destroyed = false;
 }
 
 Ship.prototype.setDestroyed = function(that) {

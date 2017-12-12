@@ -20,6 +20,11 @@ function Game(canvas, playerNumber, dificult) {
     this.enemies = [];
     this.enemiesBullets = [];
     this.enemiesList = ["enemy1", "enemy2", "enemy3", "enemy4", "enemy5", "enemy6"];
+    this.bossList = ["boss1"];
+    this.boss = null;
+    this.bosses = [];
+    this.bossIndex = 0;
+    this.bossBullets = [];
     this.colorList = ["white", "black"];
     this.players = [];
     this.player1 = new Player(this, this.canvas, this.canvas.width * 1/4, this.canvas.height - 150, "player", "player1", this.colorList[Math.floor(Math.random() * this.colorList.length)], 5, 10, 5, this.shotIncrement);
@@ -66,6 +71,7 @@ Game.prototype.draw = function() {
         this.playersBullets.forEach(function(bullet) {
             bullet.isOutOfScreen();
             bullet.checkCollision(this.enemies);
+            bullet.checkCollision(this.bosses);
             bullet.draw(this.playersBullets);
         }.bind(this))
         // Draw enemies bullets
@@ -86,6 +92,18 @@ Game.prototype.draw = function() {
             player.checkCollision(this.players);
             player.draw();
         }.bind(this))
+        // Draw Boss
+        this.bosses.forEach(function(boss) {
+            boss.isOutOfScreen();
+            boss.checkCollision(this.players);
+            boss.draw();
+        }.bind(this))
+        // Draw boss bullets
+        this.bossBullets.forEach(function(bullet) {
+            bullet.isOutOfScreen();
+            bullet.checkCollision(this.players);
+            bullet.draw(this.bossBullets);
+        }.bind(this))
 
         this.animationId = requestAnimationFrame(this.draw.bind(this));
 }
@@ -100,20 +118,17 @@ Game.prototype.setDificult = function(dificult) {
             this.actualDificult = 0;
             this.actualBg = 0;
             this.enemyInterval = 5;
-            // Maximum number of enemies
             this.maxEnemies = 2;
             this.maxPlayerBullets = 50;
             this.maxEnemyBullets = 10;
             this.enemySpeedX = 1;
             this.enemySpeedY = 1;
             this.shotIncrement = 25;
-            this.bossPoints = 50;
-            this.bossLife = 100;
-            // this.players.forEach(function(player) {
-            //     player.setShotIncrement(this.shotIncrement);
-            // }.bind(this));
-            //console.log("SET DIFICULT TO TUTORIAL");
+            // this.bossPoints = 50;
+            // this.bossLife = 100;
+            this.deleteEnemiesInterval();
             this.createEnemies();
+            this.createShotEnemies();
             break;
         case "easy":
             $("#dificult-screen").text("EASY");
@@ -126,7 +141,6 @@ Game.prototype.setDificult = function(dificult) {
             this.actualDificult = 1;    
             this.actualBg = 1;        
             this.enemyInterval = 5;
-            // Maximum number of enemies
             this.maxEnemies = 5;
             this.maxPlayerBullets = 50;
             this.maxEnemyBullets = 20;
@@ -135,12 +149,12 @@ Game.prototype.setDificult = function(dificult) {
             this.shotIncrement = 10;
             this.bossPoints = 50;
             this.bossLife = 100;
-            // this.players.forEach(function(player) {
-            //     player.setShotIncrement(this.shotIncrement);
-            // }.bind(this));
-            //console.log("SET DIFICULT TO EASY");
+            this.numMaxBosses = 1;
             this.deleteEnemiesInterval();
             this.createEnemies();
+            this.createShotEnemies();
+            this.createBoss();    
+            this.createShotBoss();    
             break;
         case "normal":
             $("#dificult-screen").text("NORMAL");
@@ -153,7 +167,6 @@ Game.prototype.setDificult = function(dificult) {
             this.actualDificult = 2;
             this.actualBg = 2;
             this.enemyInterval = 3;
-            // Maximum number of enemies
             this.maxEnemies = 10;
             this.maxPlayerBullets = 50;
             this.maxEnemyBullets = 30;
@@ -162,12 +175,12 @@ Game.prototype.setDificult = function(dificult) {
             this.shotIncrement = 5;
             this.bossPoints = 100;
             this.bossLife = 200;
-            // this.players.forEach(function(player) {
-            //     player.setShotIncrement(this.shotIncrement);
-            // }.bind(this)); 
-            //console.log("SET DIFICULT TO MEDIUM");
+            this.numMaxBosses = 1;
             this.deleteEnemiesInterval();
             this.createEnemies();
+            this.createShotEnemies();    
+            this.createBoss();
+            this.createShotBoss();     
             break;
         case "hard":
             $("#dificult-screen").text("HARD");
@@ -180,7 +193,6 @@ Game.prototype.setDificult = function(dificult) {
             this.actualDificult = 3;
             this.actualBg = 3;
             this.enemyInterval = 2;
-            // Maximum number of enemies
             this.maxEnemies = 15;
             this.maxPlayerBullets = 50;
             this.maxEnemyBullets = 50;
@@ -189,12 +201,12 @@ Game.prototype.setDificult = function(dificult) {
             this.shotIncrement = 1;
             this.bossPoints = 200;
             this.bossLife = 300;
-            // this.players.forEach(function(player) {
-            //     player.setShotIncrement(this.shotIncrement);
-            // }.bind(this));
-            //console.log("SET DIFICULT TO HARD");
+            this.numMaxBosses = 1;
             this.deleteEnemiesInterval();
             this.createEnemies();
+            this.createShotEnemies();
+            this.createBoss();    
+            this.createShotBoss();       
             break;
         case "inferno":
             $("#dificult-screen").text("INFERNO");
@@ -207,7 +219,6 @@ Game.prototype.setDificult = function(dificult) {
             this.actualDificult = 4;
             this.actualBg = 4;
             this.enemyInterval = 1;
-            // Maximum number of enemies
             this.maxEnemies = 30;
             this.maxPlayerBullets = 50;
             this.maxEnemyBullets = 100;
@@ -215,13 +226,13 @@ Game.prototype.setDificult = function(dificult) {
             this.enemySpeedY = 16;
             this.shotIncrement = 0.5;
             this.bossPoints = 400;  
-            this.bossLife = 400;          
-            // this.players.forEach(function(player) {
-            //     player.setShotIncrement(this.shotIncrement);
-            // }.bind(this));
-            //console.log("SET DIFICULT TO INFERNO");
+            this.bossLife = 400;
+            this.numMaxBosses = 2;          
             this.deleteEnemiesInterval();
             this.createEnemies();
+            this.createShotEnemies();
+            this.createBoss();   
+            this.createShotBoss();          
             break;
         default:
     }
@@ -232,7 +243,6 @@ Game.prototype.createEnemies = function() {
         if(this.enemies.length < this.maxEnemies) { 
             var enemyName = this.enemiesList[Math.floor(Math.random() * this.enemiesList.length)];
             var enemyColor = this.colorList[Math.floor(Math.random() * this.colorList.length)];
-            console.log(enemyName);
             var enemyLife = 0;
             switch(enemyName) {
                 case "enemy1":
@@ -257,15 +267,24 @@ Game.prototype.createEnemies = function() {
             this.enemies.push(new Enemy(this, this.canvas, Math.floor(Math.random()*this.canvas.width), Math.floor(Math.random()*-500)-200, "enemy", enemyName, enemyColor, enemyLife, this.enemySpeedX, this.enemySpeedY, this.player1));
             //console.log("NUMERO DE ENEMIGOS: " + this.enemies.length);
         }
-        if( parseInt(document.getElementById("score-points-p1").innerHTML) > this.bossPoints && this.actualDificult != 0 ) {
+    //}.bind(this), (Math.floor(Math.random() * this.enemyInterval) + 0.3) * 1000 );
+    }.bind(this), this.enemyInterval * 1000);
+}
+
+Game.prototype.createBoss = function() {
+    this.bossPushInterval = setInterval(function(){
+        if( parseInt(document.getElementById("score-points-p1").innerHTML) > this.bossPoints && this.actualDificult != 0 && this.bosses <= this.numMaxBosses) {
             //this.enemies = [];
                 //console.log("BOSS GENERATED dificult = " + this.dificult);
-                this.enemies.push(new Boss(this, this.canvas, Math.floor(Math.random()*700), Math.floor(Math.random()*-500)-200, "boss", "boss1", this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, this.enemySpeedX, this.enemySpeedY, this.player1));
+                this.bosses.push(new Boss(this, this.canvas, Math.floor(Math.random()*700), Math.floor(Math.random()*-500)-200, "boss", this.bossList[this.bossIndex], this.colorList[Math.floor(Math.random() * this.colorList.length)], 100, this.enemySpeedX, this.enemySpeedY, this.player1));
                 clearInterval(this.enemyPushInterval);
+                clearInterval(this.enemyShootInterval);
             //console.log("NUMERO DE ENEMIGOS: " + this.enemies.length);
         }
-    }.bind(this), (Math.floor(Math.random() * this.enemyInterval) + 0.3) * 1000 );
+    }.bind(this), this.enemyInterval * 1000);
+}
 
+Game.prototype.createShotEnemies = function() {
     this.enemyShootInterval = setInterval(function(){
         this.enemies.forEach(function(enemy){
             //if(enemy.y > 0 && this.enemiesBullets.length < this.maxEnemyBullets) { 
@@ -278,9 +297,23 @@ Game.prototype.createEnemies = function() {
     }.bind(this), this.enemyInterval * 1000);
 }
 
+Game.prototype.createShotBoss = function() {
+    this.bossShotInterval = setInterval(function(){
+        console.log("NEXT DIFICULT: " + this.nextDificult);
+        this.bosses.forEach(function(boss) {
+            if(boss.y > 0) {
+                boss.shot();
+            }
+        }.bind(this));
+    }.bind(this), this.enemyInterval * 1000);
+}
+
 Game.prototype.deleteEnemiesInterval = function() {
+    // this.enemies = [];
     clearInterval(this.enemyPushInterval);
     clearInterval(this.enemyShootInterval);
+    clearInterval(this.bossPushInterval );
+    clearInterval(this.bossShotInterval);
 }
 
 Game.prototype.myRandom = function(min, max) {
@@ -321,7 +354,12 @@ Game.prototype.nextLevel = function() {
 }
 
 Game.prototype.setWinner = function() {
-    alert("YOU WIN!!!");
+    this.cleanGame();
+    this.deleteEnemiesInterval();
+    $("#game").hide();
+    $("#ending").css("visibility", "visible");
+    $("#ending").get(0).play();
+    $("#ending").show();
 }
 
 Game.prototype.cleanGame = function() {
@@ -336,4 +374,6 @@ Game.prototype.cleanGame = function() {
     this.enemies = [];
     this.enemiesBullets = [];
     this.playersBullets = [];
+    this.bosses = [];
+    this.bossBullets = [];
 }
