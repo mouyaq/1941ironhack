@@ -147,7 +147,7 @@ Game.prototype.setDificult = function(dificult) {
             this.enemySpeedX = 2;
             this.enemySpeedY = 2;
             this.shotIncrement = 10;
-            this.bossPoints = 10;
+            this.bossPoints = 50;
             this.bossLife = 100;
             this.numMaxBosses = 1;
             this.deleteEnemiesInterval();
@@ -182,7 +182,7 @@ Game.prototype.setDificult = function(dificult) {
             this.enemySpeedX = 4;
             this.enemySpeedY = 4;
             this.shotIncrement = 5;
-            this.bossPoints = 50;
+            this.bossPoints = 100;
             this.bossLife = 200;
             this.numMaxBosses = 1;
             this.deleteEnemiesInterval();
